@@ -1,0 +1,36 @@
+{
+  "name": "BalanceTransfer",
+  "fields": [
+    {
+      "fieldName": "amount",
+      "fieldType": "Double",
+      "fieldValidateRules": ["required"]
+    }
+  ],
+  "relationships": [
+    {
+      "relationshipType": "one-to-one",
+      "otherEntityName": "userInfos",
+      "otherEntityRelationshipName": "balanceTransfer",
+      "relationshipName": "userInfos",
+      "ownerSide": true
+    },
+    {
+      "relationshipType": "one-to-one",
+      "otherEntityName": "project",
+      "otherEntityRelationshipName": "balanceTransfer",
+      "relationshipName": "project",
+      "ownerSide": true
+    }
+  ],
+  "entityTableName": "balance_transfer",
+  "dto": "mapstruct",
+  "pagination": "pagination",
+  "service": "serviceClass",
+  "jpaMetamodelFiltering": false,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "applications": "*",
+  "changelogDate": "20210830080711"
+}

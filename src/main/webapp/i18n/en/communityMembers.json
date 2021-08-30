@@ -1,0 +1,24 @@
+{
+  "crowdFundingJHipsterApp": {
+    "communityMembers": {
+      "home": {
+        "title": "Community Members",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Community Members",
+        "createOrEditLabel": "Create or edit a Community Members",
+        "notFound": "No Community Members found"
+      },
+      "created": "A new Community Members is created with identifier {{ param }}",
+      "updated": "A Community Members is updated with identifier {{ param }}",
+      "deleted": "A Community Members is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Community Members {{ id }}?"
+      },
+      "detail": {
+        "title": "Community Members"
+      },
+      "id": "ID",
+      "userInfos": "User Infos"
+    }
+  }
+}

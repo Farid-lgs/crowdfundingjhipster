@@ -1,0 +1,40 @@
+{
+  "crowdFundingJHipsterApp": {
+    "userInfos": {
+      "home": {
+        "title": "User Infos",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new User Infos",
+        "createOrEditLabel": "Create or edit a User Infos",
+        "notFound": "No User Infos found"
+      },
+      "created": "A new User Infos is created with identifier {{ param }}",
+      "updated": "A User Infos is updated with identifier {{ param }}",
+      "deleted": "A User Infos is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete User Infos {{ id }}?"
+      },
+      "detail": {
+        "title": "User Infos"
+      },
+      "id": "ID",
+      "publicName": "Public Name",
+      "birthDate": "Birth Date",
+      "twitter": "Twitter",
+      "facebook": "Facebook",
+      "linkedIn": "Linked In",
+      "description": "Description",
+      "coverImage": "Cover Image",
+      "commonId": "Common Id",
+      "user": "User",
+      "contributions": "Contributions",
+      "project": "Project",
+      "projectPosts": "Project Posts",
+      "community": "Community",
+      "address": "Address",
+      "balanceTransfer": "Balance Transfer",
+      "creditCard": "Credit Card",
+      "communityMembers": "Community Members"
+    }
+  }
+}

@@ -43,7 +43,26 @@
     "devServerPort": 4200,
     "clientTheme": "none",
     "clientThemeVariant": "",
-    "reactive": false
+    "reactive": false,
+    "entities": [
+      "Address",
+      "BalanceTransfer",
+      "Community",
+      "CommunityMembers",
+      "CommunityNotifications",
+      "Category",
+      "Contribution",
+      "ContributionNotifications",
+      "Country",
+      "CreditCard",
+      "Project",
+      "ProjectImages",
+      "ProjectAccount",
+      "ProjectComment",
+      "Reward",
+      "UserInfos"
+    ],
+    "lastLiquibaseTimestamp": 1630310845000
   },
   "git-provider": "GitHub",
   "git-company": "Farid-lgs",

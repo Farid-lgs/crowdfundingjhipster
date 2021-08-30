@@ -1,0 +1,25 @@
+{
+  "crowdFundingJHipsterApp": {
+    "projectImages": {
+      "home": {
+        "title": "Project Images",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Project Images",
+        "createOrEditLabel": "Create or edit a Project Images",
+        "notFound": "No Project Images found"
+      },
+      "created": "A new Project Images is created with identifier {{ param }}",
+      "updated": "A Project Images is updated with identifier {{ param }}",
+      "deleted": "A Project Images is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Project Images {{ id }}?"
+      },
+      "detail": {
+        "title": "Project Images"
+      },
+      "id": "ID",
+      "image": "Image",
+      "project": "Project"
+    }
+  }
+}

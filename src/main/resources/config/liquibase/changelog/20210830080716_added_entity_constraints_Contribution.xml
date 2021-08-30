@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd">
+    <!--
+        Added the constraints for entity Contribution.
+    -->
+    <changeSet id="20210830080716-2" author="jhipster">
+
+        <addForeignKeyConstraint baseColumnNames="contribution_notifications_id"
+                                 baseTableName="contribution"
+                                 constraintName="fk_contribution__contribution_notifications_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="contribution_notifications"/>
+
+        <addForeignKeyConstraint baseColumnNames="user_infos_id"
+                                 baseTableName="contribution"
+                                 constraintName="fk_contribution__user_infos_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="user_infos"/>
+
+        <addForeignKeyConstraint baseColumnNames="project_id"
+                                 baseTableName="contribution"
+                                 constraintName="fk_contribution__project_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="project"/>
+    </changeSet>
+</databaseChangeLog>

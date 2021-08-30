@@ -1,0 +1,114 @@
+<div>
+  <h2 id="page-heading" data-cy="ProjectAccountHeading">
+    <span jhiTranslate="crowdFundingJHipsterApp.projectAccount.home.title">Project Accounts</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info mr-2" (click)="loadPage()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span jhiTranslate="crowdFundingJHipsterApp.projectAccount.home.refreshListLabel">Refresh List</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-project-account"
+        [routerLink]="['/project-account/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span jhiTranslate="crowdFundingJHipsterApp.projectAccount.home.createLabel"> Create a new Project Account </span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="projectAccounts?.length === 0">
+    <span jhiTranslate="crowdFundingJHipsterApp.projectAccount.home.notFound">No projectAccounts found</span>
+  </div>
+
+  <div class="table-responsive" id="entities" *ngIf="projectAccounts && projectAccounts.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" [callback]="loadPage.bind(this)">
+          <th scope="col" jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="balance">
+            <span jhiTranslate="crowdFundingJHipsterApp.projectAccount.balance">Balance</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="number">
+            <span jhiTranslate="crowdFundingJHipsterApp.projectAccount.number">Number</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="bank">
+            <span jhiTranslate="crowdFundingJHipsterApp.projectAccount.bank">Bank</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="project.id">
+            <span jhiTranslate="crowdFundingJHipsterApp.projectAccount.project">Project</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let projectAccount of projectAccounts; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/project-account', projectAccount.id, 'view']">{{ projectAccount.id }}</a>
+          </td>
+          <td>{{ projectAccount.balance }}</td>
+          <td>{{ projectAccount.number }}</td>
+          <td>{{ projectAccount.bank }}</td>
+          <td>
+            <div *ngIf="projectAccount.project">
+              <a [routerLink]="['/project', projectAccount.project?.id, 'view']">{{ projectAccount.project?.id }}</a>
+            </div>
+          </td>
+          <td class="text-right">
+            <div class="btn-group">
+              <button
+                type="submit"
+                [routerLink]="['/project-account', projectAccount.id, 'view']"
+                class="btn btn-info btn-sm"
+                data-cy="entityDetailsButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+              </button>
+
+              <button
+                type="submit"
+                [routerLink]="['/project-account', projectAccount.id, 'edit']"
+                class="btn btn-primary btn-sm"
+                data-cy="entityEditButton"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+              </button>
+
+              <button type="submit" (click)="delete(projectAccount)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div *ngIf="projectAccounts && projectAccounts.length > 0">
+    <div class="row justify-content-center">
+      <jhi-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></jhi-item-count>
+    </div>
+
+    <div class="row justify-content-center">
+      <ngb-pagination
+        [collectionSize]="totalItems"
+        [(page)]="ngbPaginationPage"
+        [pageSize]="itemsPerPage"
+        [maxSize]="5"
+        [rotate]="true"
+        [boundaryLinks]="true"
+        (pageChange)="loadPage($event)"
+      ></ngb-pagination>
+    </div>
+  </div>
+</div>

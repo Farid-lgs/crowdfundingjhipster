@@ -1,0 +1,113 @@
+{
+  "name": "UserInfos",
+  "fields": [
+    {
+      "fieldName": "publicName",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "birthDate",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "twitter",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "facebook",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "linkedIn",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "description",
+      "fieldType": "byte[]",
+      "fieldTypeBlobContent": "text"
+    },
+    {
+      "fieldName": "coverImage",
+      "fieldType": "byte[]",
+      "fieldTypeBlobContent": "image"
+    },
+    {
+      "fieldName": "commonId",
+      "fieldType": "UUID"
+    }
+  ],
+  "relationships": [
+    {
+      "relationshipType": "one-to-one",
+      "otherEntityName": "user",
+      "otherEntityRelationshipName": "userInfos",
+      "relationshipName": "user",
+      "ownerSide": true,
+      "useJPADerivedIdentifier": true,
+      "id": true
+    },
+    {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "contribution",
+      "otherEntityRelationshipName": "userInfos",
+      "relationshipName": "contributions"
+    },
+    {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "project",
+      "otherEntityRelationshipName": "userInfos",
+      "relationshipName": "project"
+    },
+    {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "projectComment",
+      "otherEntityRelationshipName": "userInfos",
+      "relationshipName": "projectPosts"
+    },
+    {
+      "relationshipType": "one-to-one",
+      "otherEntityName": "community",
+      "otherEntityRelationshipName": "admin",
+      "relationshipName": "community",
+      "ownerSide": false
+    },
+    {
+      "relationshipType": "one-to-one",
+      "otherEntityName": "address",
+      "otherEntityRelationshipName": "userInfos",
+      "relationshipName": "address",
+      "ownerSide": false
+    },
+    {
+      "relationshipType": "one-to-one",
+      "otherEntityName": "balanceTransfer",
+      "otherEntityRelationshipName": "userInfos",
+      "relationshipName": "balanceTransfer",
+      "ownerSide": false
+    },
+    {
+      "relationshipType": "one-to-one",
+      "otherEntityName": "creditCard",
+      "otherEntityRelationshipName": "userInfos",
+      "relationshipName": "creditCard",
+      "ownerSide": false
+    },
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "communityMembers",
+      "otherEntityRelationshipName": "userInfos",
+      "relationshipName": "communityMembers"
+    }
+  ],
+  "entityTableName": "user_infos",
+  "dto": "mapstruct",
+  "pagination": "pagination",
+  "service": "serviceClass",
+  "jpaMetamodelFiltering": false,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "applications": "*",
+  "changelogDate": "20210830080725"
+}

@@ -1,0 +1,145 @@
+<div>
+  <h2 id="page-heading" data-cy="ContributionHeading">
+    <span jhiTranslate="crowdFundingJHipsterApp.contribution.home.title">Contributions</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info mr-2" (click)="loadPage()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span jhiTranslate="crowdFundingJHipsterApp.contribution.home.refreshListLabel">Refresh List</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-contribution"
+        [routerLink]="['/contribution/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span jhiTranslate="crowdFundingJHipsterApp.contribution.home.createLabel"> Create a new Contribution </span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="contributions?.length === 0">
+    <span jhiTranslate="crowdFundingJHipsterApp.contribution.home.notFound">No contributions found</span>
+  </div>
+
+  <div class="table-responsive" id="entities" *ngIf="contributions && contributions.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" [callback]="loadPage.bind(this)">
+          <th scope="col" jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="amount">
+            <span jhiTranslate="crowdFundingJHipsterApp.contribution.amount">Amount</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="payerName">
+            <span jhiTranslate="crowdFundingJHipsterApp.contribution.payerName">Payer Name</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="createdAt">
+            <span jhiTranslate="crowdFundingJHipsterApp.contribution.createdAt">Created At</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="updatedAt">
+            <span jhiTranslate="crowdFundingJHipsterApp.contribution.updatedAt">Updated At</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="anonymous">
+            <span jhiTranslate="crowdFundingJHipsterApp.contribution.anonymous">Anonymous</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="rewarded">
+            <span jhiTranslate="crowdFundingJHipsterApp.contribution.rewarded">Rewarded</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="contributionNotifications.id">
+            <span jhiTranslate="crowdFundingJHipsterApp.contribution.contributionNotifications">Contribution Notifications</span>
+            <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="userInfos.id">
+            <span jhiTranslate="crowdFundingJHipsterApp.contribution.userInfos">User Infos</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="project.id">
+            <span jhiTranslate="crowdFundingJHipsterApp.contribution.project">Project</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let contribution of contributions; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/contribution', contribution.id, 'view']">{{ contribution.id }}</a>
+          </td>
+          <td>{{ contribution.amount }}</td>
+          <td>{{ contribution.payerName }}</td>
+          <td>{{ contribution.createdAt | formatMediumDatetime }}</td>
+          <td>{{ contribution.updatedAt | formatMediumDatetime }}</td>
+          <td>{{ contribution.anonymous }}</td>
+          <td>{{ contribution.rewarded }}</td>
+          <td>
+            <div *ngIf="contribution.contributionNotifications">
+              <a [routerLink]="['/contribution-notifications', contribution.contributionNotifications?.id, 'view']">{{
+                contribution.contributionNotifications?.id
+              }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="contribution.userInfos">
+              <a [routerLink]="['/user-infos', contribution.userInfos?.id, 'view']">{{ contribution.userInfos?.id }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="contribution.project">
+              <a [routerLink]="['/project', contribution.project?.id, 'view']">{{ contribution.project?.id }}</a>
+            </div>
+          </td>
+          <td class="text-right">
+            <div class="btn-group">
+              <button
+                type="submit"
+                [routerLink]="['/contribution', contribution.id, 'view']"
+                class="btn btn-info btn-sm"
+                data-cy="entityDetailsButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+              </button>
+
+              <button
+                type="submit"
+                [routerLink]="['/contribution', contribution.id, 'edit']"
+                class="btn btn-primary btn-sm"
+                data-cy="entityEditButton"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+              </button>
+
+              <button type="submit" (click)="delete(contribution)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div *ngIf="contributions && contributions.length > 0">
+    <div class="row justify-content-center">
+      <jhi-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></jhi-item-count>
+    </div>
+
+    <div class="row justify-content-center">
+      <ngb-pagination
+        [collectionSize]="totalItems"
+        [(page)]="ngbPaginationPage"
+        [pageSize]="itemsPerPage"
+        [maxSize]="5"
+        [rotate]="true"
+        [boundaryLinks]="true"
+        (pageChange)="loadPage($event)"
+      ></ngb-pagination>
+    </div>
+  </div>
+</div>

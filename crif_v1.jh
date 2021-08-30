@@ -1,0 +1,148 @@
+entity Address {
+  address String,
+  city String,
+  state String,
+  zipCode String,
+  phoneNumber String,
+}
+
+entity BalanceTransfer {
+  amount Double required,
+}
+
+entity Community {
+  name String required,
+  nameFr String,
+  createdAt Instant,
+  about TextBlob required,
+  coverImage ImageBlob
+}
+
+entity CommunityMembers {
+}
+
+entity CommunityNotifications {
+  content String ,
+  sentAt Instant
+}
+
+entity Category {
+  name String required,
+  nameFr String,
+}
+
+entity Contribution {
+  amount Double required,
+  payerName String required,
+  createdAt Instant,
+  updatedAt Instant,
+  anonymous Boolean required,
+  rewarded Boolean required,
+}
+entity ContributionNotifications {
+  content String,
+  sentAt Instant
+}
+entity Country {
+  name String required,
+  nameFr String
+}
+entity CreditCard {
+  number Integer required,
+  ownerName String,
+  key Integer required,
+  expirationDate LocalDate
+}
+
+entity Project {
+  Title String required,
+  goal Double required,
+  headline String required,
+  videoUrl String,
+  location String,
+  createdAt Instant,
+  updatedAt Instant,
+  description TextBlob,
+  moreLinks String,
+  budgetDescription TextBlob,
+  duration Integer required,
+  adminNotes String,
+  coverImage ImageBlob,
+  status ProjectStatuts,
+  commonId UUID
+}
+
+entity ProjectImages {
+  image ImageBlob,
+}
+
+entity ProjectAccount {
+  balance String,
+  number Integer,
+  bank String
+}
+
+entity ProjectComment {
+  comment String required
+}
+
+entity Reward {
+  title String required,
+  description String required,
+  minimumValue Double required,
+  deliverAt Instant,
+  expiresAt Instant,
+  maximumContributions Integer,
+  image ImageBlob
+}
+
+entity UserInfos {
+  publicName String required,
+  birthDate LocalDate,
+  twitter String,
+  facebook String,
+  linkedIn String,
+  description TextBlob,
+  coverImage ImageBlob,
+  commonId UUID
+}
+
+
+enum ProjectStatuts {
+  Pending,
+  Approved,
+  Rejected,
+  Succeeded,
+  Failed
+}
+
+relationship OneToOne {
+
+  Community{communityMembers} to CommunityMembers,
+  Community{admin} to UserInfos{community},
+  Address{userInfos} to UserInfos{address},
+  BalanceTransfer{userInfos}  to UserInfos{balanceTransfer},
+  BalanceTransfer{project} to Project{balanceTransfer},
+  Contribution{contributionNotifications} to ContributionNotifications{contribution},
+  CreditCard{userInfos} to UserInfos{creditCard},
+  UserInfos{user} to User with jpaDerivedIdentifier
+}
+relationship OneToMany {
+  Country{address} to Address{country},
+  Project{projectImages} to ProjectImages{project},
+  UserInfos{contributions} to Contribution{userInfos},
+  Project{contributions} to Contribution{project},
+  CommunityMembers{userInfos} to UserInfos{communityMembers},
+  Community{projects} to Project{community},
+  Community{communityNotifications} to CommunityNotifications{community},
+  UserInfos{project} to Project{userInfos},
+  Category{project} to Project{category},
+  Project{projectAccount} to ProjectAccount{project},
+  UserInfos{projectPosts} to ProjectComment{userInfos},
+  Project{projectPost} to ProjectComment{project},
+  Project{reward} to Reward{project},
+}
+
+dto * with mapstruct
+paginate all with pagination
+service all with serviceClass

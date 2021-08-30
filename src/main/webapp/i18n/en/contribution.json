@@ -1,0 +1,32 @@
+{
+  "crowdFundingJHipsterApp": {
+    "contribution": {
+      "home": {
+        "title": "Contributions",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Contribution",
+        "createOrEditLabel": "Create or edit a Contribution",
+        "notFound": "No Contributions found"
+      },
+      "created": "A new Contribution is created with identifier {{ param }}",
+      "updated": "A Contribution is updated with identifier {{ param }}",
+      "deleted": "A Contribution is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Contribution {{ id }}?"
+      },
+      "detail": {
+        "title": "Contribution"
+      },
+      "id": "ID",
+      "amount": "Amount",
+      "payerName": "Payer Name",
+      "createdAt": "Created At",
+      "updatedAt": "Updated At",
+      "anonymous": "Anonymous",
+      "rewarded": "Rewarded",
+      "contributionNotifications": "Contribution Notifications",
+      "userInfos": "User Infos",
+      "project": "Project"
+    }
+  }
+}

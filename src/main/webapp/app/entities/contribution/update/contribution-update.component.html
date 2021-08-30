@@ -1,0 +1,192 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2
+        id="jhi-contribution-heading"
+        data-cy="ContributionCreateUpdateHeading"
+        jhiTranslate="crowdFundingJHipsterApp.contribution.home.createOrEditLabel"
+      >
+        Create or edit a Contribution
+      </h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="form-group" [hidden]="editForm.get('id')!.value == null">
+          <label class="form-control-label" jhiTranslate="global.field.id" for="field_id">ID</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="crowdFundingJHipsterApp.contribution.amount" for="field_amount">Amount</label>
+          <input type="number" class="form-control" name="amount" id="field_amount" data-cy="amount" formControlName="amount" />
+          <div *ngIf="editForm.get('amount')!.invalid && (editForm.get('amount')!.dirty || editForm.get('amount')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('amount')?.errors?.required" jhiTranslate="entity.validation.required">
+              This field is required.
+            </small>
+            <small class="form-text text-danger" [hidden]="!editForm.get('amount')?.errors?.number" jhiTranslate="entity.validation.number">
+              This field should be a number.
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="crowdFundingJHipsterApp.contribution.payerName" for="field_payerName"
+            >Payer Name</label
+          >
+          <input type="text" class="form-control" name="payerName" id="field_payerName" data-cy="payerName" formControlName="payerName" />
+          <div *ngIf="editForm.get('payerName')!.invalid && (editForm.get('payerName')!.dirty || editForm.get('payerName')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('payerName')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="crowdFundingJHipsterApp.contribution.createdAt" for="field_createdAt"
+            >Created At</label
+          >
+          <div class="d-flex">
+            <input
+              id="field_createdAt"
+              data-cy="createdAt"
+              type="datetime-local"
+              class="form-control"
+              name="createdAt"
+              formControlName="createdAt"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="crowdFundingJHipsterApp.contribution.updatedAt" for="field_updatedAt"
+            >Updated At</label
+          >
+          <div class="d-flex">
+            <input
+              id="field_updatedAt"
+              data-cy="updatedAt"
+              type="datetime-local"
+              class="form-control"
+              name="updatedAt"
+              formControlName="updatedAt"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="crowdFundingJHipsterApp.contribution.anonymous" for="field_anonymous"
+            >Anonymous</label
+          >
+          <input type="checkbox" class="form-check" name="anonymous" id="field_anonymous" data-cy="anonymous" formControlName="anonymous" />
+          <div *ngIf="editForm.get('anonymous')!.invalid && (editForm.get('anonymous')!.dirty || editForm.get('anonymous')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('anonymous')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="crowdFundingJHipsterApp.contribution.rewarded" for="field_rewarded"
+            >Rewarded</label
+          >
+          <input type="checkbox" class="form-check" name="rewarded" id="field_rewarded" data-cy="rewarded" formControlName="rewarded" />
+          <div *ngIf="editForm.get('rewarded')!.invalid && (editForm.get('rewarded')!.dirty || editForm.get('rewarded')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('rewarded')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label
+            class="form-control-label"
+            jhiTranslate="crowdFundingJHipsterApp.contribution.contributionNotifications"
+            for="field_contributionNotifications"
+            >Contribution Notifications</label
+          >
+          <select
+            class="form-control"
+            id="field_contributionNotifications"
+            data-cy="contributionNotifications"
+            name="contributionNotifications"
+            formControlName="contributionNotifications"
+          >
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="
+                contributionNotificationsOption.id === editForm.get('contributionNotifications')!.value?.id
+                  ? editForm.get('contributionNotifications')!.value
+                  : contributionNotificationsOption
+              "
+              *ngFor="
+                let contributionNotificationsOption of contributionNotificationsCollection;
+                trackBy: trackContributionNotificationsById
+              "
+            >
+              {{ contributionNotificationsOption.id }}
+            </option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="crowdFundingJHipsterApp.contribution.userInfos" for="field_userInfos"
+            >User Infos</label
+          >
+          <select class="form-control" id="field_userInfos" data-cy="userInfos" name="userInfos" formControlName="userInfos">
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="userInfosOption.id === editForm.get('userInfos')!.value?.id ? editForm.get('userInfos')!.value : userInfosOption"
+              *ngFor="let userInfosOption of userInfosSharedCollection; trackBy: trackUserInfosById"
+            >
+              {{ userInfosOption.id }}
+            </option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="crowdFundingJHipsterApp.contribution.project" for="field_project">Project</label>
+          <select class="form-control" id="field_project" data-cy="project" name="project" formControlName="project">
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="projectOption.id === editForm.get('project')!.value?.id ? editForm.get('project')!.value : projectOption"
+              *ngFor="let projectOption of projectsSharedCollection; trackBy: trackProjectById"
+            >
+              {{ projectOption.id }}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

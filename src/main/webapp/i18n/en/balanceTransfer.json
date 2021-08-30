@@ -1,0 +1,26 @@
+{
+  "crowdFundingJHipsterApp": {
+    "balanceTransfer": {
+      "home": {
+        "title": "Balance Transfers",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Balance Transfer",
+        "createOrEditLabel": "Create or edit a Balance Transfer",
+        "notFound": "No Balance Transfers found"
+      },
+      "created": "A new Balance Transfer is created with identifier {{ param }}",
+      "updated": "A Balance Transfer is updated with identifier {{ param }}",
+      "deleted": "A Balance Transfer is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Balance Transfer {{ id }}?"
+      },
+      "detail": {
+        "title": "Balance Transfer"
+      },
+      "id": "ID",
+      "amount": "Amount",
+      "userInfos": "User Infos",
+      "project": "Project"
+    }
+  }
+}

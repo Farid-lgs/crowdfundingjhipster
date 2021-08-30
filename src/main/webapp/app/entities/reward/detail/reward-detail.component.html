@@ -1,0 +1,67 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <div *ngIf="reward">
+      <h2 data-cy="rewardDetailsHeading"><span jhiTranslate="crowdFundingJHipsterApp.reward.detail.title">Reward</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="global.field.id">ID</span></dt>
+        <dd>
+          <span>{{ reward.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="crowdFundingJHipsterApp.reward.title">Title</span></dt>
+        <dd>
+          <span>{{ reward.title }}</span>
+        </dd>
+        <dt><span jhiTranslate="crowdFundingJHipsterApp.reward.description">Description</span></dt>
+        <dd>
+          <span>{{ reward.description }}</span>
+        </dd>
+        <dt><span jhiTranslate="crowdFundingJHipsterApp.reward.minimumValue">Minimum Value</span></dt>
+        <dd>
+          <span>{{ reward.minimumValue }}</span>
+        </dd>
+        <dt><span jhiTranslate="crowdFundingJHipsterApp.reward.deliverAt">Deliver At</span></dt>
+        <dd>
+          <span>{{ reward.deliverAt | formatMediumDatetime }}</span>
+        </dd>
+        <dt><span jhiTranslate="crowdFundingJHipsterApp.reward.expiresAt">Expires At</span></dt>
+        <dd>
+          <span>{{ reward.expiresAt | formatMediumDatetime }}</span>
+        </dd>
+        <dt><span jhiTranslate="crowdFundingJHipsterApp.reward.maximumContributions">Maximum Contributions</span></dt>
+        <dd>
+          <span>{{ reward.maximumContributions }}</span>
+        </dd>
+        <dt><span jhiTranslate="crowdFundingJHipsterApp.reward.image">Image</span></dt>
+        <dd>
+          <div *ngIf="reward.image">
+            <a (click)="openFile(reward.image, reward.imageContentType)">
+              <img [src]="'data:' + reward.imageContentType + ';base64,' + reward.image" style="max-width: 100%" alt="reward image" />
+            </a>
+            {{ reward.imageContentType }}, {{ byteSize(reward.image) }}
+          </div>
+        </dd>
+        <dt><span jhiTranslate="crowdFundingJHipsterApp.reward.project">Project</span></dt>
+        <dd>
+          <div *ngIf="reward.project">
+            <a [routerLink]="['/project', reward.project?.id, 'view']">{{ reward.project?.id }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/reward', reward.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>
