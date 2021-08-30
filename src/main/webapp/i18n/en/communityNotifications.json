@@ -1,0 +1,26 @@
+{
+  "crowdFundingJHipsterApp": {
+    "communityNotifications": {
+      "home": {
+        "title": "Community Notifications",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Community Notifications",
+        "createOrEditLabel": "Create or edit a Community Notifications",
+        "notFound": "No Community Notifications found"
+      },
+      "created": "A new Community Notifications is created with identifier {{ param }}",
+      "updated": "A Community Notifications is updated with identifier {{ param }}",
+      "deleted": "A Community Notifications is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Community Notifications {{ id }}?"
+      },
+      "detail": {
+        "title": "Community Notifications"
+      },
+      "id": "ID",
+      "content": "Content",
+      "sentAt": "Sent At",
+      "community": "Community"
+    }
+  }
+}

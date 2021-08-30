@@ -1,0 +1,47 @@
+{
+  "crowdFundingJHipsterApp": {
+    "project": {
+      "home": {
+        "title": "Projects",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Project",
+        "createOrEditLabel": "Create or edit a Project",
+        "notFound": "No Projects found"
+      },
+      "created": "A new Project is created with identifier {{ param }}",
+      "updated": "A Project is updated with identifier {{ param }}",
+      "deleted": "A Project is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Project {{ id }}?"
+      },
+      "detail": {
+        "title": "Project"
+      },
+      "id": "ID",
+      "title": "Title",
+      "goal": "Goal",
+      "headline": "Headline",
+      "videoUrl": "Video Url",
+      "location": "Location",
+      "createdAt": "Created At",
+      "updatedAt": "Updated At",
+      "description": "Description",
+      "moreLinks": "More Links",
+      "budgetDescription": "Budget Description",
+      "duration": "Duration",
+      "adminNotes": "Admin Notes",
+      "coverImage": "Cover Image",
+      "status": "Status",
+      "commonId": "Common Id",
+      "projectImages": "Project Images",
+      "contributions": "Contributions",
+      "projectAccount": "Project Account",
+      "projectPost": "Project Post",
+      "reward": "Reward",
+      "balanceTransfer": "Balance Transfer",
+      "community": "Community",
+      "userInfos": "User Infos",
+      "category": "Category"
+    }
+  }
+}

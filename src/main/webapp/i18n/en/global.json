@@ -7,6 +7,22 @@
       "jhipster-needle-menu-add-element": "JHipster will add additional menu entries here (do not translate!)",
       "entities": {
         "main": "Entities",
+        "address": "Address",
+        "balanceTransfer": "Balance Transfer",
+        "community": "Community",
+        "communityMembers": "Community Members",
+        "communityNotifications": "Community Notifications",
+        "category": "Category",
+        "contribution": "Contribution",
+        "contributionNotifications": "Contribution Notifications",
+        "country": "Country",
+        "creditCard": "Credit Card",
+        "project": "Project",
+        "projectImages": "Project Images",
+        "projectAccount": "Project Account",
+        "projectComment": "Project Comment",
+        "reward": "Reward",
+        "userInfos": "User Infos",
         "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
       },
       "account": {

@@ -1,0 +1,67 @@
+{
+  "name": "Community",
+  "fields": [
+    {
+      "fieldName": "name",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "nameFr",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "createdAt",
+      "fieldType": "Instant"
+    },
+    {
+      "fieldName": "about",
+      "fieldType": "byte[]",
+      "fieldTypeBlobContent": "text",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "coverImage",
+      "fieldType": "byte[]",
+      "fieldTypeBlobContent": "image"
+    }
+  ],
+  "relationships": [
+    {
+      "relationshipType": "one-to-one",
+      "otherEntityName": "communityMembers",
+      "otherEntityRelationshipName": "community",
+      "relationshipName": "communityMembers",
+      "ownerSide": true
+    },
+    {
+      "relationshipType": "one-to-one",
+      "otherEntityName": "userInfos",
+      "otherEntityRelationshipName": "community",
+      "relationshipName": "admin",
+      "ownerSide": true
+    },
+    {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "project",
+      "otherEntityRelationshipName": "community",
+      "relationshipName": "projects"
+    },
+    {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "communityNotifications",
+      "otherEntityRelationshipName": "community",
+      "relationshipName": "communityNotifications"
+    }
+  ],
+  "entityTableName": "community",
+  "dto": "mapstruct",
+  "pagination": "pagination",
+  "service": "serviceClass",
+  "jpaMetamodelFiltering": false,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "applications": "*",
+  "changelogDate": "20210830080712"
+}

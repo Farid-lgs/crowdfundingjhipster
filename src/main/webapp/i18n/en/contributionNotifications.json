@@ -1,0 +1,26 @@
+{
+  "crowdFundingJHipsterApp": {
+    "contributionNotifications": {
+      "home": {
+        "title": "Contribution Notifications",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Contribution Notifications",
+        "createOrEditLabel": "Create or edit a Contribution Notifications",
+        "notFound": "No Contribution Notifications found"
+      },
+      "created": "A new Contribution Notifications is created with identifier {{ param }}",
+      "updated": "A Contribution Notifications is updated with identifier {{ param }}",
+      "deleted": "A Contribution Notifications is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Contribution Notifications {{ id }}?"
+      },
+      "detail": {
+        "title": "Contribution Notifications"
+      },
+      "id": "ID",
+      "content": "Content",
+      "sentAt": "Sent At",
+      "contribution": "Contribution"
+    }
+  }
+}

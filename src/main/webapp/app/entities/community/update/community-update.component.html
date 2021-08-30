@@ -1,0 +1,167 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2
+        id="jhi-community-heading"
+        data-cy="CommunityCreateUpdateHeading"
+        jhiTranslate="crowdFundingJHipsterApp.community.home.createOrEditLabel"
+      >
+        Create or edit a Community
+      </h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="form-group" [hidden]="editForm.get('id')!.value == null">
+          <label class="form-control-label" jhiTranslate="global.field.id" for="field_id">ID</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="crowdFundingJHipsterApp.community.name" for="field_name">Name</label>
+          <input type="text" class="form-control" name="name" id="field_name" data-cy="name" formControlName="name" />
+          <div *ngIf="editForm.get('name')!.invalid && (editForm.get('name')!.dirty || editForm.get('name')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('name')?.errors?.required" jhiTranslate="entity.validation.required">
+              This field is required.
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="crowdFundingJHipsterApp.community.nameFr" for="field_nameFr">Name Fr</label>
+          <input type="text" class="form-control" name="nameFr" id="field_nameFr" data-cy="nameFr" formControlName="nameFr" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="crowdFundingJHipsterApp.community.createdAt" for="field_createdAt"
+            >Created At</label
+          >
+          <div class="d-flex">
+            <input
+              id="field_createdAt"
+              data-cy="createdAt"
+              type="datetime-local"
+              class="form-control"
+              name="createdAt"
+              formControlName="createdAt"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="crowdFundingJHipsterApp.community.about" for="field_about">About</label>
+          <textarea class="form-control" name="about" id="field_about" data-cy="about" formControlName="about"></textarea>
+          <div *ngIf="editForm.get('about')!.invalid && (editForm.get('about')!.dirty || editForm.get('about')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('about')?.errors?.required" jhiTranslate="entity.validation.required">
+              This field is required.
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="crowdFundingJHipsterApp.community.coverImage" for="field_coverImage"
+            >Cover Image</label
+          >
+          <div>
+            <img
+              [src]="'data:' + editForm.get('coverImageContentType')!.value + ';base64,' + editForm.get('coverImage')!.value"
+              style="max-height: 100px"
+              *ngIf="editForm.get('coverImage')!.value"
+              alt="community image"
+            />
+            <div *ngIf="editForm.get('coverImage')!.value" class="form-text text-danger clearfix">
+              <span class="pull-left"
+                >{{ editForm.get('coverImageContentType')!.value }}, {{ byteSize(editForm.get('coverImage')!.value) }}</span
+              >
+              <button
+                type="button"
+                (click)="clearInputImage('coverImage', 'coverImageContentType', 'file_coverImage')"
+                class="btn btn-secondary btn-xs pull-right"
+              >
+                <fa-icon icon="times"></fa-icon>
+              </button>
+            </div>
+            <input
+              type="file"
+              id="file_coverImage"
+              data-cy="coverImage"
+              (change)="setFileData($event, 'coverImage', true)"
+              accept="image/*"
+              jhiTranslate="entity.action.addimage"
+            />
+          </div>
+          <input
+            type="hidden"
+            class="form-control"
+            name="coverImage"
+            id="field_coverImage"
+            data-cy="coverImage"
+            formControlName="coverImage"
+          />
+          <input
+            type="hidden"
+            class="form-control"
+            name="coverImageContentType"
+            id="field_coverImageContentType"
+            formControlName="coverImageContentType"
+          />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="crowdFundingJHipsterApp.community.communityMembers" for="field_communityMembers"
+            >Community Members</label
+          >
+          <select
+            class="form-control"
+            id="field_communityMembers"
+            data-cy="communityMembers"
+            name="communityMembers"
+            formControlName="communityMembers"
+          >
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="
+                communityMembersOption.id === editForm.get('communityMembers')!.value?.id
+                  ? editForm.get('communityMembers')!.value
+                  : communityMembersOption
+              "
+              *ngFor="let communityMembersOption of communityMembersCollection; trackBy: trackCommunityMembersById"
+            >
+              {{ communityMembersOption.id }}
+            </option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="crowdFundingJHipsterApp.community.admin" for="field_admin">Admin</label>
+          <select class="form-control" id="field_admin" data-cy="admin" name="admin" formControlName="admin">
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="userInfosOption.id === editForm.get('admin')!.value?.id ? editForm.get('admin')!.value : userInfosOption"
+              *ngFor="let userInfosOption of adminsCollection; trackBy: trackUserInfosById"
+            >
+              {{ userInfosOption.id }}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

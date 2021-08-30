@@ -1,0 +1,49 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <div *ngIf="projectImages">
+      <h2 data-cy="projectImagesDetailsHeading">
+        <span jhiTranslate="crowdFundingJHipsterApp.projectImages.detail.title">Project Images</span>
+      </h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="global.field.id">ID</span></dt>
+        <dd>
+          <span>{{ projectImages.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="crowdFundingJHipsterApp.projectImages.image">Image</span></dt>
+        <dd>
+          <div *ngIf="projectImages.image">
+            <a (click)="openFile(projectImages.image, projectImages.imageContentType)">
+              <img
+                [src]="'data:' + projectImages.imageContentType + ';base64,' + projectImages.image"
+                style="max-width: 100%"
+                alt="projectImages image"
+              />
+            </a>
+            {{ projectImages.imageContentType }}, {{ byteSize(projectImages.image) }}
+          </div>
+        </dd>
+        <dt><span jhiTranslate="crowdFundingJHipsterApp.projectImages.project">Project</span></dt>
+        <dd>
+          <div *ngIf="projectImages.project">
+            <a [routerLink]="['/project', projectImages.project?.id, 'view']">{{ projectImages.project?.id }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/project-images', projectImages.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

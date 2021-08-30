@@ -1,0 +1,50 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <div *ngIf="creditCard">
+      <h2 data-cy="creditCardDetailsHeading"><span jhiTranslate="crowdFundingJHipsterApp.creditCard.detail.title">Credit Card</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="global.field.id">ID</span></dt>
+        <dd>
+          <span>{{ creditCard.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="crowdFundingJHipsterApp.creditCard.number">Number</span></dt>
+        <dd>
+          <span>{{ creditCard.number }}</span>
+        </dd>
+        <dt><span jhiTranslate="crowdFundingJHipsterApp.creditCard.ownerName">Owner Name</span></dt>
+        <dd>
+          <span>{{ creditCard.ownerName }}</span>
+        </dd>
+        <dt><span jhiTranslate="crowdFundingJHipsterApp.creditCard.key">Key</span></dt>
+        <dd>
+          <span>{{ creditCard.key }}</span>
+        </dd>
+        <dt><span jhiTranslate="crowdFundingJHipsterApp.creditCard.expirationDate">Expiration Date</span></dt>
+        <dd>
+          <span>{{ creditCard.expirationDate | formatMediumDate }}</span>
+        </dd>
+        <dt><span jhiTranslate="crowdFundingJHipsterApp.creditCard.userInfos">User Infos</span></dt>
+        <dd>
+          <div *ngIf="creditCard.userInfos">
+            <a [routerLink]="['/user-infos', creditCard.userInfos?.id, 'view']">{{ creditCard.userInfos?.id }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/credit-card', creditCard.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

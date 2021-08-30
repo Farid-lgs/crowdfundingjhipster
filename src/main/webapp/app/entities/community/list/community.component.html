@@ -1,0 +1,139 @@
+<div>
+  <h2 id="page-heading" data-cy="CommunityHeading">
+    <span jhiTranslate="crowdFundingJHipsterApp.community.home.title">Communities</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info mr-2" (click)="loadPage()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span jhiTranslate="crowdFundingJHipsterApp.community.home.refreshListLabel">Refresh List</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-community"
+        [routerLink]="['/community/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span jhiTranslate="crowdFundingJHipsterApp.community.home.createLabel"> Create a new Community </span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="communities?.length === 0">
+    <span jhiTranslate="crowdFundingJHipsterApp.community.home.notFound">No communities found</span>
+  </div>
+
+  <div class="table-responsive" id="entities" *ngIf="communities && communities.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" [callback]="loadPage.bind(this)">
+          <th scope="col" jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="name">
+            <span jhiTranslate="crowdFundingJHipsterApp.community.name">Name</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="nameFr">
+            <span jhiTranslate="crowdFundingJHipsterApp.community.nameFr">Name Fr</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="createdAt">
+            <span jhiTranslate="crowdFundingJHipsterApp.community.createdAt">Created At</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="about">
+            <span jhiTranslate="crowdFundingJHipsterApp.community.about">About</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="coverImage">
+            <span jhiTranslate="crowdFundingJHipsterApp.community.coverImage">Cover Image</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="communityMembers.id">
+            <span jhiTranslate="crowdFundingJHipsterApp.community.communityMembers">Community Members</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="admin.id">
+            <span jhiTranslate="crowdFundingJHipsterApp.community.admin">Admin</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let community of communities; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/community', community.id, 'view']">{{ community.id }}</a>
+          </td>
+          <td>{{ community.name }}</td>
+          <td>{{ community.nameFr }}</td>
+          <td>{{ community.createdAt | formatMediumDatetime }}</td>
+          <td>{{ community.about }}</td>
+          <td>
+            <a *ngIf="community.coverImage" (click)="openFile(community.coverImage, community.coverImageContentType)">
+              <img
+                [src]="'data:' + community.coverImageContentType + ';base64,' + community.coverImage"
+                style="max-height: 30px"
+                alt="community image"
+              />
+            </a>
+            <span *ngIf="community.coverImage">{{ community.coverImageContentType }}, {{ byteSize(community.coverImage) }}</span>
+          </td>
+          <td>
+            <div *ngIf="community.communityMembers">
+              <a [routerLink]="['/community-members', community.communityMembers?.id, 'view']">{{ community.communityMembers?.id }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="community.admin">
+              <a [routerLink]="['/user-infos', community.admin?.id, 'view']">{{ community.admin?.id }}</a>
+            </div>
+          </td>
+          <td class="text-right">
+            <div class="btn-group">
+              <button
+                type="submit"
+                [routerLink]="['/community', community.id, 'view']"
+                class="btn btn-info btn-sm"
+                data-cy="entityDetailsButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+              </button>
+
+              <button
+                type="submit"
+                [routerLink]="['/community', community.id, 'edit']"
+                class="btn btn-primary btn-sm"
+                data-cy="entityEditButton"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+              </button>
+
+              <button type="submit" (click)="delete(community)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div *ngIf="communities && communities.length > 0">
+    <div class="row justify-content-center">
+      <jhi-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></jhi-item-count>
+    </div>
+
+    <div class="row justify-content-center">
+      <ngb-pagination
+        [collectionSize]="totalItems"
+        [(page)]="ngbPaginationPage"
+        [pageSize]="itemsPerPage"
+        [maxSize]="5"
+        [rotate]="true"
+        [boundaryLinks]="true"
+        (pageChange)="loadPage($event)"
+      ></ngb-pagination>
+    </div>
+  </div>
+</div>

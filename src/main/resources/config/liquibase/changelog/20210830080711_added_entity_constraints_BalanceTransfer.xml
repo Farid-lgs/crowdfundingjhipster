@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd">
+    <!--
+        Added the constraints for entity BalanceTransfer.
+    -->
+    <changeSet id="20210830080711-2" author="jhipster">
+
+        <addForeignKeyConstraint baseColumnNames="user_infos_id"
+                                 baseTableName="balance_transfer"
+                                 constraintName="fk_balance_transfer__user_infos_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="user_infos"/>
+
+        <addForeignKeyConstraint baseColumnNames="project_id"
+                                 baseTableName="balance_transfer"
+                                 constraintName="fk_balance_transfer__project_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="project"/>
+    </changeSet>
+</databaseChangeLog>

@@ -1,0 +1,204 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2
+        id="jhi-user-infos-heading"
+        data-cy="UserInfosCreateUpdateHeading"
+        jhiTranslate="crowdFundingJHipsterApp.userInfos.home.createOrEditLabel"
+      >
+        Create or edit a User Infos
+      </h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="form-group" [hidden]="editForm.get('id')!.value == null">
+          <label class="form-control-label" jhiTranslate="global.field.id" for="field_id">ID</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="crowdFundingJHipsterApp.userInfos.publicName" for="field_publicName"
+            >Public Name</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="publicName"
+            id="field_publicName"
+            data-cy="publicName"
+            formControlName="publicName"
+          />
+          <div *ngIf="editForm.get('publicName')!.invalid && (editForm.get('publicName')!.dirty || editForm.get('publicName')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('publicName')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="crowdFundingJHipsterApp.userInfos.birthDate" for="field_birthDate"
+            >Birth Date</label
+          >
+          <div class="input-group">
+            <input
+              id="field_birthDate"
+              data-cy="birthDate"
+              type="text"
+              class="form-control"
+              name="birthDate"
+              ngbDatepicker
+              #birthDateDp="ngbDatepicker"
+              formControlName="birthDate"
+            />
+            <span class="input-group-append">
+              <button type="button" class="btn btn-secondary" (click)="birthDateDp.toggle()">
+                <fa-icon icon="calendar-alt"></fa-icon>
+              </button>
+            </span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="crowdFundingJHipsterApp.userInfos.twitter" for="field_twitter">Twitter</label>
+          <input type="text" class="form-control" name="twitter" id="field_twitter" data-cy="twitter" formControlName="twitter" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="crowdFundingJHipsterApp.userInfos.facebook" for="field_facebook">Facebook</label>
+          <input type="text" class="form-control" name="facebook" id="field_facebook" data-cy="facebook" formControlName="facebook" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="crowdFundingJHipsterApp.userInfos.linkedIn" for="field_linkedIn">Linked In</label>
+          <input type="text" class="form-control" name="linkedIn" id="field_linkedIn" data-cy="linkedIn" formControlName="linkedIn" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="crowdFundingJHipsterApp.userInfos.description" for="field_description"
+            >Description</label
+          >
+          <textarea
+            class="form-control"
+            name="description"
+            id="field_description"
+            data-cy="description"
+            formControlName="description"
+          ></textarea>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="crowdFundingJHipsterApp.userInfos.coverImage" for="field_coverImage"
+            >Cover Image</label
+          >
+          <div>
+            <img
+              [src]="'data:' + editForm.get('coverImageContentType')!.value + ';base64,' + editForm.get('coverImage')!.value"
+              style="max-height: 100px"
+              *ngIf="editForm.get('coverImage')!.value"
+              alt="userInfos image"
+            />
+            <div *ngIf="editForm.get('coverImage')!.value" class="form-text text-danger clearfix">
+              <span class="pull-left"
+                >{{ editForm.get('coverImageContentType')!.value }}, {{ byteSize(editForm.get('coverImage')!.value) }}</span
+              >
+              <button
+                type="button"
+                (click)="clearInputImage('coverImage', 'coverImageContentType', 'file_coverImage')"
+                class="btn btn-secondary btn-xs pull-right"
+              >
+                <fa-icon icon="times"></fa-icon>
+              </button>
+            </div>
+            <input
+              type="file"
+              id="file_coverImage"
+              data-cy="coverImage"
+              (change)="setFileData($event, 'coverImage', true)"
+              accept="image/*"
+              jhiTranslate="entity.action.addimage"
+            />
+          </div>
+          <input
+            type="hidden"
+            class="form-control"
+            name="coverImage"
+            id="field_coverImage"
+            data-cy="coverImage"
+            formControlName="coverImage"
+          />
+          <input
+            type="hidden"
+            class="form-control"
+            name="coverImageContentType"
+            id="field_coverImageContentType"
+            formControlName="coverImageContentType"
+          />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="crowdFundingJHipsterApp.userInfos.commonId" for="field_commonId">Common Id</label>
+          <input type="text" class="form-control" name="commonId" id="field_commonId" data-cy="commonId" formControlName="commonId" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="crowdFundingJHipsterApp.userInfos.user" for="field_user">User</label>
+          <select class="form-control" id="field_user" data-cy="user" name="user" formControlName="user">
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="userOption.id === editForm.get('user')!.value?.id ? editForm.get('user')!.value : userOption"
+              *ngFor="let userOption of usersSharedCollection; trackBy: trackUserById"
+            >
+              {{ userOption.id }}
+            </option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="crowdFundingJHipsterApp.userInfos.communityMembers" for="field_communityMembers"
+            >Community Members</label
+          >
+          <select
+            class="form-control"
+            id="field_communityMembers"
+            data-cy="communityMembers"
+            name="communityMembers"
+            formControlName="communityMembers"
+          >
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="
+                communityMembersOption.id === editForm.get('communityMembers')!.value?.id
+                  ? editForm.get('communityMembers')!.value
+                  : communityMembersOption
+              "
+              *ngFor="let communityMembersOption of communityMembersSharedCollection; trackBy: trackCommunityMembersById"
+            >
+              {{ communityMembersOption.id }}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

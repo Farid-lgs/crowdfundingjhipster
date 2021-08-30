@@ -1,0 +1,294 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2
+        id="jhi-project-heading"
+        data-cy="ProjectCreateUpdateHeading"
+        jhiTranslate="crowdFundingJHipsterApp.project.home.createOrEditLabel"
+      >
+        Create or edit a Project
+      </h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="form-group" [hidden]="editForm.get('id')!.value == null">
+          <label class="form-control-label" jhiTranslate="global.field.id" for="field_id">ID</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="crowdFundingJHipsterApp.project.title" for="field_title">Title</label>
+          <input type="text" class="form-control" name="title" id="field_title" data-cy="title" formControlName="title" />
+          <div *ngIf="editForm.get('title')!.invalid && (editForm.get('title')!.dirty || editForm.get('title')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('title')?.errors?.required" jhiTranslate="entity.validation.required">
+              This field is required.
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="crowdFundingJHipsterApp.project.goal" for="field_goal">Goal</label>
+          <input type="number" class="form-control" name="goal" id="field_goal" data-cy="goal" formControlName="goal" />
+          <div *ngIf="editForm.get('goal')!.invalid && (editForm.get('goal')!.dirty || editForm.get('goal')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('goal')?.errors?.required" jhiTranslate="entity.validation.required">
+              This field is required.
+            </small>
+            <small class="form-text text-danger" [hidden]="!editForm.get('goal')?.errors?.number" jhiTranslate="entity.validation.number">
+              This field should be a number.
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="crowdFundingJHipsterApp.project.headline" for="field_headline">Headline</label>
+          <input type="text" class="form-control" name="headline" id="field_headline" data-cy="headline" formControlName="headline" />
+          <div *ngIf="editForm.get('headline')!.invalid && (editForm.get('headline')!.dirty || editForm.get('headline')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('headline')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="crowdFundingJHipsterApp.project.videoUrl" for="field_videoUrl">Video Url</label>
+          <input type="text" class="form-control" name="videoUrl" id="field_videoUrl" data-cy="videoUrl" formControlName="videoUrl" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="crowdFundingJHipsterApp.project.location" for="field_location">Location</label>
+          <input type="text" class="form-control" name="location" id="field_location" data-cy="location" formControlName="location" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="crowdFundingJHipsterApp.project.createdAt" for="field_createdAt"
+            >Created At</label
+          >
+          <div class="d-flex">
+            <input
+              id="field_createdAt"
+              data-cy="createdAt"
+              type="datetime-local"
+              class="form-control"
+              name="createdAt"
+              formControlName="createdAt"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="crowdFundingJHipsterApp.project.updatedAt" for="field_updatedAt"
+            >Updated At</label
+          >
+          <div class="d-flex">
+            <input
+              id="field_updatedAt"
+              data-cy="updatedAt"
+              type="datetime-local"
+              class="form-control"
+              name="updatedAt"
+              formControlName="updatedAt"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="crowdFundingJHipsterApp.project.description" for="field_description"
+            >Description</label
+          >
+          <textarea
+            class="form-control"
+            name="description"
+            id="field_description"
+            data-cy="description"
+            formControlName="description"
+          ></textarea>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="crowdFundingJHipsterApp.project.moreLinks" for="field_moreLinks"
+            >More Links</label
+          >
+          <input type="text" class="form-control" name="moreLinks" id="field_moreLinks" data-cy="moreLinks" formControlName="moreLinks" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="crowdFundingJHipsterApp.project.budgetDescription" for="field_budgetDescription"
+            >Budget Description</label
+          >
+          <textarea
+            class="form-control"
+            name="budgetDescription"
+            id="field_budgetDescription"
+            data-cy="budgetDescription"
+            formControlName="budgetDescription"
+          ></textarea>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="crowdFundingJHipsterApp.project.duration" for="field_duration">Duration</label>
+          <input type="number" class="form-control" name="duration" id="field_duration" data-cy="duration" formControlName="duration" />
+          <div *ngIf="editForm.get('duration')!.invalid && (editForm.get('duration')!.dirty || editForm.get('duration')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('duration')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+            <small
+              class="form-text text-danger"
+              [hidden]="!editForm.get('duration')?.errors?.number"
+              jhiTranslate="entity.validation.number"
+            >
+              This field should be a number.
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="crowdFundingJHipsterApp.project.adminNotes" for="field_adminNotes"
+            >Admin Notes</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="adminNotes"
+            id="field_adminNotes"
+            data-cy="adminNotes"
+            formControlName="adminNotes"
+          />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="crowdFundingJHipsterApp.project.coverImage" for="field_coverImage"
+            >Cover Image</label
+          >
+          <div>
+            <img
+              [src]="'data:' + editForm.get('coverImageContentType')!.value + ';base64,' + editForm.get('coverImage')!.value"
+              style="max-height: 100px"
+              *ngIf="editForm.get('coverImage')!.value"
+              alt="project image"
+            />
+            <div *ngIf="editForm.get('coverImage')!.value" class="form-text text-danger clearfix">
+              <span class="pull-left"
+                >{{ editForm.get('coverImageContentType')!.value }}, {{ byteSize(editForm.get('coverImage')!.value) }}</span
+              >
+              <button
+                type="button"
+                (click)="clearInputImage('coverImage', 'coverImageContentType', 'file_coverImage')"
+                class="btn btn-secondary btn-xs pull-right"
+              >
+                <fa-icon icon="times"></fa-icon>
+              </button>
+            </div>
+            <input
+              type="file"
+              id="file_coverImage"
+              data-cy="coverImage"
+              (change)="setFileData($event, 'coverImage', true)"
+              accept="image/*"
+              jhiTranslate="entity.action.addimage"
+            />
+          </div>
+          <input
+            type="hidden"
+            class="form-control"
+            name="coverImage"
+            id="field_coverImage"
+            data-cy="coverImage"
+            formControlName="coverImage"
+          />
+          <input
+            type="hidden"
+            class="form-control"
+            name="coverImageContentType"
+            id="field_coverImageContentType"
+            formControlName="coverImageContentType"
+          />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="crowdFundingJHipsterApp.project.status" for="field_status">Status</label>
+          <select class="form-control" name="status" formControlName="status" id="field_status" data-cy="status">
+            <option [ngValue]="null">{{ 'crowdFundingJHipsterApp.ProjectStatuts.null' | translate }}</option>
+            <option value="Pending">{{ 'crowdFundingJHipsterApp.ProjectStatuts.Pending' | translate }}</option>
+            <option value="Approved">{{ 'crowdFundingJHipsterApp.ProjectStatuts.Approved' | translate }}</option>
+            <option value="Rejected">{{ 'crowdFundingJHipsterApp.ProjectStatuts.Rejected' | translate }}</option>
+            <option value="Succeeded">{{ 'crowdFundingJHipsterApp.ProjectStatuts.Succeeded' | translate }}</option>
+            <option value="Failed">{{ 'crowdFundingJHipsterApp.ProjectStatuts.Failed' | translate }}</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="crowdFundingJHipsterApp.project.commonId" for="field_commonId">Common Id</label>
+          <input type="text" class="form-control" name="commonId" id="field_commonId" data-cy="commonId" formControlName="commonId" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="crowdFundingJHipsterApp.project.community" for="field_community">Community</label>
+          <select class="form-control" id="field_community" data-cy="community" name="community" formControlName="community">
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="communityOption.id === editForm.get('community')!.value?.id ? editForm.get('community')!.value : communityOption"
+              *ngFor="let communityOption of communitiesSharedCollection; trackBy: trackCommunityById"
+            >
+              {{ communityOption.id }}
+            </option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="crowdFundingJHipsterApp.project.userInfos" for="field_userInfos"
+            >User Infos</label
+          >
+          <select class="form-control" id="field_userInfos" data-cy="userInfos" name="userInfos" formControlName="userInfos">
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="userInfosOption.id === editForm.get('userInfos')!.value?.id ? editForm.get('userInfos')!.value : userInfosOption"
+              *ngFor="let userInfosOption of userInfosSharedCollection; trackBy: trackUserInfosById"
+            >
+              {{ userInfosOption.id }}
+            </option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="crowdFundingJHipsterApp.project.category" for="field_category">Category</label>
+          <select class="form-control" id="field_category" data-cy="category" name="category" formControlName="category">
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="categoryOption.id === editForm.get('category')!.value?.id ? editForm.get('category')!.value : categoryOption"
+              *ngFor="let categoryOption of categoriesSharedCollection; trackBy: trackCategoryById"
+            >
+              {{ categoryOption.id }}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

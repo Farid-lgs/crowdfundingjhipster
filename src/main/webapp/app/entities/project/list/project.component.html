@@ -1,0 +1,187 @@
+<div>
+  <h2 id="page-heading" data-cy="ProjectHeading">
+    <span jhiTranslate="crowdFundingJHipsterApp.project.home.title">Projects</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info mr-2" (click)="loadPage()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span jhiTranslate="crowdFundingJHipsterApp.project.home.refreshListLabel">Refresh List</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-project"
+        [routerLink]="['/project/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span jhiTranslate="crowdFundingJHipsterApp.project.home.createLabel"> Create a new Project </span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="projects?.length === 0">
+    <span jhiTranslate="crowdFundingJHipsterApp.project.home.notFound">No projects found</span>
+  </div>
+
+  <div class="table-responsive" id="entities" *ngIf="projects && projects.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" [callback]="loadPage.bind(this)">
+          <th scope="col" jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="title">
+            <span jhiTranslate="crowdFundingJHipsterApp.project.title">Title</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="goal">
+            <span jhiTranslate="crowdFundingJHipsterApp.project.goal">Goal</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="headline">
+            <span jhiTranslate="crowdFundingJHipsterApp.project.headline">Headline</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="videoUrl">
+            <span jhiTranslate="crowdFundingJHipsterApp.project.videoUrl">Video Url</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="location">
+            <span jhiTranslate="crowdFundingJHipsterApp.project.location">Location</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="createdAt">
+            <span jhiTranslate="crowdFundingJHipsterApp.project.createdAt">Created At</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="updatedAt">
+            <span jhiTranslate="crowdFundingJHipsterApp.project.updatedAt">Updated At</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="description">
+            <span jhiTranslate="crowdFundingJHipsterApp.project.description">Description</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="moreLinks">
+            <span jhiTranslate="crowdFundingJHipsterApp.project.moreLinks">More Links</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="budgetDescription">
+            <span jhiTranslate="crowdFundingJHipsterApp.project.budgetDescription">Budget Description</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="duration">
+            <span jhiTranslate="crowdFundingJHipsterApp.project.duration">Duration</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="adminNotes">
+            <span jhiTranslate="crowdFundingJHipsterApp.project.adminNotes">Admin Notes</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="coverImage">
+            <span jhiTranslate="crowdFundingJHipsterApp.project.coverImage">Cover Image</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="status">
+            <span jhiTranslate="crowdFundingJHipsterApp.project.status">Status</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="commonId">
+            <span jhiTranslate="crowdFundingJHipsterApp.project.commonId">Common Id</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="community.id">
+            <span jhiTranslate="crowdFundingJHipsterApp.project.community">Community</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="userInfos.id">
+            <span jhiTranslate="crowdFundingJHipsterApp.project.userInfos">User Infos</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="category.id">
+            <span jhiTranslate="crowdFundingJHipsterApp.project.category">Category</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let project of projects; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/project', project.id, 'view']">{{ project.id }}</a>
+          </td>
+          <td>{{ project.title }}</td>
+          <td>{{ project.goal }}</td>
+          <td>{{ project.headline }}</td>
+          <td>{{ project.videoUrl }}</td>
+          <td>{{ project.location }}</td>
+          <td>{{ project.createdAt | formatMediumDatetime }}</td>
+          <td>{{ project.updatedAt | formatMediumDatetime }}</td>
+          <td>{{ project.description }}</td>
+          <td>{{ project.moreLinks }}</td>
+          <td>{{ project.budgetDescription }}</td>
+          <td>{{ project.duration }}</td>
+          <td>{{ project.adminNotes }}</td>
+          <td>
+            <a *ngIf="project.coverImage" (click)="openFile(project.coverImage, project.coverImageContentType)">
+              <img
+                [src]="'data:' + project.coverImageContentType + ';base64,' + project.coverImage"
+                style="max-height: 30px"
+                alt="project image"
+              />
+            </a>
+            <span *ngIf="project.coverImage">{{ project.coverImageContentType }}, {{ byteSize(project.coverImage) }}</span>
+          </td>
+          <td jhiTranslate="{{ 'crowdFundingJHipsterApp.ProjectStatuts.' + project.status }}">{{ project.status }}</td>
+          <td>{{ project.commonId }}</td>
+          <td>
+            <div *ngIf="project.community">
+              <a [routerLink]="['/community', project.community?.id, 'view']">{{ project.community?.id }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="project.userInfos">
+              <a [routerLink]="['/user-infos', project.userInfos?.id, 'view']">{{ project.userInfos?.id }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="project.category">
+              <a [routerLink]="['/category', project.category?.id, 'view']">{{ project.category?.id }}</a>
+            </div>
+          </td>
+          <td class="text-right">
+            <div class="btn-group">
+              <button
+                type="submit"
+                [routerLink]="['/project', project.id, 'view']"
+                class="btn btn-info btn-sm"
+                data-cy="entityDetailsButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+              </button>
+
+              <button
+                type="submit"
+                [routerLink]="['/project', project.id, 'edit']"
+                class="btn btn-primary btn-sm"
+                data-cy="entityEditButton"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+              </button>
+
+              <button type="submit" (click)="delete(project)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div *ngIf="projects && projects.length > 0">
+    <div class="row justify-content-center">
+      <jhi-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></jhi-item-count>
+    </div>
+
+    <div class="row justify-content-center">
+      <ngb-pagination
+        [collectionSize]="totalItems"
+        [(page)]="ngbPaginationPage"
+        [pageSize]="itemsPerPage"
+        [maxSize]="5"
+        [rotate]="true"
+        [boundaryLinks]="true"
+        (pageChange)="loadPage($event)"
+      ></ngb-pagination>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,12 @@
+{
+  "crowdFundingJHipsterApp": {
+    "ProjectStatuts": {
+      "null": "",
+      "Pending": "Pending",
+      "Approved": "Approved",
+      "Rejected": "Rejected",
+      "Succeeded": "Succeeded",
+      "Failed": "Failed"
+    }
+  }
+}

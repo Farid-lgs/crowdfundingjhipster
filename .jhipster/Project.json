@@ -1,0 +1,140 @@
+{
+  "name": "Project",
+  "fields": [
+    {
+      "fieldName": "title",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "goal",
+      "fieldType": "Double",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "headline",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "videoUrl",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "location",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "createdAt",
+      "fieldType": "Instant"
+    },
+    {
+      "fieldName": "updatedAt",
+      "fieldType": "Instant"
+    },
+    {
+      "fieldName": "description",
+      "fieldType": "byte[]",
+      "fieldTypeBlobContent": "text"
+    },
+    {
+      "fieldName": "moreLinks",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "budgetDescription",
+      "fieldType": "byte[]",
+      "fieldTypeBlobContent": "text"
+    },
+    {
+      "fieldName": "duration",
+      "fieldType": "Integer",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "adminNotes",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "coverImage",
+      "fieldType": "byte[]",
+      "fieldTypeBlobContent": "image"
+    },
+    {
+      "fieldName": "status",
+      "fieldType": "ProjectStatuts",
+      "fieldValues": "Pending,Approved,Rejected,Succeeded,Failed"
+    },
+    {
+      "fieldName": "commonId",
+      "fieldType": "UUID"
+    }
+  ],
+  "relationships": [
+    {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "projectImages",
+      "otherEntityRelationshipName": "project",
+      "relationshipName": "projectImages"
+    },
+    {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "contribution",
+      "otherEntityRelationshipName": "project",
+      "relationshipName": "contributions"
+    },
+    {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "projectAccount",
+      "otherEntityRelationshipName": "project",
+      "relationshipName": "projectAccount"
+    },
+    {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "projectComment",
+      "otherEntityRelationshipName": "project",
+      "relationshipName": "projectPost"
+    },
+    {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "reward",
+      "otherEntityRelationshipName": "project",
+      "relationshipName": "reward"
+    },
+    {
+      "relationshipType": "one-to-one",
+      "otherEntityName": "balanceTransfer",
+      "otherEntityRelationshipName": "project",
+      "relationshipName": "balanceTransfer",
+      "ownerSide": false
+    },
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "community",
+      "otherEntityRelationshipName": "projects",
+      "relationshipName": "community"
+    },
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "userInfos",
+      "otherEntityRelationshipName": "project",
+      "relationshipName": "userInfos"
+    },
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "category",
+      "otherEntityRelationshipName": "project",
+      "relationshipName": "category"
+    }
+  ],
+  "entityTableName": "project",
+  "dto": "mapstruct",
+  "pagination": "pagination",
+  "service": "serviceClass",
+  "jpaMetamodelFiltering": false,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "applications": "*",
+  "changelogDate": "20210830080720"
+}

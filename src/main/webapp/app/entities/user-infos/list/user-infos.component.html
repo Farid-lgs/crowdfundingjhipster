@@ -1,0 +1,149 @@
+<div>
+  <h2 id="page-heading" data-cy="UserInfosHeading">
+    <span jhiTranslate="crowdFundingJHipsterApp.userInfos.home.title">User Infos</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info mr-2" (click)="loadPage()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span jhiTranslate="crowdFundingJHipsterApp.userInfos.home.refreshListLabel">Refresh List</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-user-infos"
+        [routerLink]="['/user-infos/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span jhiTranslate="crowdFundingJHipsterApp.userInfos.home.createLabel"> Create a new User Infos </span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="userInfos?.length === 0">
+    <span jhiTranslate="crowdFundingJHipsterApp.userInfos.home.notFound">No userInfos found</span>
+  </div>
+
+  <div class="table-responsive" id="entities" *ngIf="userInfos && userInfos.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" [callback]="loadPage.bind(this)">
+          <th scope="col" jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="publicName">
+            <span jhiTranslate="crowdFundingJHipsterApp.userInfos.publicName">Public Name</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="birthDate">
+            <span jhiTranslate="crowdFundingJHipsterApp.userInfos.birthDate">Birth Date</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="twitter">
+            <span jhiTranslate="crowdFundingJHipsterApp.userInfos.twitter">Twitter</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="facebook">
+            <span jhiTranslate="crowdFundingJHipsterApp.userInfos.facebook">Facebook</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="linkedIn">
+            <span jhiTranslate="crowdFundingJHipsterApp.userInfos.linkedIn">Linked In</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="description">
+            <span jhiTranslate="crowdFundingJHipsterApp.userInfos.description">Description</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="coverImage">
+            <span jhiTranslate="crowdFundingJHipsterApp.userInfos.coverImage">Cover Image</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="commonId">
+            <span jhiTranslate="crowdFundingJHipsterApp.userInfos.commonId">Common Id</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="user.id">
+            <span jhiTranslate="crowdFundingJHipsterApp.userInfos.user">User</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="communityMembers.id">
+            <span jhiTranslate="crowdFundingJHipsterApp.userInfos.communityMembers">Community Members</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let userInfos of userInfos; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/user-infos', userInfos.id, 'view']">{{ userInfos.id }}</a>
+          </td>
+          <td>{{ userInfos.publicName }}</td>
+          <td>{{ userInfos.birthDate | formatMediumDate }}</td>
+          <td>{{ userInfos.twitter }}</td>
+          <td>{{ userInfos.facebook }}</td>
+          <td>{{ userInfos.linkedIn }}</td>
+          <td>{{ userInfos.description }}</td>
+          <td>
+            <a *ngIf="userInfos.coverImage" (click)="openFile(userInfos.coverImage, userInfos.coverImageContentType)">
+              <img
+                [src]="'data:' + userInfos.coverImageContentType + ';base64,' + userInfos.coverImage"
+                style="max-height: 30px"
+                alt="userInfos image"
+              />
+            </a>
+            <span *ngIf="userInfos.coverImage">{{ userInfos.coverImageContentType }}, {{ byteSize(userInfos.coverImage) }}</span>
+          </td>
+          <td>{{ userInfos.commonId }}</td>
+          <td>
+            {{ userInfos.user?.id }}
+          </td>
+          <td>
+            <div *ngIf="userInfos.communityMembers">
+              <a [routerLink]="['/community-members', userInfos.communityMembers?.id, 'view']">{{ userInfos.communityMembers?.id }}</a>
+            </div>
+          </td>
+          <td class="text-right">
+            <div class="btn-group">
+              <button
+                type="submit"
+                [routerLink]="['/user-infos', userInfos.id, 'view']"
+                class="btn btn-info btn-sm"
+                data-cy="entityDetailsButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+              </button>
+
+              <button
+                type="submit"
+                [routerLink]="['/user-infos', userInfos.id, 'edit']"
+                class="btn btn-primary btn-sm"
+                data-cy="entityEditButton"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+              </button>
+
+              <button type="submit" (click)="delete(userInfos)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div *ngIf="userInfos && userInfos.length > 0">
+    <div class="row justify-content-center">
+      <jhi-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></jhi-item-count>
+    </div>
+
+    <div class="row justify-content-center">
+      <ngb-pagination
+        [collectionSize]="totalItems"
+        [(page)]="ngbPaginationPage"
+        [pageSize]="itemsPerPage"
+        [maxSize]="5"
+        [rotate]="true"
+        [boundaryLinks]="true"
+        (pageChange)="loadPage($event)"
+      ></ngb-pagination>
+    </div>
+  </div>
+</div>

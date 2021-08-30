@@ -1,0 +1,79 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <div *ngIf="userInfos">
+      <h2 data-cy="userInfosDetailsHeading"><span jhiTranslate="crowdFundingJHipsterApp.userInfos.detail.title">User Infos</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="global.field.id">ID</span></dt>
+        <dd>
+          <span>{{ userInfos.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="crowdFundingJHipsterApp.userInfos.publicName">Public Name</span></dt>
+        <dd>
+          <span>{{ userInfos.publicName }}</span>
+        </dd>
+        <dt><span jhiTranslate="crowdFundingJHipsterApp.userInfos.birthDate">Birth Date</span></dt>
+        <dd>
+          <span>{{ userInfos.birthDate | formatMediumDate }}</span>
+        </dd>
+        <dt><span jhiTranslate="crowdFundingJHipsterApp.userInfos.twitter">Twitter</span></dt>
+        <dd>
+          <span>{{ userInfos.twitter }}</span>
+        </dd>
+        <dt><span jhiTranslate="crowdFundingJHipsterApp.userInfos.facebook">Facebook</span></dt>
+        <dd>
+          <span>{{ userInfos.facebook }}</span>
+        </dd>
+        <dt><span jhiTranslate="crowdFundingJHipsterApp.userInfos.linkedIn">Linked In</span></dt>
+        <dd>
+          <span>{{ userInfos.linkedIn }}</span>
+        </dd>
+        <dt><span jhiTranslate="crowdFundingJHipsterApp.userInfos.description">Description</span></dt>
+        <dd>
+          <span>{{ userInfos.description }}</span>
+        </dd>
+        <dt><span jhiTranslate="crowdFundingJHipsterApp.userInfos.coverImage">Cover Image</span></dt>
+        <dd>
+          <div *ngIf="userInfos.coverImage">
+            <a (click)="openFile(userInfos.coverImage, userInfos.coverImageContentType)">
+              <img
+                [src]="'data:' + userInfos.coverImageContentType + ';base64,' + userInfos.coverImage"
+                style="max-width: 100%"
+                alt="userInfos image"
+              />
+            </a>
+            {{ userInfos.coverImageContentType }}, {{ byteSize(userInfos.coverImage) }}
+          </div>
+        </dd>
+        <dt><span jhiTranslate="crowdFundingJHipsterApp.userInfos.commonId">Common Id</span></dt>
+        <dd>
+          <span>{{ userInfos.commonId }}</span>
+        </dd>
+        <dt><span jhiTranslate="crowdFundingJHipsterApp.userInfos.user">User</span></dt>
+        <dd>
+          <span>{{ userInfos.user?.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="crowdFundingJHipsterApp.userInfos.communityMembers">Community Members</span></dt>
+        <dd>
+          <div *ngIf="userInfos.communityMembers">
+            <a [routerLink]="['/community-members', userInfos.communityMembers?.id, 'view']">{{ userInfos.communityMembers?.id }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/user-infos', userInfos.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

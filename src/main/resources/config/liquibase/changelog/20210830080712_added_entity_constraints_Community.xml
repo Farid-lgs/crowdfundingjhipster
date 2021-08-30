@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd">
+    <!--
+        Added the constraints for entity Community.
+    -->
+    <changeSet id="20210830080712-2" author="jhipster">
+
+        <addForeignKeyConstraint baseColumnNames="community_members_id"
+                                 baseTableName="community"
+                                 constraintName="fk_community__community_members_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="community_members"/>
+
+        <addForeignKeyConstraint baseColumnNames="admin_id"
+                                 baseTableName="community"
+                                 constraintName="fk_community__admin_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="user_infos"/>
+    </changeSet>
+</databaseChangeLog>

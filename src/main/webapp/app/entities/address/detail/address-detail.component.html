@@ -1,0 +1,60 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <div *ngIf="address">
+      <h2 data-cy="addressDetailsHeading"><span jhiTranslate="crowdFundingJHipsterApp.address.detail.title">Address</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="global.field.id">ID</span></dt>
+        <dd>
+          <span>{{ address.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="crowdFundingJHipsterApp.address.address">Address</span></dt>
+        <dd>
+          <span>{{ address.address }}</span>
+        </dd>
+        <dt><span jhiTranslate="crowdFundingJHipsterApp.address.city">City</span></dt>
+        <dd>
+          <span>{{ address.city }}</span>
+        </dd>
+        <dt><span jhiTranslate="crowdFundingJHipsterApp.address.state">State</span></dt>
+        <dd>
+          <span>{{ address.state }}</span>
+        </dd>
+        <dt><span jhiTranslate="crowdFundingJHipsterApp.address.zipCode">Zip Code</span></dt>
+        <dd>
+          <span>{{ address.zipCode }}</span>
+        </dd>
+        <dt><span jhiTranslate="crowdFundingJHipsterApp.address.phoneNumber">Phone Number</span></dt>
+        <dd>
+          <span>{{ address.phoneNumber }}</span>
+        </dd>
+        <dt><span jhiTranslate="crowdFundingJHipsterApp.address.userInfos">User Infos</span></dt>
+        <dd>
+          <div *ngIf="address.userInfos">
+            <a [routerLink]="['/user-infos', address.userInfos?.id, 'view']">{{ address.userInfos?.id }}</a>
+          </div>
+        </dd>
+        <dt><span jhiTranslate="crowdFundingJHipsterApp.address.country">Country</span></dt>
+        <dd>
+          <div *ngIf="address.country">
+            <a [routerLink]="['/country', address.country?.id, 'view']">{{ address.country?.id }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/address', address.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

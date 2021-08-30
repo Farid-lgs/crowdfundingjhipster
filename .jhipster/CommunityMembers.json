@@ -1,0 +1,22 @@
+{
+  "name": "CommunityMembers",
+  "fields": [],
+  "relationships": [
+    {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "userInfos",
+      "otherEntityRelationshipName": "communityMembers",
+      "relationshipName": "userInfos"
+    }
+  ],
+  "entityTableName": "community_members",
+  "dto": "mapstruct",
+  "pagination": "pagination",
+  "service": "serviceClass",
+  "jpaMetamodelFiltering": false,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "applications": "*",
+  "changelogDate": "20210830080713"
+}

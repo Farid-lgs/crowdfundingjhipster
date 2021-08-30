@@ -1,0 +1,74 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <div *ngIf="contribution">
+      <h2 data-cy="contributionDetailsHeading">
+        <span jhiTranslate="crowdFundingJHipsterApp.contribution.detail.title">Contribution</span>
+      </h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="global.field.id">ID</span></dt>
+        <dd>
+          <span>{{ contribution.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="crowdFundingJHipsterApp.contribution.amount">Amount</span></dt>
+        <dd>
+          <span>{{ contribution.amount }}</span>
+        </dd>
+        <dt><span jhiTranslate="crowdFundingJHipsterApp.contribution.payerName">Payer Name</span></dt>
+        <dd>
+          <span>{{ contribution.payerName }}</span>
+        </dd>
+        <dt><span jhiTranslate="crowdFundingJHipsterApp.contribution.createdAt">Created At</span></dt>
+        <dd>
+          <span>{{ contribution.createdAt | formatMediumDatetime }}</span>
+        </dd>
+        <dt><span jhiTranslate="crowdFundingJHipsterApp.contribution.updatedAt">Updated At</span></dt>
+        <dd>
+          <span>{{ contribution.updatedAt | formatMediumDatetime }}</span>
+        </dd>
+        <dt><span jhiTranslate="crowdFundingJHipsterApp.contribution.anonymous">Anonymous</span></dt>
+        <dd>
+          <span>{{ contribution.anonymous }}</span>
+        </dd>
+        <dt><span jhiTranslate="crowdFundingJHipsterApp.contribution.rewarded">Rewarded</span></dt>
+        <dd>
+          <span>{{ contribution.rewarded }}</span>
+        </dd>
+        <dt><span jhiTranslate="crowdFundingJHipsterApp.contribution.contributionNotifications">Contribution Notifications</span></dt>
+        <dd>
+          <div *ngIf="contribution.contributionNotifications">
+            <a [routerLink]="['/contribution-notifications', contribution.contributionNotifications?.id, 'view']">{{
+              contribution.contributionNotifications?.id
+            }}</a>
+          </div>
+        </dd>
+        <dt><span jhiTranslate="crowdFundingJHipsterApp.contribution.userInfos">User Infos</span></dt>
+        <dd>
+          <div *ngIf="contribution.userInfos">
+            <a [routerLink]="['/user-infos', contribution.userInfos?.id, 'view']">{{ contribution.userInfos?.id }}</a>
+          </div>
+        </dd>
+        <dt><span jhiTranslate="crowdFundingJHipsterApp.contribution.project">Project</span></dt>
+        <dd>
+          <div *ngIf="contribution.project">
+            <a [routerLink]="['/project', contribution.project?.id, 'view']">{{ contribution.project?.id }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/contribution', contribution.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

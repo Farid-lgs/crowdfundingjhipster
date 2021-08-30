@@ -1,0 +1,32 @@
+{
+  "name": "ContributionNotifications",
+  "fields": [
+    {
+      "fieldName": "content",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "sentAt",
+      "fieldType": "Instant"
+    }
+  ],
+  "relationships": [
+    {
+      "relationshipType": "one-to-one",
+      "otherEntityName": "contribution",
+      "otherEntityRelationshipName": "contributionNotifications",
+      "relationshipName": "contribution",
+      "ownerSide": false
+    }
+  ],
+  "entityTableName": "contribution_notifications",
+  "dto": "mapstruct",
+  "pagination": "pagination",
+  "service": "serviceClass",
+  "jpaMetamodelFiltering": false,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "applications": "*",
+  "changelogDate": "20210830080717"
+}
