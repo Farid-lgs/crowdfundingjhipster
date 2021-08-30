@@ -105,7 +105,7 @@ spring:
       hibernate.cache.hazelcast.instance_name: CrowdFundingJHipster
       hibernate.cache.hazelcast.use_lite_member: true
     hibernate:
-      ddl-auto: none
+      ddl-auto: update
       naming:
         physical-strategy: org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy
         implicit-strategy: org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy
