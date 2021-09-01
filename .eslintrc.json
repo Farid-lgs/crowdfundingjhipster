@@ -28,6 +28,8 @@
         "style": "kebab-case"
       }
     ],
+    "@angular-eslint/no-empty-lifecycle-method": "warn",
+    "@angular-eslint/no-host-metadata-property": "warn",
     "@angular-eslint/directive-selector": [
       "error",
       {
