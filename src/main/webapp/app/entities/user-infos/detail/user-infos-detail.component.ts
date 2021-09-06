@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute} from '@angular/router';
 
 import { IUserInfos } from '../user-infos.model';
 import { DataUtils } from 'app/core/util/data-util.service';
@@ -11,11 +11,13 @@ import { DataUtils } from 'app/core/util/data-util.service';
 export class UserInfosDetailComponent implements OnInit {
   userInfos: IUserInfos | null = null;
 
-  constructor(protected dataUtils: DataUtils, protected activatedRoute: ActivatedRoute) {}
+  constructor(protected dataUtils: DataUtils, protected activatedRoute: ActivatedRoute) {
+  }
 
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ userInfos }) => {
       this.userInfos = userInfos;
+      console.log(userInfos);
     });
   }
 

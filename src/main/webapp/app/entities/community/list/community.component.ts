@@ -109,7 +109,7 @@ export class CommunityComponent implements OnInit {
     this.totalItems = Number(headers.get('X-Total-Count'));
     this.page = page;
     if (navigate) {
-      this.router.navigate(['/community'], {
+      this.router.navigate(['/community/list'], {
         queryParams: {
           page: this.page,
           size: this.itemsPerPage,

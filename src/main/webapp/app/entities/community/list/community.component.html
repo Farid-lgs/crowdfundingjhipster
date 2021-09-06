@@ -12,7 +12,7 @@
         id="jh-create-entity"
         data-cy="entityCreateButton"
         class="btn btn-primary jh-create-entity create-community"
-        [routerLink]="['/community/new']"
+        [routerLink]="['../new']"
       >
         <fa-icon icon="plus"></fa-icon>
         <span jhiTranslate="crowdFundingJHipsterApp.community.home.createLabel"> Create a new Community </span>
@@ -35,9 +35,6 @@
           <th scope="col" jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <fa-icon icon="sort"></fa-icon></th>
           <th scope="col" jhiSortBy="name">
             <span jhiTranslate="crowdFundingJHipsterApp.community.name">Name</span> <fa-icon icon="sort"></fa-icon>
-          </th>
-          <th scope="col" jhiSortBy="nameFr">
-            <span jhiTranslate="crowdFundingJHipsterApp.community.nameFr">Name Fr</span> <fa-icon icon="sort"></fa-icon>
           </th>
           <th scope="col" jhiSortBy="createdAt">
             <span jhiTranslate="crowdFundingJHipsterApp.community.createdAt">Created At</span> <fa-icon icon="sort"></fa-icon>
@@ -63,7 +60,6 @@
             <a [routerLink]="['/community', community.id, 'view']">{{ community.id }}</a>
           </td>
           <td>{{ community.name }}</td>
-          <td>{{ community.nameFr }}</td>
           <td>{{ community.createdAt | formatMediumDatetime }}</td>
           <td>{{ community.about }}</td>
           <td>

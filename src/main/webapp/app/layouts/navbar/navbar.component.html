@@ -26,7 +26,78 @@
           </span>
         </a>
       </li>
+      <li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+        <a class="nav-link" routerLink="community/list" (click)="collapseNavbar()">
+          <span>
+<!--            <fa-icon icon="Communities"></fa-icon>-->
+<!--            <fa-icon icon="certificate"></fa-icon>-->
+<!--            <i class="fas fa-certificate"></i>-->
+<!--            <span jhiTranslate="global.menu.communities">Communities</span>-->
+            <span>Communities</span>
+          </span>
+        </a>
+      </li>
+      <li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+        <a class="nav-link" routerLink="project/list" (click)="collapseNavbar()">
+          <span>
+<!--            <fa-icon icon="Projects"></fa-icon>-->
+            <i class="fas fa-certificate"></i>
+<!--            <span jhiTranslate="global.menu.projects">Projects</span>-->
+            <span>Projects</span>
+          </span>
+        </a>
+      </li>
+      <li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+        <a class="nav-link" routerLink="profile" (click)="collapseNavbar()">
+          <span>
+<!--            <fa-icon icon="Projects"></fa-icon>-->
+            <i class="fas fa-certificate"></i>
+            <!--            <span jhiTranslate="global.menu.projects">Projects</span>-->
+            <span>test</span>
+          </span>
+        </a>
+      </li>
       <!-- jhipster-needle-add-element-to-menu - JHipster will add new menu items here -->
+      <li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+        <a class="nav-link" routerLink="admin/user-management" (click)="collapseNavbar()">
+          <span>
+<!--            <fa-icon icon="Projects"></fa-icon>-->
+<!--            <i class="fas fa-certificate"></i>-->
+            <!--            <span jhiTranslate="global.menu.projects">Projects</span>-->
+            <span>User Management</span>
+          </span>
+        </a>
+      </li>
+      <li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+        <a class="nav-link" routerLink="admin/category-management" (click)="collapseNavbar()">
+          <span>
+<!--            <fa-icon icon="Projects"></fa-icon>-->
+            <!--            <i class="fas fa-certificate"></i>-->
+            <!--            <span jhiTranslate="global.menu.projects">Projects</span>-->
+            <span>Category Management</span>
+          </span>
+        </a>
+      </li>
+      <li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+        <a class="nav-link" routerLink="admin/project-management" (click)="collapseNavbar()">
+          <span>
+<!--            <fa-icon icon="Projects"></fa-icon>-->
+            <!--            <i class="fas fa-certificate"></i>-->
+            <!--            <span jhiTranslate="global.menu.projects">Projects</span>-->
+            <span>Project Management</span>
+          </span>
+        </a>
+      </li>
+      <li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+        <a class="nav-link" routerLink="admin/community-management" (click)="collapseNavbar()">
+          <span>
+<!--            <fa-icon icon="Projects"></fa-icon>-->
+            <!--            <i class="fas fa-certificate"></i>-->
+            <!--            <span jhiTranslate="global.menu.projects">Projects</span>-->
+            <span>Community Management</span>
+          </span>
+        </a>
+      </li>
       <li
         *ngSwitchCase="true"
         ngbDropdown

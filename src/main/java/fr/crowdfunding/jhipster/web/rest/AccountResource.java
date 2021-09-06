@@ -1,7 +1,9 @@
 package fr.crowdfunding.jhipster.web.rest;
 
+import fr.crowdfunding.jhipster.config.Constants;
 import fr.crowdfunding.jhipster.domain.User;
 import fr.crowdfunding.jhipster.repository.UserRepository;
+import fr.crowdfunding.jhipster.security.AuthoritiesConstants;
 import fr.crowdfunding.jhipster.security.SecurityUtils;
 import fr.crowdfunding.jhipster.service.MailService;
 import fr.crowdfunding.jhipster.service.UserService;
@@ -14,11 +16,16 @@ import fr.crowdfunding.jhipster.web.rest.vm.ManagedUserVM;
 import java.util.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import javax.validation.constraints.Pattern;
+
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import tech.jhipster.web.util.ResponseUtil;
 
 /**
  * REST controller for managing the current user's account.
@@ -191,5 +198,18 @@ public class AccountResource {
             password.length() < ManagedUserVM.PASSWORD_MIN_LENGTH ||
             password.length() > ManagedUserVM.PASSWORD_MAX_LENGTH
         );
+    }
+
+    /**
+     * {@code GET /users/:login} : get the "login" user.
+     *
+     * @param login the login of the user to find.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the "login" user, or with status {@code 404 (Not Found)}.
+     */
+    @GetMapping("/users/{login}")
+    @PreAuthorize("hasAuthority(\"" + AuthoritiesConstants.USER + "\")")
+    public ResponseEntity<AdminUserDTO> getUser(@PathVariable @Pattern(regexp = Constants.LOGIN_REGEX) String login) {
+        log.debug("REST request to get User : {}", login);
+        return ResponseUtil.wrapOrNotFound(userService.getUserWithAuthoritiesByLogin(login).map(AdminUserDTO::new));
     }
 }

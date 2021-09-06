@@ -17,6 +17,14 @@ const projectRoute: Routes = [
     canActivate: [UserRouteAccessService],
   },
   {
+    path: 'list',
+    component: ProjectComponent,
+    data: {
+      defaultSort: 'id,asc',
+    },
+    canActivate: [UserRouteAccessService],
+  },
+  {
     path: ':id/view',
     component: ProjectDetailComponent,
     resolve: {

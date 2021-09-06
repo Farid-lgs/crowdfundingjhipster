@@ -32,38 +32,41 @@ import GlobalVariables from "./core/context/global-variables";
 import { SubmenuComponent } from './layouts/submenu/submenu.component';
 
 @NgModule({
-  imports: [
-    BrowserModule,
-    SharedModule,
-    HomeModule,
-    // jhipster-needle-angular-add-module JHipster will add new module here
-    EntityRoutingModule,
-    AppRoutingModule,
-    // Set this to true to enable service worker (PWA)
-    ServiceWorkerModule.register('ngsw-worker.js', { enabled: false }),
-    HttpClientModule,
-    NgxWebstorageModule.forRoot({ prefix: 'jhi', separator: '-', caseSensitive: true }),
-    TranslateModule.forRoot({
-      loader: {
-        provide: TranslateLoader,
-        useFactory: translatePartialLoader,
-        deps: [HttpClient],
-      },
-      missingTranslationHandler: {
-        provide: MissingTranslationHandler,
-        useFactory: missingTranslationHandler,
-      },
-    }),
-  ],
-  providers: [
-    Title,
-    { provide: LOCALE_ID, useValue: 'en' },
-    { provide: NgbDateAdapter, useClass: NgbDateDayjsAdapter },
-    httpInterceptorProviders,
-    GlobalVariables
-  ],
-  declarations: [MainComponent, NavbarComponent, ErrorComponent, PageRibbonComponent, ActiveMenuDirective, FooterComponent, SubmenuComponent],
-  bootstrap: [MainComponent],
+    imports: [
+        BrowserModule,
+        SharedModule,
+        HomeModule,
+        // jhipster-needle-angular-add-module JHipster will add new module here
+        EntityRoutingModule,
+        AppRoutingModule,
+        // Set this to true to enable service worker (PWA)
+        ServiceWorkerModule.register('ngsw-worker.js', {enabled: false}),
+        HttpClientModule,
+        NgxWebstorageModule.forRoot({prefix: 'jhi', separator: '-', caseSensitive: true}),
+        TranslateModule.forRoot({
+            loader: {
+                provide: TranslateLoader,
+                useFactory: translatePartialLoader,
+                deps: [HttpClient],
+            },
+            missingTranslationHandler: {
+                provide: MissingTranslationHandler,
+                useFactory: missingTranslationHandler,
+            },
+        }),
+    ],
+    providers: [
+        Title,
+        {provide: LOCALE_ID, useValue: 'en'},
+        {provide: NgbDateAdapter, useClass: NgbDateDayjsAdapter},
+        httpInterceptorProviders,
+        GlobalVariables
+    ],
+    declarations: [MainComponent, NavbarComponent, ErrorComponent, PageRibbonComponent, ActiveMenuDirective, FooterComponent, SubmenuComponent],
+    bootstrap: [MainComponent],
+    exports: [
+        SubmenuComponent
+    ]
 })
 export class AppModule {
   constructor(
