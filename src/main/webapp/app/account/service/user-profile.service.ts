@@ -10,7 +10,7 @@ import {ApplicationConfigService} from "../../core/config/application-config.ser
 export class UserProfileService {
   private resourceUrl = this.applicationConfigService.getEndpointFor('api/users');
 
-  constructor(private http: HttpClient, private applicationConfigService: ApplicationConfigService) { /* Do nothing*/}
+  constructor(private http: HttpClient, private applicationConfigService: ApplicationConfigService) { /* Do nothing */}
 
   find(login: string): Observable<IUserInfos> {
     return this.http.get<IUserInfos>(`${this.resourceUrl}/${login}`);
