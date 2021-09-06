@@ -8,9 +8,10 @@ import GlobalVariables from "../../core/context/global-variables";
 })
 export class UserProfileComponent implements OnInit {
 
-  btnDatas: Array<{ logo: string, txt: string }>;
+  btnDatas: Array<{ path: string, logo: string, txt: string }>;
 
   constructor(public globalVariables: GlobalVariables) {
+    globalVariables.personalSubbarBtns[0].path = `details/${localStorage.getItem('login') as string}/view`;
     this.btnDatas = globalVariables.personalSubbarBtns;
   }
 
