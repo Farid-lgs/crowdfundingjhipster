@@ -109,7 +109,7 @@ export class ProjectComponent implements OnInit {
     this.totalItems = Number(headers.get('X-Total-Count'));
     this.page = page;
     if (navigate) {
-      this.router.navigate(['/project'], {
+      this.router.navigate(['/project/list'], {
         queryParams: {
           page: this.page,
           size: this.itemsPerPage,
