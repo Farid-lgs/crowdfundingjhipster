@@ -20,6 +20,7 @@
     "project": "./tsconfig.json"
   },
   "rules": {
+    "no-console": "off",
     "@angular-eslint/component-selector": [
       "error",
       {
@@ -88,7 +89,7 @@
     "guard-for-in": "error",
     "no-bitwise": "error",
     "no-caller": "error",
-    "no-console": ["error", { "allow": ["warn", "error"] }],
+//    "no-console": ["error", { "allow": ["warn", "error"] }],
     "no-eval": "error",
     "no-labels": "error",
     "no-new": "error",
