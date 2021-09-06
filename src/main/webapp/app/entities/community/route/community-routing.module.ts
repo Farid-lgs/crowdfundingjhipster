@@ -17,6 +17,14 @@ const communityRoute: Routes = [
     canActivate: [UserRouteAccessService],
   },
   {
+    path: 'list',
+    component: CommunityComponent,
+    data: {
+      defaultSort: 'id,asc',
+    },
+    canActivate: [UserRouteAccessService],
+  },
+  {
     path: ':id/view',
     component: CommunityDetailComponent,
     resolve: {
