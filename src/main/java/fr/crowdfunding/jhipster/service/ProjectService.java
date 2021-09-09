@@ -2,8 +2,13 @@ package fr.crowdfunding.jhipster.service;
 
 import fr.crowdfunding.jhipster.domain.Project;
 import fr.crowdfunding.jhipster.repository.ProjectRepository;
+import fr.crowdfunding.jhipster.service.dto.CategoryCardDTO;
+import fr.crowdfunding.jhipster.service.dto.ProjectCardDTO;
 import fr.crowdfunding.jhipster.service.dto.ProjectDTO;
 import fr.crowdfunding.jhipster.service.mapper.ProjectMapper;
+
+import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
@@ -12,6 +17,7 @@ import java.util.stream.StreamSupport;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -76,9 +82,76 @@ public class ProjectService {
      * @return the list of entities.
      */
     @Transactional(readOnly = true)
-    public Page<ProjectDTO> findAll(Pageable pageable) {
+    public Page<ProjectCardDTO> findAll(Pageable pageable) {
+        List<ProjectCardDTO> project = choiceRequest(pageable);
+
         log.debug("Request to get all Projects");
-        return projectRepository.findAll(pageable).map(projectMapper::toDto);
+
+        Page<ProjectCardDTO> page = new PageImpl(project, pageable, project.get(0).getNbRows().longValue());
+
+        return page;
+    }
+
+    public List<ProjectCardDTO> choiceRequest(Pageable pageable) {
+
+        String sort = pageable.getSort().toString();
+        int pageNumber = pageable.getPageNumber();
+        int pageSize = pageable.getPageSize();
+        int startValue = pageNumber * pageSize;
+
+        String[] sortFirstSplit = (sort.split(","));
+        String[] sortFinalSplit = sortFirstSplit[0].split(": ");
+
+        List<Object[]> result;
+
+        if(sortFinalSplit[0].equals("title")) {
+            if(sortFinalSplit[1].equals("ASC")) {
+                result = projectRepository.findAllByTitleAsc(pageSize, startValue);
+            } else {
+                result = projectRepository.findAllByTitleDesc(pageSize, startValue);
+            }
+        } else if(sortFinalSplit[0].equals("goal")) {
+            if(sortFinalSplit[1].equals("ASC")) {
+                result = projectRepository.findAllByGoalAsc(pageSize, startValue);
+            } else {
+                result = projectRepository.findAllByGoalDesc(pageSize, startValue);
+            }
+        } else if(sortFinalSplit[0].equals("category.id")) {
+            if(sortFinalSplit[1].equals("ASC")) {
+                result = projectRepository.findAllByCategoryIdAsc(pageSize, startValue);
+            } else {
+                result = projectRepository.findAllByCategoryIdDesc(pageSize, startValue);
+            }
+        } else {
+            result = projectRepository.find(pageSize, startValue);
+        }
+
+        return convertListObjectInProjectCardDTO(result);
+    }
+
+    public List<ProjectCardDTO> convertListObjectInProjectCardDTO(List<Object[]> result) {
+        List<ProjectCardDTO> project = new ArrayList<>();
+
+        for (Object[] res : result) {
+            ProjectCardDTO p = new ProjectCardDTO();
+            CategoryCardDTO c = new CategoryCardDTO();
+
+            p.setParticipants((BigInteger) res[0]);
+            p.setAmount((Double) res[1]);
+            p.setTitle((String) res[2]);
+            p.setId((BigInteger) res[3]);
+            p.setGoal((Double) res[4]);
+            p.setHeadline((String) res[5]);
+            p.setDuration((Integer)res[6]);
+            p.setNbRows((BigInteger)res[9]);
+
+            c.setId((BigInteger) res[7]);
+            c.setName((String) res[8]);
+            p.setCategory(c);
+            project.add(p);
+        }
+
+        return project;
     }
 
     /**
