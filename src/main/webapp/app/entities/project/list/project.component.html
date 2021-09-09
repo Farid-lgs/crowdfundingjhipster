@@ -28,227 +28,78 @@
     <span jhiTranslate="crowdFundingJHipsterApp.project.home.notFound">No projects found</span>
   </div>
 
-  <div class="table-responsive" id="entities" *ngIf="projects && projects.length > 0">
-    <table class="table table-striped" aria-describedby="page-heading">
-      <thead>
-        <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" [callback]="loadPage.bind(this)">
-<!--          <th scope="col" jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <fa-icon icon="sort"></fa-icon></th>-->
-          <th scope="col" jhiSortBy="title">
-            <span jhiTranslate="crowdFundingJHipsterApp.project.title">Title</span> <fa-icon icon="sort"></fa-icon>
-          </th>
-          <th scope="col" jhiSortBy="goal">
-            <span jhiTranslate="crowdFundingJHipsterApp.project.goal">Goal</span> <fa-icon icon="sort"></fa-icon>
-          </th>
-<!--          <th scope="col" jhiSortBy="headline">-->
-<!--            <span jhiTranslate="crowdFundingJHipsterApp.project.headline">Headline</span> <fa-icon icon="sort"></fa-icon>-->
-<!--          </th>-->
-<!--          <th scope="col" jhiSortBy="videoUrl">-->
-<!--            <span jhiTranslate="crowdFundingJHipsterApp.project.videoUrl">Video Url</span> <fa-icon icon="sort"></fa-icon>-->
-<!--          </th>-->
-          <th scope="col" jhiSortBy="location">
-            <span jhiTranslate="crowdFundingJHipsterApp.project.location">Location</span> <fa-icon icon="sort"></fa-icon>
-          </th>
-<!--          <th scope="col" jhiSortBy="createdAt">-->
-<!--            <span jhiTranslate="crowdFundingJHipsterApp.project.createdAt">Created At</span> <fa-icon icon="sort"></fa-icon>-->
-<!--          </th>-->
-<!--          <th scope="col" jhiSortBy="updatedAt">-->
-<!--            <span jhiTranslate="crowdFundingJHipsterApp.project.updatedAt">Updated At</span> <fa-icon icon="sort"></fa-icon>-->
-<!--          </th>-->
-          <th scope="col" jhiSortBy="description">
-            <span jhiTranslate="crowdFundingJHipsterApp.project.description">Description</span> <fa-icon icon="sort"></fa-icon>
-          </th>
-<!--          <th scope="col" jhiSortBy="moreLinks">-->
-<!--            <span jhiTranslate="crowdFundingJHipsterApp.project.moreLinks">More Links</span> <fa-icon icon="sort"></fa-icon>-->
-<!--          </th>-->
-<!--          <th scope="col" jhiSortBy="budgetDescription">-->
-<!--            <span jhiTranslate="crowdFundingJHipsterApp.project.budgetDescription">Budget Description</span> <fa-icon icon="sort"></fa-icon>-->
-<!--          </th>-->
-<!--          <th scope="col" jhiSortBy="duration">-->
-<!--            <span jhiTranslate="crowdFundingJHipsterApp.project.duration">Duration</span> <fa-icon icon="sort"></fa-icon>-->
-<!--          </th>-->
-<!--          <th scope="col" jhiSortBy="adminNotes">-->
-<!--            <span jhiTranslate="crowdFundingJHipsterApp.project.adminNotes">Admin Notes</span> <fa-icon icon="sort"></fa-icon>-->
-<!--          </th>-->
-<!--          <th scope="col" jhiSortBy="coverImage">-->
-<!--            <span jhiTranslate="crowdFundingJHipsterApp.project.coverImage">Cover Image</span> <fa-icon icon="sort"></fa-icon>-->
-<!--          </th>-->
-          <th scope="col" jhiSortBy="status">
-            <span jhiTranslate="crowdFundingJHipsterApp.project.status">Status</span> <fa-icon icon="sort"></fa-icon>
-          </th>
-<!--          <th scope="col" jhiSortBy="commonId">-->
-<!--            <span jhiTranslate="crowdFundingJHipsterApp.project.commonId">Common Id</span> <fa-icon icon="sort"></fa-icon>-->
-<!--          </th>-->
-<!--          <th scope="col" jhiSortBy="community.id">-->
-<!--            <span jhiTranslate="crowdFundingJHipsterApp.project.community">Community</span> <fa-icon icon="sort"></fa-icon>-->
-<!--          </th>-->
-<!--          <th scope="col" jhiSortBy="userInfos.id">-->
-<!--            <span jhiTranslate="crowdFundingJHipsterApp.project.userInfos">User Infos</span> <fa-icon icon="sort"></fa-icon>-->
-<!--          </th>-->
-          <th scope="col" jhiSortBy="category.id">
-            <span jhiTranslate="crowdFundingJHipsterApp.project.category">Category</span> <fa-icon icon="sort"></fa-icon>
-          </th>
-          <th scope="col"></th>
-        </tr>
-      </thead>
-      <tbody>
+  <div id="entities" *ngIf="projects && projects.length > 0">
+    <div class="row mb-3 mr-2 justify-content-end" jhiSort [(predicate)]="predicate" [(ascending)]="ascending" [callback]="loadPage.bind(this)">
+      <div class="mr-3" scope="col" jhiSortBy="category.id">
+        <span jhiTranslate="crowdFundingJHipsterApp.project.category">Category</span> <fa-icon icon="sort"></fa-icon>
+      </div>
+      <div class="mr-3" scope="col" jhiSortBy="title">
+        <span jhiTranslate="crowdFundingJHipsterApp.project.title">Title</span> <fa-icon icon="sort"></fa-icon>
+      </div>
+      <div class="mr-3" scope="col" jhiSortBy="goal">
+        <span jhiTranslate="crowdFundingJHipsterApp.project.goal">Goal</span> <fa-icon icon="sort"></fa-icon>
+      </div>
 
-      <!--  </div>-->
-  <div class="col-lg-4 col-md-4 col-xs-12 desc shadow-lg" *ngFor="let project of projects ; trackBy: trackId">
-    <a class="b-link-fade b-animate-go" [routerLink]="['/project', project.id, 'view']">
-      <img *ngIf="project.coverImage" width="360" height="230" [src]="'data:' + project.coverImageContentType + ';base64,' + project.coverImage" alt="project image" />
-      <img *ngIf="!project.coverImage" width="360" height="230" src="../../../content/images/projectLogo.png" alt="project image" />
-    </a>
-    <div class="desc1">
-      <p>{{ project.title }}</p>
-      <p class="lead">{{ project.headline }}</p>
-<!--      <table class="table table-hover text-center">-->
-<!--        <tbody>-->
-        <tr>
-          <td>
-            <p *ngIf="project.amount">{{ project.amount}} / {{project.goal}}</p>
-            <p *ngIf="!project.amount">0 / {{project.goal}}</p>
-          </td>
-          <td >
-            <p *ngIf="project.participants">{{ project.participants}} participants</p>
-            <p *ngIf="!project.participants">0 participants</p>
-          </td>
-        </tr>
-        <button
-          type="submit"
-          [routerLink]="['/project', project.id, 'view']"
-          class="btn btn-info btn-sm"
-          data-cy="entityDetailsButton"
-        >
-          <fa-icon icon="eye"></fa-icon>
-          <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
-        </button>
-        <button *jhiHasAnyAuthority="'ROLE_ADMIN'" type="submit" (click)="delete(project)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
-          <fa-icon icon="times"></fa-icon>
-          <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
-        </button>
-<!--        </tbody>-->
-<!--      </table>-->
-
-      <div class="hr-d"></div>
-      <p class="time row">
-        <span class="col-5"><i class="fa fa-tag"></i> {{ project.category?.name }}</span>
-        <span class="col-5 col-offset-2"><i class="fa fa-calendar"></i> Time left : {{(project.duration? calcHours(project.duration) : '0 hours')}}</span>
-      </p>
     </div>
-  </div>
+    <div class="row justify-content-center">
+      <div class="mr-3 ml-3 mb-4 col-lg-3 col-md-3 col-xs-12 desc shadow-lg" *ngFor="let project of projects ; trackBy: trackId">
+        <a class="b-link-fade b-animate-go" [routerLink]="['/project', project.id, 'view']">
+          <img *ngIf="project.coverImage" width="360" height="230" [src]="'data:' + project.coverImageContentType + ';base64,' + project.coverImage" alt="project image" />
+          <img *ngIf="!project.coverImage" width="360" height="230" src="../../../content/images/projectLogo.png" alt="project image" />
+        </a>
+        <div class="desc1">
+          <p>{{ project.title }}</p>
+          <p class="lead">{{ project.headline }}</p>
+          <div class="row">
+            <div class="col-6">
+              <p *ngIf="project.amount">{{ project.amount}} / {{project.goal}}</p>
+              <p *ngIf="!project.amount">0 / {{project.goal}}</p>
+            </div>
+            <div class="col-6">
+              <p *ngIf="project.participants">{{ project.participants}} participants</p>
+              <p *ngIf="!project.participants">0 participants</p>
+            </div>
+          </div>
+          <button
+            type="submit"
+            [routerLink]="['/project', project.id, 'view']"
+            class="btn btn-info btn-sm"
+            data-cy="entityDetailsButton"
+          >
+            <fa-icon icon="eye"></fa-icon>
+            <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+          </button>
+          <button *jhiHasAnyAuthority="'ROLE_ADMIN'" type="submit" (click)="delete(project)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+            <fa-icon icon="times"></fa-icon>
+            <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+          </button>
 
-      <div *ngIf="projects && projects.length > 0">
-
-      <div class="row justify-content-center">
-          <jhi-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></jhi-item-count>
-        </div>
-
-        <div class="row justify-content-center">
-          <ngb-pagination
-            [collectionSize]="totalItems"
-            [(page)]="ngbPaginationPage"
-            [pageSize]="itemsPerPage"
-            [maxSize]="5"
-            [rotate]="true"
-            [boundaryLinks]="true"
-            (pageChange)="loadPage($event)"
-          ></ngb-pagination>
+          <div class="hr-d"></div>
+          <p class="time row">
+            <span class="col-5"><i class="fa fa-tag"></i> {{ project.category?.name }}</span>
+            <span class="col-5 col-offset-2"><i class="fa fa-calendar"></i> Time left : {{(project.duration? calcHours(project.duration) : '0 hours')}}</span>
+          </p>
         </div>
       </div>
-      </tbody>
-<!--      <tbody>-->
-<!--        <tr *ngFor="let project of projects; trackBy: trackId" data-cy="entityTable">-->
-<!--          <div class="card">-->
-<!--            <img class="card-img-top" alt="" src="{{project.coverImage}}" />-->
+    </div>
 
-<!--            <div class="card-body">-->
-<!--              <div class="card-title">{{project.title}}</div>-->
-<!--              <div class="card-text">{{project.description}}</div>-->
-<!--              <div>-->
-<!--              <div class="card-text">{{project.goal}} Euro Goal</div>-->
-<!--            </div>-->
-<!--              <div class="card-text">{{project.category}}</div>-->
-<!--              <div class="card-text">{{project.location}}</div>-->
-<!--              <div class="card-text">{{project.status}}</div>-->
-<!--            </div>-->
+    <div *ngIf="projects && projects.length > 0">
 
-<!--            <div>-->
+      <div class="row justify-content-center">
+        <jhi-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></jhi-item-count>
+      </div>
 
-<!--            </div>-->
-<!--          </div>-->
-<!--          <td>-->
-<!--            <a [routerLink]="['/project', project.id, 'view']">{{ project.id }}</a>-->
-<!--          </td>-->
-<!--          <td>{{ project.title }}</td>-->
-<!--          <td>{{ project.goal }}</td>-->
-<!--          <td>{{ project.headline }}</td>-->
-<!--          <td>{{ project.videoUrl }}</td>-->
-<!--          <td>{{ project.location }}</td>-->
-<!--          <td>{{ project.createdAt | formatMediumDatetime }}</td>-->
-<!--          <td>{{ project.updatedAt | formatMediumDatetime }}</td>-->
-<!--          <td>{{ project.description }}</td>-->
-<!--          <td>{{ project.moreLinks }}</td>-->
-<!--          <td>{{ project.budgetDescription }}</td>-->
-<!--          <td>{{ project.duration }}</td>-->
-<!--          <td>{{ project.adminNotes }}</td>-->
-<!--          <td>-->
-<!--            <a *ngIf="project.coverImage" (click)="openFile(project.coverImage, project.coverImageContentType)">-->
-<!--              <img-->
-<!--                [src]="'data:' + project.coverImageContentType + ';base64,' + project.coverImage"-->
-<!--                style="max-height: 30px"-->
-<!--                alt="project image"-->
-<!--              />-->
-<!--            </a>-->
-<!--            <span *ngIf="project.coverImage">{{ project.coverImageContentType }}, {{ byteSize(project.coverImage) }}</span>-->
-<!--          </td>-->
-<!--          <td jhiTranslate="{{ 'crowdFundingJHipsterApp.ProjectStatuts.' + project.status }}">{{ project.status }}</td>-->
-<!--          <td>{{ project.commonId }}</td>-->
-<!--          <td>-->
-<!--            <div *ngIf="project.community">-->
-<!--              <a [routerLink]="['/community', project.community?.id, 'view']">{{ project.community?.id }}</a>-->
-<!--            </div>-->
-<!--          </td>-->
-<!--          <td>-->
-<!--            <div *ngIf="project.userInfos">-->
-<!--              <a [routerLink]="['/user-infos', project.userInfos?.id, 'view']">{{ project.userInfos?.id }}</a>-->
-<!--            </div>-->
-<!--          </td>-->
-<!--          <td>-->
-<!--            <div *ngIf="project.category">-->
-<!--              <a [routerLink]="['/category', project.category?.id, 'view']">{{ project.category?.id }}</a>-->
-<!--            </div>-->
-<!--          </td>-->
-
-<!--          <td class="text-right">-->
-<!--            <div class="btn-group">-->
-<!--              <button-->
-<!--                type="submit"-->
-<!--                [routerLink]="['/project', project.id, 'view']"-->
-<!--                class="btn btn-info btn-sm"-->
-<!--                data-cy="entityDetailsButton"-->
-<!--              >-->
-<!--                <fa-icon icon="eye"></fa-icon>-->
-<!--                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>-->
-<!--              </button>-->
-
-<!--              <button-->
-<!--                type="submit"-->
-<!--                [routerLink]="['/project', project.id, 'edit']"-->
-<!--                class="btn btn-primary btn-sm"-->
-<!--                data-cy="entityEditButton"-->
-<!--              >-->
-<!--                <fa-icon icon="pencil-alt"></fa-icon>-->
-<!--                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>-->
-<!--              </button>-->
-
-<!--              <button type="submit" (click)="delete(project)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">-->
-<!--                <fa-icon icon="times"></fa-icon>-->
-<!--                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>-->
-<!--              </button>-->
-<!--            </div>-->
-<!--          </td>-->
-<!--        </tr>-->
-<!--      </tbody>-->
-    </table>
+      <div class="row justify-content-center">
+        <ngb-pagination
+          [collectionSize]="totalItems"
+          [(page)]="ngbPaginationPage"
+          [pageSize]="itemsPerPage"
+          [maxSize]="5"
+          [rotate]="true"
+          [boundaryLinks]="true"
+          (pageChange)="loadPage($event)"
+        ></ngb-pagination>
+      </div>
+    </div>
   </div>
 </div>
