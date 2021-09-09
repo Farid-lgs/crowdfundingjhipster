@@ -1,20 +1,19 @@
 package fr.crowdfunding.jhipster.service.dto;
 
 import fr.crowdfunding.jhipster.domain.enumeration.ProjectStatuts;
+
+import javax.persistence.Lob;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.math.BigInteger;
 import java.time.Instant;
+import java.util.Arrays;
 import java.util.Objects;
 import java.util.UUID;
-import javax.persistence.Lob;
-import javax.validation.constraints.*;
 
-/**
- * A DTO for the {@link fr.crowdfunding.jhipster.domain.Project} entity.
- */
-public class ProjectDTO implements Serializable {
+public class ProjectCardDTO implements Serializable {
 
-    private Long id;
+    private BigInteger id;
 
     @NotNull
     private String title;
@@ -52,19 +51,23 @@ public class ProjectDTO implements Serializable {
     private String coverImageContentType;
     private ProjectStatuts status;
 
+    private BigInteger participants;
+    private Double amount;
+    private BigInteger nbRows;
+
     private UUID commonId;
 
     private CommunityDTO community;
 
     private UserInfosDTO userInfos;
 
-    private CategoryDTO category;
+    private CategoryCardDTO category;
 
-    public Long getId() {
+    public BigInteger getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(BigInteger id) {
         this.id = id;
     }
 
@@ -188,6 +191,30 @@ public class ProjectDTO implements Serializable {
         this.status = status;
     }
 
+    public BigInteger getParticipants() {
+        return participants;
+    }
+
+    public void setParticipants(BigInteger participants) {
+        this.participants = participants;
+    }
+
+    public Double getAmount() {
+        return amount;
+    }
+
+    public void setAmount(Double amount) {
+        this.amount = amount;
+    }
+
+    public BigInteger getNbRows() {
+        return nbRows;
+    }
+
+    public void setNbRows(BigInteger nbRows) {
+        this.nbRows = nbRows;
+    }
+
     public UUID getCommonId() {
         return commonId;
     }
@@ -212,58 +239,54 @@ public class ProjectDTO implements Serializable {
         this.userInfos = userInfos;
     }
 
-    public CategoryDTO getCategory() {
+    public CategoryCardDTO getCategory() {
         return category;
     }
 
-    public void setCategory(CategoryDTO category) {
+    public void setCategory(CategoryCardDTO category) {
         this.category = category;
     }
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (!(o instanceof ProjectDTO)) {
-            return false;
-        }
-
-        ProjectDTO projectDTO = (ProjectDTO) o;
-        if (this.id == null) {
-            return false;
-        }
-        return Objects.equals(this.id, projectDTO.id);
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ProjectCardDTO that = (ProjectCardDTO) o;
+        return Objects.equals(id, that.id) && Objects.equals(title, that.title) && Objects.equals(goal, that.goal) && Objects.equals(headline, that.headline) && Objects.equals(videoUrl, that.videoUrl) && Objects.equals(location, that.location) && Objects.equals(createdAt, that.createdAt) && Objects.equals(updatedAt, that.updatedAt) && Objects.equals(description, that.description) && Objects.equals(moreLinks, that.moreLinks) && Objects.equals(budgetDescription, that.budgetDescription) && Objects.equals(duration, that.duration) && Objects.equals(adminNotes, that.adminNotes) && Arrays.equals(coverImage, that.coverImage) && Objects.equals(coverImageContentType, that.coverImageContentType) && status == that.status && Objects.equals(participants, that.participants) && Objects.equals(amount, that.amount) && Objects.equals(commonId, that.commonId) && Objects.equals(community, that.community) && Objects.equals(userInfos, that.userInfos) && Objects.equals(category, that.category);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(this.id);
+        int result = Objects.hash(id, title, goal, headline, videoUrl, location, createdAt, updatedAt, description, moreLinks, budgetDescription, duration, adminNotes, coverImageContentType, status, participants, amount, commonId, community, userInfos, category);
+        result = 31 * result + Arrays.hashCode(coverImage);
+        return result;
     }
 
-    // prettier-ignore
     @Override
     public String toString() {
-        return "ProjectDTO{" +
-            "id=" + getId() +
-            ", title='" + getTitle() + "'" +
-            ", goal=" + getGoal() +
-            ", headline='" + getHeadline() + "'" +
-            ", videoUrl='" + getVideoUrl() + "'" +
-            ", location='" + getLocation() + "'" +
-            ", createdAt='" + getCreatedAt() + "'" +
-            ", updatedAt='" + getUpdatedAt() + "'" +
-            ", description='" + getDescription() + "'" +
-            ", moreLinks='" + getMoreLinks() + "'" +
-            ", budgetDescription='" + getBudgetDescription() + "'" +
-            ", duration=" + getDuration() +
-            ", adminNotes='" + getAdminNotes() + "'" +
-            ", coverImage='" + getCoverImage() + "'" +
-            ", status='" + getStatus() + "'" +
-            ", commonId='" + getCommonId() + "'" +
-            ", community=" + getCommunity() +
-            ", userInfos=" + getUserInfos() +
-            ", category=" + getCategory() +
-            "}";
+        return "ProjectCardDTO{" +
+            "id=" + id +
+            ", title='" + title + '\'' +
+            ", goal=" + goal +
+            ", headline='" + headline + '\'' +
+            ", videoUrl='" + videoUrl + '\'' +
+            ", location='" + location + '\'' +
+            ", createdAt=" + createdAt +
+            ", updatedAt=" + updatedAt +
+            ", description='" + description + '\'' +
+            ", moreLinks='" + moreLinks + '\'' +
+            ", budgetDescription='" + budgetDescription + '\'' +
+            ", duration=" + duration +
+            ", adminNotes='" + adminNotes + '\'' +
+            ", coverImage=" + Arrays.toString(coverImage) +
+            ", coverImageContentType='" + coverImageContentType + '\'' +
+            ", status=" + status +
+            ", participants=" + participants +
+            ", amount=" + amount +
+            ", commonId=" + commonId +
+            ", community=" + community +
+            ", userInfos=" + userInfos +
+            ", category=" + category +
+            '}';
     }
 }
