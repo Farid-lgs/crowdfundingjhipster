@@ -2,14 +2,21 @@ package fr.crowdfunding.jhipster.service;
 
 import fr.crowdfunding.jhipster.config.Constants;
 import fr.crowdfunding.jhipster.domain.Authority;
+import fr.crowdfunding.jhipster.domain.CommunityMembers;
 import fr.crowdfunding.jhipster.domain.User;
+import fr.crowdfunding.jhipster.domain.UserInfos;
 import fr.crowdfunding.jhipster.repository.AuthorityRepository;
+import fr.crowdfunding.jhipster.repository.UserInfosRepository;
 import fr.crowdfunding.jhipster.repository.UserRepository;
 import fr.crowdfunding.jhipster.security.AuthoritiesConstants;
 import fr.crowdfunding.jhipster.security.SecurityUtils;
 import fr.crowdfunding.jhipster.service.dto.AdminUserDTO;
 import fr.crowdfunding.jhipster.service.dto.UserDTO;
+
+import java.math.BigInteger;
 import java.time.Instant;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -41,16 +48,20 @@ public class UserService {
 
     private final CacheManager cacheManager;
 
+    private final UserInfosRepository userInfosRepository;
+
     public UserService(
         UserRepository userRepository,
         PasswordEncoder passwordEncoder,
         AuthorityRepository authorityRepository,
-        CacheManager cacheManager
+        CacheManager cacheManager,
+        UserInfosRepository userInfosRepository
     ) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.authorityRepository = authorityRepository;
         this.cacheManager = cacheManager;
+        this.userInfosRepository = userInfosRepository;
     }
 
     public Optional<User> activateRegistration(String key) {
@@ -302,6 +313,44 @@ public class UserService {
     @Transactional(readOnly = true)
     public Optional<User> getUserWithAuthoritiesByLogin(String login) {
         return userRepository.findOneWithAuthoritiesByLogin(login);
+    }
+
+    @Transactional(readOnly = true)
+    public Optional<UserInfos> getUserWithAuthoritiesByLogin2(String login) {
+
+        Optional<User> user = userRepository.findOneWithAuthoritiesByLogin(login);
+        List<Object[]> userO = userInfosRepository.find(login);
+
+        UserInfos userInfos = convertObjectIntoUserInfos(userO.get(0));
+
+        userInfos.setUser(user.get());
+
+        return Optional.of(userInfos);
+    }
+
+    public UserInfos convertObjectIntoUserInfos(Object[] user) {
+        UserInfos userInfos = new UserInfos();
+        CommunityMembers communityMembers = new CommunityMembers();
+        BigInteger id = (BigInteger) user[0];
+        Date date = (Date) user[2];
+        LocalDate localDate = Instant.ofEpochMilli(date.getTime())
+            .atZone(ZoneId.systemDefault())
+            .toLocalDate();
+
+        userInfos.setId(id.longValue());
+        userInfos.setPublicName((String) user[1]);
+        userInfos.setBirthDate(localDate);
+        userInfos.setFacebook((String) user[3]);
+        userInfos.setTwitter((String) user[4]);
+        userInfos.setLinkedIn((String) user[5]);
+        userInfos.setDescription((String) user[6]);
+        userInfos.setCoverImage((byte[]) user[7]);
+        userInfos.setCoverImageContentType((String) user[8]);
+
+        communityMembers.setId((Long) user[9]);
+        userInfos.setCommunityMembers(communityMembers);
+
+        return userInfos;
     }
 
     @Transactional(readOnly = true)
