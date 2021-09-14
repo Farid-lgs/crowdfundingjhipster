@@ -12,7 +12,7 @@ import { ICommunityMembers } from 'app/entities/community-members/community-memb
 export interface IUserInfos {
   id?: number;
   publicName?: string;
-  birthDate?: dayjs.Dayjs | null;
+  birthDate?: dayjs.Dayjs;
   twitter?: string | null;
   facebook?: string | null;
   linkedIn?: string | null;
@@ -20,7 +20,7 @@ export interface IUserInfos {
   coverImageContentType?: string | null;
   coverImage?: string | null;
   commonId?: string | null;
-  user?: IUser | null;
+  user?: IUser;
   contributions?: IContribution[] | null;
   projects?: IProject[] | null;
   projectPosts?: IProjectComment[] | null;
@@ -35,7 +35,7 @@ export class UserInfos implements IUserInfos {
   constructor(
     public id?: number,
     public publicName?: string,
-    public birthDate?: dayjs.Dayjs | null,
+    public birthDate?: dayjs.Dayjs,
     public twitter?: string | null,
     public facebook?: string | null,
     public linkedIn?: string | null,
@@ -43,7 +43,7 @@ export class UserInfos implements IUserInfos {
     public coverImageContentType?: string | null,
     public coverImage?: string | null,
     public commonId?: string | null,
-    public user?: IUser | null,
+    public user?: IUser,
     public contributions?: IContribution[] | null,
     public projects?: IProject[] | null,
     public projectPosts?: IProjectComment[] | null,

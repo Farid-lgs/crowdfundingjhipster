@@ -8,7 +8,6 @@ import { Authority } from 'app/config/authority.constants';
 
 import { UserRouteAccessService } from 'app/core/auth/user-route-access.service';
 import {UserProfileComponent} from "./account/user-profile/user-profile.component";
-import {PasswordComponent} from "./account/password/password.component";
 import {CreditCardComponent} from "./entities/credit-card/list/credit-card.component";
 import {AddressComponent} from "./entities/address/list/address.component";
 import {CommunityComponent} from "./entities/community/list/community.component";
@@ -44,8 +43,6 @@ const LAYOUT_ROUTES = [navbarRoute, ...errorRoute];
         },
         {
           path: 'profile',
-          // loadChildren: () => import('./account/user-profile/user-profile.module').then(m => m.UserProfileModule),
-          // loadChildren: () => import('./account/user-profile/user-profile.route').then(m => m.UserProFileRoute),
           component: UserProfileComponent,
           children: [
             {path: 'details/:login/view', component: UserManagementDetailComponent,
@@ -53,8 +50,6 @@ const LAYOUT_ROUTES = [navbarRoute, ...errorRoute];
                 user: UserResolve,
               },
             },
-            // {path: 'authentication', component: AuthenticationComponent},
-            {path: 'password', component: PasswordComponent},
             {path: 'creditCard', component: CreditCardUpdateComponent},
             {path: 'address', component: AddressUpdateComponent},
             {path: 'project', component: ProjectComponent},
