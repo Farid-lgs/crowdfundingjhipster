@@ -1,10 +1,7 @@
 package fr.crowdfunding.jhipster.service;
 
 import fr.crowdfunding.jhipster.config.Constants;
-import fr.crowdfunding.jhipster.domain.Authority;
-import fr.crowdfunding.jhipster.domain.CommunityMembers;
-import fr.crowdfunding.jhipster.domain.User;
-import fr.crowdfunding.jhipster.domain.UserInfos;
+import fr.crowdfunding.jhipster.domain.*;
 import fr.crowdfunding.jhipster.repository.AuthorityRepository;
 import fr.crowdfunding.jhipster.repository.UserInfosRepository;
 import fr.crowdfunding.jhipster.repository.UserRepository;
@@ -319,9 +316,9 @@ public class UserService {
     public Optional<UserInfos> getUserWithAuthoritiesByLogin2(String login) {
 
         Optional<User> user = userRepository.findOneWithAuthoritiesByLogin(login);
-        List<Object[]> userO = userInfosRepository.find(login);
+        List<Object[]> userI = userInfosRepository.find(login);
 
-        UserInfos userInfos = convertObjectIntoUserInfos(userO.get(0));
+        UserInfos userInfos = convertObjectIntoUserInfos(userI.get(0));
 
         userInfos.setUser(user.get());
 
@@ -331,13 +328,14 @@ public class UserService {
     public UserInfos convertObjectIntoUserInfos(Object[] user) {
         UserInfos userInfos = new UserInfos();
         CommunityMembers communityMembers = new CommunityMembers();
-        BigInteger id = (BigInteger) user[0];
+        BigInteger userInfosId = (BigInteger) user[0];
+        BigInteger communityMembersId = (BigInteger) user[9];
         Date date = (Date) user[2];
         LocalDate localDate = Instant.ofEpochMilli(date.getTime())
             .atZone(ZoneId.systemDefault())
             .toLocalDate();
 
-        userInfos.setId(id.longValue());
+        userInfos.setId(userInfosId.longValue());
         userInfos.setPublicName((String) user[1]);
         userInfos.setBirthDate(localDate);
         userInfos.setFacebook((String) user[3]);
@@ -347,10 +345,41 @@ public class UserService {
         userInfos.setCoverImage((byte[]) user[7]);
         userInfos.setCoverImageContentType((String) user[8]);
 
-        communityMembers.setId((Long) user[9]);
+        if (communityMembersId == null) {
+            communityMembers.setId((Long) user[9]);
+        } else {
+            communityMembers.setId(communityMembersId.longValue());
+        }
+
         userInfos.setCommunityMembers(communityMembers);
 
+        Address address = convertObjectIntoAddress(user);
+
+        userInfos.setAddress(address);
+
         return userInfos;
+    }
+
+    public Address convertObjectIntoAddress(Object[] user) {
+        // Address value start user[10]
+        Address address = new Address();
+        BigInteger countryId = (BigInteger) user[14];
+        Country country = new Country();
+
+        address.setAddress((String) user[10]);
+        address.setCity((String) user[11]);
+        address.setState((String) user[12]);
+        address.setZipCode((String) user[13]);
+
+        if(countryId == null) {
+            country.setId((Long) user[14]);
+        } else {
+            country.setId(countryId.longValue());
+        }
+
+        address.setCountry(country);
+
+        return address;
     }
 
     @Transactional(readOnly = true)

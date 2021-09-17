@@ -111,9 +111,10 @@ public class UserInfos implements Serializable {
 
     public UserInfos() {
     }
-//    public UserInfos(UserInfos userInfos) {
-//
-//    }
+
+    public UserInfos(Long id) {
+        this.id = id;
+    }
 
     public UserInfos(UserInfos userInfos) {
         this.id = userInfos.getId();
