@@ -32,6 +32,7 @@ export interface IUserInfos {
 }
 
 export class UserInfos implements IUserInfos {
+
   constructor(
     public id?: number,
     public publicName?: string,

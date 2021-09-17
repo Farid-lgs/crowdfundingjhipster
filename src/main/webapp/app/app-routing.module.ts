@@ -22,6 +22,7 @@ import {AddressUpdateComponent} from "./entities/address/update/address-update.c
 import {UserManagementDetailComponent} from "./admin/user-management/detail/user-management-detail.component";
 import {UserManagementResolve} from "./admin/user-management/user-management.route";
 import {UserResolve} from "./account/user-resolve";
+import {AddressRoutingResolveService} from "./entities/address/route/address-routing-resolve.service";
 
 const LAYOUT_ROUTES = [navbarRoute, ...errorRoute];
 
@@ -51,7 +52,18 @@ const LAYOUT_ROUTES = [navbarRoute, ...errorRoute];
               },
             },
             {path: 'creditCard', component: CreditCardUpdateComponent},
-            {path: 'address', component: AddressUpdateComponent},
+            {path: 'address/:userId/new', component: AddressUpdateComponent,
+              resolve: {
+                address: AddressRoutingResolveService,
+              },
+              canActivate: [UserRouteAccessService],
+            },
+            {path: 'address/:id/edit', component: AddressUpdateComponent,
+              resolve: {
+                address: AddressRoutingResolveService,
+              },
+              canActivate: [UserRouteAccessService],
+            },
             {path: 'project', component: ProjectComponent},
             {path: 'community', component: CommunityUpdateComponent},
             // {path: 'communities/subscription', component: Category},

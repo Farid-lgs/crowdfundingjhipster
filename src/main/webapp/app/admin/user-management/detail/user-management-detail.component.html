@@ -7,15 +7,18 @@
 
       <div class="row-md jh-entity-details">
         <div>
-          <p ><span class="font-weight-bold">Birthdate</span> : {{user?.birthDate}}</p>
-          <p *ngIf="user.twitter"><span class="font-weight-bold">Twitter</span> : {{user.twitter}}</p>
-          <p *ngIf="!user.twitter"><span class="font-weight-bold">Twitter</span> : -</p>
+          <p ><span class="font-weight-bold">Birthdate :</span> {{user?.birthDate}}</p>
+          <p *ngIf="user.twitter"><span class="font-weight-bold">Twitter :</span> {{user.twitter}}</p>
+          <p *ngIf="!user.twitter"><span class="font-weight-bold">Twitter :</span> -</p>
 
-          <p *ngIf="user.facebook"><span class="font-weight-bold">Facebook</span> : {{user.facebook}}</p>
-          <p *ngIf="!user.facebook"><span class="font-weight-bold">Facebook</span> : -</p>
+          <p *ngIf="user.facebook"><span class="font-weight-bold">Facebook :</span> {{user.facebook}}</p>
+          <p *ngIf="!user.facebook"><span class="font-weight-bold">Facebook :</span> -</p>
 
-          <p *ngIf="user.linkedIn"><span class="font-weight-bold">LinkedIn</span> : {{user.linkedIn}}</p>
-          <p *ngIf="!user.linkedIn"><span class="font-weight-bold">LinkedIn</span> : -</p>
+          <p *ngIf="user.linkedIn"><span class="font-weight-bold">LinkedIn :</span> {{user.linkedIn}}</p>
+          <p *ngIf="!user.linkedIn"><span class="font-weight-bold">LinkedIn :</span> -</p>
+
+          <p *ngIf="user.address?.address"><span class="font-weight-bold">Address :</span> {{user.address?.address}}, {{user.address?.zipCode}} {{user.address?.city}}, {{user.address?.state}} <a routerLink="../../../address/{{user.id}}/edit" class="btn btn-info">Edit address</a></p>
+          <p *ngIf="!user.address?.address"><span class="font-weight-bold">Address :</span> No address <a routerLink="../../../address/{{user.id}}/new" class="btn btn-info">Add address</a></p>
         </div>
       </div>
 
