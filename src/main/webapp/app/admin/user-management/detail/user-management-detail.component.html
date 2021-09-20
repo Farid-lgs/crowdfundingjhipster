@@ -19,6 +19,9 @@
 
           <p *ngIf="user.address?.address"><span class="font-weight-bold">Address :</span> {{user.address?.address}}, {{user.address?.zipCode}} {{user.address?.city}}, {{user.address?.state}} <a routerLink="../../../address/{{user.id}}/edit" class="btn btn-info">Edit address</a></p>
           <p *ngIf="!user.address?.address"><span class="font-weight-bold">Address :</span> No address <a routerLink="../../../address/{{user.id}}/new" class="btn btn-info">Add address</a></p>
+
+          <p *ngIf="user.creditCard?.number"><span class="font-weight-bold">Credit Card :</span> Number : {{user.creditCard?.number}}, owner: {{user.creditCard?.ownerName}}, key : {{user.creditCard?.key}}, expiration : {{user.creditCard?.expirationDate}}<a routerLink="../../../creditCard/{{user.id}}/edit" class="btn btn-info">Edit credit card</a></p>
+          <p *ngIf="!user.creditCard?.number"><span class="font-weight-bold">Credit Card :</span> No credit card <a routerLink="../../../creditCard/{{user.id}}/new" class="btn btn-info">Add credit card</a></p>
         </div>
       </div>
 

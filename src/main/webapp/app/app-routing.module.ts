@@ -23,6 +23,7 @@ import {UserManagementDetailComponent} from "./admin/user-management/detail/user
 import {UserManagementResolve} from "./admin/user-management/user-management.route";
 import {UserResolve} from "./account/user-resolve";
 import {AddressRoutingResolveService} from "./entities/address/route/address-routing-resolve.service";
+import {CreditCardRoutingResolveService} from "./entities/credit-card/route/credit-card-routing-resolve.service";
 
 const LAYOUT_ROUTES = [navbarRoute, ...errorRoute];
 
@@ -51,7 +52,17 @@ const LAYOUT_ROUTES = [navbarRoute, ...errorRoute];
                 user: UserResolve,
               },
             },
-            {path: 'creditCard', component: CreditCardUpdateComponent},
+            {path: 'creditCard',
+              canActivate: [UserRouteAccessService],
+              children: [
+                {path : ':userId/new', component: CreditCardUpdateComponent,},
+                {path : ':id/edit', component: CreditCardUpdateComponent,
+                  resolve: {
+                    creditCard: CreditCardRoutingResolveService,
+                  },
+                }
+              ]
+            },
             {path: 'address/:userId/new', component: AddressUpdateComponent,
               resolve: {
                 address: AddressRoutingResolveService,
