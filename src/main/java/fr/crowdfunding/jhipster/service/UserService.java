@@ -357,11 +357,14 @@ public class UserService {
 
         userInfos.setAddress(address);
 
+        CreditCard creditCard = convertObjectIntoCreditCard(user);
+        userInfos.setCreditCard(creditCard);
+
         return userInfos;
     }
 
     public Address convertObjectIntoAddress(Object[] user) {
-        // Address value start user[10]
+        // Address valuew start user[10]
         Address address = new Address();
         BigInteger countryId = (BigInteger) user[14];
         Country country = new Country();
@@ -380,6 +383,26 @@ public class UserService {
         address.setCountry(country);
 
         return address;
+    }
+
+    private CreditCard convertObjectIntoCreditCard(Object[] user) {
+        // CreditCard values start user[15]
+        CreditCard creditCard = new CreditCard();
+        Integer number = (Integer) user[15];
+        String ownerName = (String) user[16];
+        Integer key = (Integer) user[17];
+        Date date = (Date) user[18];
+
+        LocalDate expirationDate = Instant.ofEpochMilli(date.getTime())
+            .atZone(ZoneId.systemDefault())
+            .toLocalDate();
+
+        creditCard.setNumber(number);
+        creditCard.setOwnerName(ownerName);
+        creditCard.setKey(key);
+        creditCard.setExpirationDate(expirationDate);
+
+        return creditCard;
     }
 
     @Transactional(readOnly = true)
