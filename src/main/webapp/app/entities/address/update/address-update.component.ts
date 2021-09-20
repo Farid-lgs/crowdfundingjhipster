@@ -47,11 +47,6 @@ export class AddressUpdateComponent implements OnInit {
     const userId = this.activatedRoute.snapshot.paramMap.get('userId');
     const id = this.activatedRoute.snapshot.paramMap.get('id');
 
-    if(userId != null) {
-      this.userId = Number(userId);
-
-      this.IUserInfos = new UserInfos(this.userId);
-    }
     if(id != null) {
       this.userId = Number(id);
     }
@@ -60,9 +55,11 @@ export class AddressUpdateComponent implements OnInit {
       if(userId != null) {
         this.userId = Number(userId);
 
+        this.IUserInfos = new UserInfos(this.userId);
+
         address.userInfos = this.IUserInfos;
       }
-      console.log(address);
+
       this.updateForm(address);
 
       this.loadRelationshipsOptions();
