@@ -8,10 +8,7 @@ import fr.crowdfunding.jhipster.service.dto.ProjectDTO;
 import fr.crowdfunding.jhipster.service.mapper.ProjectMapper;
 
 import java.math.BigInteger;
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 import org.slf4j.Logger;
@@ -92,7 +89,17 @@ public class ProjectService {
         return page;
     }
 
-    public List<ProjectCardDTO> choiceRequest(Pageable pageable) {
+    @Transactional(readOnly = true)
+    public Page<ProjectCardDTO> findAllByUserId(Pageable pageable, Long id) {
+
+        List<ProjectCardDTO> project = choiceRequest(pageable, id);
+
+        Page<ProjectCardDTO> page = new PageImpl(project, pageable, project.get(0).getNbRows().longValue());
+
+        return page;
+    }
+
+    public List<ProjectCardDTO> choiceRequest(Pageable pageable, Long... id) {
 
         String sort = pageable.getSort().toString();
         int pageNumber = pageable.getPageNumber();
@@ -102,28 +109,50 @@ public class ProjectService {
         String[] sortFirstSplit = (sort.split(","));
         String[] sortFinalSplit = sortFirstSplit[0].split(": ");
 
-        List<Object[]> result;
+        List<Object[]> result = new ArrayList<>();
 
         if(sortFinalSplit[0].equals("title")) {
-            if(sortFinalSplit[1].equals("ASC")) {
+
+            if(sortFinalSplit[1].equals("ASC") && id.length < 1) {
                 result = projectRepository.findAllByTitleAsc(pageSize, startValue);
-            } else {
+            } else if(sortFinalSplit[1].equals("DESC") && id.length < 1){
                 result = projectRepository.findAllByTitleDesc(pageSize, startValue);
+            } else if(sortFinalSplit[1].equals("ASC")){
+                result = projectRepository.findAllByUserIdAndTitleAsc(pageSize, startValue, id[0]);
+            } else if(sortFinalSplit[1].equals("DESC")){
+                result = projectRepository.findAllByUserIdAndTitleDesc(pageSize, startValue, id[0]);
             }
+
         } else if(sortFinalSplit[0].equals("goal")) {
-            if(sortFinalSplit[1].equals("ASC")) {
+
+            if(sortFinalSplit[1].equals("ASC") && id.length < 1) {
                 result = projectRepository.findAllByGoalAsc(pageSize, startValue);
-            } else {
+            } else if(sortFinalSplit[1].equals("DESC") && id.length < 1){
                 result = projectRepository.findAllByGoalDesc(pageSize, startValue);
+            } else if(sortFinalSplit[1].equals("ASC")) {
+                result = projectRepository.findAllByUserIdAndGoalAsc(pageSize, startValue, id[0]);
+            } else if(sortFinalSplit[1].equals("DESC")){
+                result = projectRepository.findAllByUserIdAndGoalDesc(pageSize, startValue, id[0]);
             }
+
         } else if(sortFinalSplit[0].equals("category.id")) {
-            if(sortFinalSplit[1].equals("ASC")) {
+
+            if(sortFinalSplit[1].equals("ASC") && id.length < 1) {
                 result = projectRepository.findAllByCategoryIdAsc(pageSize, startValue);
-            } else {
+            } else if(sortFinalSplit[1].equals("DESC") && id.length < 1){
                 result = projectRepository.findAllByCategoryIdDesc(pageSize, startValue);
+            } else if(sortFinalSplit[1].equals("ASC")) {
+                result = projectRepository.findAllByUserIdAndCategoryIdAsc(pageSize, startValue, id[0]);
+            } else if(sortFinalSplit[1].equals("DESC")){
+                result = projectRepository.findAllByUserIdAndCategoryIdDesc(pageSize, startValue, id[0]);
             }
+
         } else {
-            result = projectRepository.find(pageSize, startValue);
+            if(id.length >= 1) {
+                result = projectRepository.findAllByUserIdAndTitleAsc(pageSize, startValue, id[0]);
+            } else {
+                result = projectRepository.find(pageSize, startValue);
+            }
         }
 
         return convertListObjectInProjectCardDTO(result);
