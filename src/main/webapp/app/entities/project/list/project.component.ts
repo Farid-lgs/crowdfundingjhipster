@@ -23,7 +23,8 @@ export class ProjectComponent implements OnInit {
   page?: number;
   predicate!: string;
   ascending!: boolean;
-  ngbPaginationPage = 1;
+  ngbPaginationPage = 1
+  id: number | null = null;
 
   constructor(
     protected projectService: ProjectService,
@@ -36,14 +37,14 @@ export class ProjectComponent implements OnInit {
   loadPage(page?: number, dontNavigate?: boolean): void {
     this.isLoading = true;
     const pageToLoad: number = page ?? this.page ?? 1;
+    this.id = Number(this.activatedRoute.snapshot.paramMap.get('id'));
 
-    this.projectService
-      .query({
+    if(this.id) {
+      this.projectService.findByUserId(this.id, {
         page: pageToLoad - 1,
         size: this.itemsPerPage,
         sort: this.sort(),
-      })
-      .subscribe(
+      }).subscribe(
         (res: HttpResponse<IProject[]>) => {
           this.isLoading = false;
           this.onSuccess(res.body, res.headers, pageToLoad, !dontNavigate);
@@ -53,6 +54,24 @@ export class ProjectComponent implements OnInit {
           this.onError();
         }
       );
+    } else {
+      this.projectService
+        .query({
+          page: pageToLoad - 1,
+          size: this.itemsPerPage,
+          sort: this.sort(),
+        })
+        .subscribe(
+          (res: HttpResponse<IProject[]>) => {
+            this.isLoading = false;
+            this.onSuccess(res.body, res.headers, pageToLoad, !dontNavigate);
+          },
+          () => {
+            this.isLoading = false;
+            this.onError();
+          }
+        );
+    }
   }
 
   ngOnInit(): void {
@@ -102,6 +121,7 @@ export class ProjectComponent implements OnInit {
   }
 
   protected handleNavigation(): void {
+
     combineLatest([this.activatedRoute.data, this.activatedRoute.queryParamMap]).subscribe(([data, params]) => {
       const page = params.get('page');
       const pageNumber = page !== null ? +page : 1;
@@ -119,7 +139,7 @@ export class ProjectComponent implements OnInit {
   protected onSuccess(data: IProject[] | null, headers: HttpHeaders, page: number, navigate: boolean): void {
     this.totalItems = Number(headers.get('X-Total-Count'));
     this.page = page;
-    if (navigate) {
+    if (navigate && this.id == null) {
       this.router.navigate(['/project/list'], {
         queryParams: {
           page: this.page,

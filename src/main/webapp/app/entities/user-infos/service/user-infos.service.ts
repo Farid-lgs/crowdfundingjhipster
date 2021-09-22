@@ -46,6 +46,12 @@ export class UserInfosService {
       .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
   }
 
+  findUserByLogin(login: string): Observable<EntityResponseType> {
+    return this.http
+      .get<IUserInfos>(`${this.resourceUrl}/name/${login}`, { observe: 'response' })
+      .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
+  }
+
   query(req?: any): Observable<EntityArrayResponseType> {
     const options = createRequestOption(req);
     return this.http

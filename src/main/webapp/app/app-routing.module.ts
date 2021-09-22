@@ -46,6 +46,9 @@ const LAYOUT_ROUTES = [navbarRoute, ...errorRoute];
         {
           path: 'profile',
           component: UserProfileComponent,
+          resolve: {
+            user: UserManagementResolve,
+          },
           children: [
             {path: 'details/:login/view', component: UserManagementDetailComponent,
               resolve: {
@@ -75,7 +78,12 @@ const LAYOUT_ROUTES = [navbarRoute, ...errorRoute];
               },
               canActivate: [UserRouteAccessService],
             },
-            {path: 'project', component: ProjectComponent},
+            {path: 'project/:id', component: ProjectComponent,
+              data: {
+                defaultSort: 'id,asc',
+              },
+              canActivate: [UserRouteAccessService],
+            },
             {path: 'community', component: CommunityUpdateComponent},
             // {path: 'communities/subscription', component: Category},
           ]
