@@ -1,15 +1,19 @@
 package fr.crowdfunding.jhipster.service;
 
 import fr.crowdfunding.jhipster.config.Constants;
-import fr.crowdfunding.jhipster.domain.Authority;
-import fr.crowdfunding.jhipster.domain.User;
+import fr.crowdfunding.jhipster.domain.*;
 import fr.crowdfunding.jhipster.repository.AuthorityRepository;
+import fr.crowdfunding.jhipster.repository.UserInfosRepository;
 import fr.crowdfunding.jhipster.repository.UserRepository;
 import fr.crowdfunding.jhipster.security.AuthoritiesConstants;
 import fr.crowdfunding.jhipster.security.SecurityUtils;
 import fr.crowdfunding.jhipster.service.dto.AdminUserDTO;
 import fr.crowdfunding.jhipster.service.dto.UserDTO;
+
+import java.math.BigInteger;
 import java.time.Instant;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -41,16 +45,20 @@ public class UserService {
 
     private final CacheManager cacheManager;
 
+    private final UserInfosRepository userInfosRepository;
+
     public UserService(
         UserRepository userRepository,
         PasswordEncoder passwordEncoder,
         AuthorityRepository authorityRepository,
-        CacheManager cacheManager
+        CacheManager cacheManager,
+        UserInfosRepository userInfosRepository
     ) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.authorityRepository = authorityRepository;
         this.cacheManager = cacheManager;
+        this.userInfosRepository = userInfosRepository;
     }
 
     public Optional<User> activateRegistration(String key) {
@@ -302,6 +310,99 @@ public class UserService {
     @Transactional(readOnly = true)
     public Optional<User> getUserWithAuthoritiesByLogin(String login) {
         return userRepository.findOneWithAuthoritiesByLogin(login);
+    }
+
+    @Transactional(readOnly = true)
+    public Optional<UserInfos> getUserWithAuthoritiesByLogin2(String login) {
+
+        Optional<User> user = userRepository.findOneWithAuthoritiesByLogin(login);
+        List<Object[]> userI = userInfosRepository.find(login);
+
+        UserInfos userInfos = convertObjectIntoUserInfos(userI.get(0));
+
+        userInfos.setUser(user.get());
+
+        return Optional.of(userInfos);
+    }
+
+    public UserInfos convertObjectIntoUserInfos(Object[] user) {
+        UserInfos userInfos = new UserInfos();
+        CommunityMembers communityMembers = new CommunityMembers();
+        BigInteger userInfosId = (BigInteger) user[0];
+        BigInteger communityMembersId = (BigInteger) user[9];
+        Date date = (Date) user[2];
+        LocalDate localDate = Instant.ofEpochMilli(date.getTime())
+            .atZone(ZoneId.systemDefault())
+            .toLocalDate();
+
+        userInfos.setId(userInfosId.longValue());
+        userInfos.setPublicName((String) user[1]);
+        userInfos.setBirthDate(localDate);
+        userInfos.setFacebook((String) user[3]);
+        userInfos.setTwitter((String) user[4]);
+        userInfos.setLinkedIn((String) user[5]);
+        userInfos.setDescription((String) user[6]);
+        userInfos.setCoverImage((byte[]) user[7]);
+        userInfos.setCoverImageContentType((String) user[8]);
+
+        if (communityMembersId == null) {
+            communityMembers.setId((Long) user[9]);
+        } else {
+            communityMembers.setId(communityMembersId.longValue());
+        }
+
+        userInfos.setCommunityMembers(communityMembers);
+
+        Address address = convertObjectIntoAddress(user);
+
+        userInfos.setAddress(address);
+
+        CreditCard creditCard = convertObjectIntoCreditCard(user);
+        userInfos.setCreditCard(creditCard);
+
+        return userInfos;
+    }
+
+    public Address convertObjectIntoAddress(Object[] user) {
+        // Address valuew start user[10]
+        Address address = new Address();
+        BigInteger countryId = (BigInteger) user[14];
+        Country country = new Country();
+
+        address.setAddress((String) user[10]);
+        address.setCity((String) user[11]);
+        address.setState((String) user[12]);
+        address.setZipCode((String) user[13]);
+
+        if(countryId == null) {
+            country.setId((Long) user[14]);
+        } else {
+            country.setId(countryId.longValue());
+        }
+
+        address.setCountry(country);
+
+        return address;
+    }
+
+    private CreditCard convertObjectIntoCreditCard(Object[] user) {
+        // CreditCard values start user[15]
+        CreditCard creditCard = new CreditCard();
+        Integer number = (Integer) user[15];
+        String ownerName = (String) user[16];
+        Integer key = (Integer) user[17];
+        Date date = (Date) user[18];
+
+        LocalDate expirationDate = Instant.ofEpochMilli(date.getTime())
+            .atZone(ZoneId.systemDefault())
+            .toLocalDate();
+
+        creditCard.setNumber(number);
+        creditCard.setOwnerName(ownerName);
+        creditCard.setKey(key);
+        creditCard.setExpirationDate(expirationDate);
+
+        return creditCard;
     }
 
     @Transactional(readOnly = true)

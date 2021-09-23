@@ -1,7 +1,9 @@
 package fr.crowdfunding.jhipster.service;
 
 import fr.crowdfunding.jhipster.domain.CreditCard;
+import fr.crowdfunding.jhipster.domain.UserInfos;
 import fr.crowdfunding.jhipster.repository.CreditCardRepository;
+import fr.crowdfunding.jhipster.repository.UserInfosRepository;
 import fr.crowdfunding.jhipster.service.dto.CreditCardDTO;
 import fr.crowdfunding.jhipster.service.mapper.CreditCardMapper;
 import java.util.Optional;
@@ -25,9 +27,12 @@ public class CreditCardService {
 
     private final CreditCardMapper creditCardMapper;
 
-    public CreditCardService(CreditCardRepository creditCardRepository, CreditCardMapper creditCardMapper) {
+    private final UserInfosRepository userInfosRepository;
+
+    public CreditCardService(CreditCardRepository creditCardRepository, CreditCardMapper creditCardMapper, UserInfosRepository userInfosRepository) {
         this.creditCardRepository = creditCardRepository;
         this.creditCardMapper = creditCardMapper;
+        this.userInfosRepository = userInfosRepository;
     }
 
     /**
@@ -39,6 +44,8 @@ public class CreditCardService {
     public CreditCardDTO save(CreditCardDTO creditCardDTO) {
         log.debug("Request to save CreditCard : {}", creditCardDTO);
         CreditCard creditCard = creditCardMapper.toEntity(creditCardDTO);
+        Optional<UserInfos> userInfos = userInfosRepository.findById(creditCardDTO.getUserInfos().getId());
+        creditCard.setUserInfos(userInfos.get());
         creditCard = creditCardRepository.save(creditCard);
         return creditCardMapper.toDto(creditCard);
     }
@@ -86,7 +93,9 @@ public class CreditCardService {
     @Transactional(readOnly = true)
     public Optional<CreditCardDTO> findOne(Long id) {
         log.debug("Request to get CreditCard : {}", id);
-        return creditCardRepository.findById(id).map(creditCardMapper::toDto);
+        Optional<UserInfos> userInfos = userInfosRepository.findById(id);
+
+        return creditCardRepository.findOneCreditCardByUserInfos(userInfos.get()).map(creditCardMapper::toDto);
     }
 
     /**

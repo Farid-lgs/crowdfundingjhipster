@@ -2,6 +2,7 @@ package fr.crowdfunding.jhipster.web.rest;
 
 import fr.crowdfunding.jhipster.config.Constants;
 import fr.crowdfunding.jhipster.domain.User;
+import fr.crowdfunding.jhipster.domain.UserInfos;
 import fr.crowdfunding.jhipster.repository.UserRepository;
 import fr.crowdfunding.jhipster.security.AuthoritiesConstants;
 import fr.crowdfunding.jhipster.security.SecurityUtils;
@@ -9,7 +10,6 @@ import fr.crowdfunding.jhipster.service.MailService;
 import fr.crowdfunding.jhipster.service.UserService;
 import fr.crowdfunding.jhipster.service.dto.AdminUserDTO;
 import fr.crowdfunding.jhipster.service.dto.PasswordChangeDTO;
-import fr.crowdfunding.jhipster.service.dto.UserDTO;
 import fr.crowdfunding.jhipster.web.rest.errors.*;
 import fr.crowdfunding.jhipster.web.rest.vm.KeyAndPasswordVM;
 import fr.crowdfunding.jhipster.web.rest.vm.ManagedUserVM;
@@ -208,8 +208,8 @@ public class AccountResource {
      */
     @GetMapping("/users/{login}")
     @PreAuthorize("hasAuthority(\"" + AuthoritiesConstants.USER + "\")")
-    public ResponseEntity<AdminUserDTO> getUser(@PathVariable @Pattern(regexp = Constants.LOGIN_REGEX) String login) {
+    public ResponseEntity<UserInfos> getUser(@PathVariable @Pattern(regexp = Constants.LOGIN_REGEX) String login) {
         log.debug("REST request to get User : {}", login);
-        return ResponseUtil.wrapOrNotFound(userService.getUserWithAuthoritiesByLogin(login).map(AdminUserDTO::new));
+        return ResponseUtil.wrapOrNotFound(userService.getUserWithAuthoritiesByLogin2(login));//.map(UserInfos::new));
     }
 }

@@ -7,7 +7,7 @@ import { finalize, map } from 'rxjs/operators';
 
 import { ICreditCard, CreditCard } from '../credit-card.model';
 import { CreditCardService } from '../service/credit-card.service';
-import { IUserInfos } from 'app/entities/user-infos/user-infos.model';
+import {IUserInfos, UserInfos} from 'app/entities/user-infos/user-infos.model';
 import { UserInfosService } from 'app/entities/user-infos/service/user-infos.service';
 
 @Component({
@@ -16,6 +16,8 @@ import { UserInfosService } from 'app/entities/user-infos/service/user-infos.ser
 })
 export class CreditCardUpdateComponent implements OnInit {
   isSaving = false;
+  userId: number | undefined;
+  IUserInfos = new UserInfos();
 
   userInfosCollection: IUserInfos[] = [];
 
@@ -36,7 +38,22 @@ export class CreditCardUpdateComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    const userId = this.activatedRoute.snapshot.paramMap.get('userId');
+    const id = this.activatedRoute.snapshot.paramMap.get('id');
+
+    if(id != null) {
+      this.userId = Number(id);
+    }
+
     this.activatedRoute.data.subscribe(({ creditCard }) => {
+      if(userId != null) {
+        this.userId = Number(userId);
+
+        this.IUserInfos = new UserInfos(this.userId);
+
+        creditCard.userInfos = this.IUserInfos;
+      }
+      console.log(creditCard);
       this.updateForm(creditCard);
 
       this.loadRelationshipsOptions();

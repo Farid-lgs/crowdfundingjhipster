@@ -109,6 +109,35 @@ public class UserInfos implements Serializable {
     @JsonIgnoreProperties(value = { "userInfos" }, allowSetters = true)
     private CommunityMembers communityMembers;
 
+    public UserInfos() {
+    }
+
+    public UserInfos(Long id) {
+        this.id = id;
+    }
+
+    public UserInfos(UserInfos userInfos) {
+        this.id = userInfos.getId();
+        this.publicName = userInfos.getPublicName();
+        this.birthDate = userInfos.getBirthDate();
+        this.twitter = userInfos.getTwitter();
+        this.facebook = userInfos.getFacebook();
+        this.linkedIn = userInfos.getLinkedIn();
+        this.description = userInfos.getDescription();
+        this.coverImage = userInfos.getCoverImage();
+        this.coverImageContentType = userInfos.getCoverImageContentType();
+        this.commonId = userInfos.getCommonId();
+        this.user = userInfos.getUser();
+        this.contributions = userInfos.getContributions();
+        this.projects = userInfos.getProjects();
+        this.projectPosts = userInfos.getProjectPosts();
+        this.community = userInfos.getCommunity();
+        this.address = userInfos.getAddress();
+        this.balanceTransfer = userInfos.getBalanceTransfer();
+        this.creditCard = userInfos.getCreditCard();
+        this.communityMembers = userInfos.getCommunityMembers();
+    }
+
     // jhipster-needle-entity-add-field - JHipster will add fields here
     public Long getId() {
         return id;
