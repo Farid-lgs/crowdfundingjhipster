@@ -32,7 +32,7 @@ export class UserProfileComponent implements OnInit {
         if(!this.id) {
           throw new Error("Not Number Id");
         } else {
-          this.globalVariables.personalSubbarBtns[2].path = `project/${(this.id)}`;
+          this.globalVariables.personalSubbarBtns[1].path = `project/${(this.id)}`;
         }
       },
       () => {
