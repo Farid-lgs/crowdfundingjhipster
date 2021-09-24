@@ -1,5 +1,6 @@
 package fr.crowdfunding.jhipster.service;
 
+import fr.crowdfunding.jhipster.domain.Project;
 import fr.crowdfunding.jhipster.domain.Reward;
 import fr.crowdfunding.jhipster.repository.RewardRepository;
 import fr.crowdfunding.jhipster.service.dto.RewardDTO;
@@ -72,9 +73,12 @@ public class RewardService {
      * @return the list of entities.
      */
     @Transactional(readOnly = true)
-    public Page<RewardDTO> findAll(Pageable pageable) {
+    public Page<RewardDTO> findAll(Pageable pageable, Long id) {
         log.debug("Request to get all Rewards");
-        return rewardRepository.findAll(pageable).map(rewardMapper::toDto);
+
+        Project project = new Project(id);
+
+        return rewardRepository.findByProject(pageable, project).map(rewardMapper::toDto);
     }
 
     /**

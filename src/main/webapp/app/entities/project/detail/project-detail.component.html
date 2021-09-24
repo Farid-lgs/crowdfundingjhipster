@@ -9,6 +9,14 @@
 
       <jhi-alert></jhi-alert>
 
+      <ul>
+        <li><a routerLink="../{{project.id}}">Projet</a></li>
+        <li><a routerLink="reward">Reward</a></li>
+        <li><a routerLink="comment">Commentaires</a></li>
+      </ul>
+
+      <router-outlet></router-outlet>
+
       <dl class="row-md jh-entity-details">
         <dt><span jhiTranslate="global.field.id">ID</span></dt>
         <dd>
@@ -92,7 +100,7 @@
         <dt><span jhiTranslate="crowdFundingJHipsterApp.project.userInfos">User Infos</span></dt>
         <dd>
           <div *ngIf="project.userInfos">
-            <a [routerLink]="['/user-infos', project.userInfos?.id, 'view']">{{ project.userInfos?.id }}</a>
+            <a [routerLink]="['/user-infos', project.userInfos?.id, 'view']">{{ project.userInfos?.id }} aa {{project.userInfos?.user?.login}}</a>
           </div>
         </dd>
         <dt><span jhiTranslate="crowdFundingJHipsterApp.project.category">Category</span></dt>

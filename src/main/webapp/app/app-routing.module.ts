@@ -24,6 +24,8 @@ import {UserManagementResolve} from "./admin/user-management/user-management.rou
 import {UserResolve} from "./account/user-resolve";
 import {AddressRoutingResolveService} from "./entities/address/route/address-routing-resolve.service";
 import {CreditCardRoutingResolveService} from "./entities/credit-card/route/credit-card-routing-resolve.service";
+import {RewardUpdateComponent} from "./entities/reward/update/reward-update.component";
+import {RewardRoutingResolveService} from "./entities/reward/route/reward-routing-resolve.service";
 
 const LAYOUT_ROUTES = [navbarRoute, ...errorRoute];
 
@@ -78,7 +80,7 @@ const LAYOUT_ROUTES = [navbarRoute, ...errorRoute];
               },
               canActivate: [UserRouteAccessService],
             },
-            {path: 'project/:id', component: ProjectComponent,
+            {path: 'project/:userId', component: ProjectComponent,
               data: {
                 defaultSort: 'id,asc',
               },

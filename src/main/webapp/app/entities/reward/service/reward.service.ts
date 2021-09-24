@@ -45,10 +45,10 @@ export class RewardService {
       .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
   }
 
-  query(req?: any): Observable<EntityArrayResponseType> {
+  query(id: number, req?: any): Observable<EntityArrayResponseType> {
     const options = createRequestOption(req);
     return this.http
-      .get<IReward[]>(this.resourceUrl, { params: options, observe: 'response' })
+      .get<IReward[]>(`${this.resourceUrl}/project/${id}`, { params: options, observe: 'response' })
       .pipe(map((res: EntityArrayResponseType) => this.convertDateArrayFromServer(res)));
   }
 

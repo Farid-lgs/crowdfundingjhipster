@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 
 import { IProject } from '../project.model';
 import { DataUtils } from 'app/core/util/data-util.service';
+import {CreatorService} from "../../../shared/service/creator.service";
 
 @Component({
   selector: 'jhi-project-detail',
@@ -10,12 +11,19 @@ import { DataUtils } from 'app/core/util/data-util.service';
 })
 export class ProjectDetailComponent implements OnInit {
   project: IProject | null = null;
+  creator = false;
 
-  constructor(protected dataUtils: DataUtils, protected activatedRoute: ActivatedRoute) {}
+  constructor(protected dataUtils: DataUtils, protected activatedRoute: ActivatedRoute, protected creatorService: CreatorService) {}
 
   ngOnInit(): void {
+
     this.activatedRoute.data.subscribe(({ project }) => {
       this.project = project;
+
+      this.creatorService.userLogin = project.userInfos?.user?.login;
+
+      this.creator = this.creatorService.isCreator();
+
     });
   }
 
