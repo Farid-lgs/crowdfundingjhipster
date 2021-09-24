@@ -5,9 +5,10 @@ import { ProjectDetailComponent } from './detail/project-detail.component';
 import { ProjectUpdateComponent } from './update/project-update.component';
 import { ProjectDeleteDialogComponent } from './delete/project-delete-dialog.component';
 import { ProjectRoutingModule } from './route/project-routing.module';
+import {RewardModule} from "../reward/reward.module";
 
 @NgModule({
-  imports: [SharedModule, ProjectRoutingModule],
+    imports: [SharedModule, ProjectRoutingModule, RewardModule],
   declarations: [ProjectComponent, ProjectDetailComponent, ProjectUpdateComponent, ProjectDeleteDialogComponent],
   entryComponents: [ProjectDeleteDialogComponent],
 })

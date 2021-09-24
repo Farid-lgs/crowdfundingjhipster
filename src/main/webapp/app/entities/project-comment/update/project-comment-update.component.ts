@@ -1,16 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
 import { FormBuilder, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import { Observable } from 'rxjs';
 import { finalize, map } from 'rxjs/operators';
 
 import { IProjectComment, ProjectComment } from '../project-comment.model';
 import { ProjectCommentService } from '../service/project-comment.service';
-import { IUserInfos } from 'app/entities/user-infos/user-infos.model';
+import {IUserInfos, UserInfos} from 'app/entities/user-infos/user-infos.model';
 import { UserInfosService } from 'app/entities/user-infos/service/user-infos.service';
-import { IProject } from 'app/entities/project/project.model';
+import {IProject, Project} from 'app/entities/project/project.model';
 import { ProjectService } from 'app/entities/project/service/project.service';
+import {CreatorService} from "../../../shared/service/creator.service";
 
 @Component({
   selector: 'jhi-project-comment-update',
@@ -18,6 +19,8 @@ import { ProjectService } from 'app/entities/project/service/project.service';
 })
 export class ProjectCommentUpdateComponent implements OnInit {
   isSaving = false;
+  project: IProject = new Project();
+  userInfos: IUserInfos = new UserInfos();
 
   userInfosSharedCollection: IUserInfos[] = [];
   projectsSharedCollection: IProject[] = [];
@@ -34,11 +37,28 @@ export class ProjectCommentUpdateComponent implements OnInit {
     protected userInfosService: UserInfosService,
     protected projectService: ProjectService,
     protected activatedRoute: ActivatedRoute,
+    protected router: Router,
+    protected creatorService: CreatorService,
     protected fb: FormBuilder
   ) {}
 
   ngOnInit(): void {
+    this.creatorService.idUser();
+    const userId = this.creatorService.id;
+    // Récupère l'url + split la chaine et retourne le 3è fragment (équivalent au projectId)
+    const projectId = Number(this.router.url.split('/')[2]);
+
     this.activatedRoute.data.subscribe(({ projectComment }) => {
+      if(projectId > 0) {
+        this.project = new Project(projectId);
+        this.userInfos = new UserInfos(userId)
+
+        console.log(userId);
+
+        projectComment.project = this.project;
+        projectComment.userInfos = this.userInfos;
+      }
+
       this.updateForm(projectComment);
 
       this.loadRelationshipsOptions();
@@ -87,6 +107,7 @@ export class ProjectCommentUpdateComponent implements OnInit {
   }
 
   protected updateForm(projectComment: IProjectComment): void {
+    console.log(projectComment)
     this.editForm.patchValue({
       id: projectComment.id,
       comment: projectComment.comment,
