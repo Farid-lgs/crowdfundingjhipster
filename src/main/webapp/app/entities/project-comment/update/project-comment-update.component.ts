@@ -27,7 +27,7 @@ export class ProjectCommentUpdateComponent implements OnInit {
 
   editForm = this.fb.group({
     id: [],
-    comment: [null, [Validators.required]],
+    comment: [null, [Validators.minLength(5), Validators.maxLength(255), Validators.required]],
     userInfos: [],
     project: [],
   });
@@ -107,7 +107,7 @@ export class ProjectCommentUpdateComponent implements OnInit {
   }
 
   protected updateForm(projectComment: IProjectComment): void {
-    console.log(projectComment)
+
     this.editForm.patchValue({
       id: projectComment.id,
       comment: projectComment.comment,

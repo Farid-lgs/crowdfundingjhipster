@@ -160,10 +160,10 @@ public class ProjectCommentResource {
      * @param pageable the pagination information.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of projectComments in body.
      */
-    @GetMapping("/project-comments")
-    public ResponseEntity<List<ProjectCommentDTO>> getAllProjectComments(Pageable pageable) {
+    @GetMapping("/project-comments/project/{id}")
+    public ResponseEntity<List<ProjectCommentDTO>> getAllProjectComments(Pageable pageable, @PathVariable Long id) {
         log.debug("REST request to get a page of ProjectComments");
-        Page<ProjectCommentDTO> page = projectCommentService.findAll(pageable);
+        Page<ProjectCommentDTO> page = projectCommentService.findAll(pageable, id);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return ResponseEntity.ok().headers(headers).body(page.getContent());
     }

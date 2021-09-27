@@ -9,6 +9,7 @@ import { IProjectComment } from '../project-comment.model';
 import { ASC, DESC, ITEMS_PER_PAGE, SORT } from 'app/config/pagination.constants';
 import { ProjectCommentService } from '../service/project-comment.service';
 import { ProjectCommentDeleteDialogComponent } from '../delete/project-comment-delete-dialog.component';
+import {CreatorService} from "../../../shared/service/creator.service";
 
 @Component({
   selector: 'jhi-project-comment',
@@ -23,20 +24,24 @@ export class ProjectCommentComponent implements OnInit {
   predicate!: string;
   ascending!: boolean;
   ngbPaginationPage = 1;
+  projectId = 0;
 
   constructor(
     protected projectCommentService: ProjectCommentService,
     protected activatedRoute: ActivatedRoute,
     protected router: Router,
+    protected creatorService: CreatorService,
     protected modalService: NgbModal
   ) {}
 
   loadPage(page?: number, dontNavigate?: boolean): void {
     this.isLoading = true;
     const pageToLoad: number = page ?? this.page ?? 1;
+    // Récupère l'url + split la chaine et retourne le 3è fragment (équivalent au projectId)
+    this.projectId = Number(this.router.url.split('/')[2]);
 
     this.projectCommentService
-      .query({
+      .query(this.projectId, {
         page: pageToLoad - 1,
         size: this.itemsPerPage,
         sort: this.sort(),
@@ -99,7 +104,7 @@ export class ProjectCommentComponent implements OnInit {
     this.totalItems = Number(headers.get('X-Total-Count'));
     this.page = page;
     if (navigate) {
-      this.router.navigate(['/project-comment'], {
+      this.router.navigate(['/project', this.creatorService.id, 'comment'], {
         queryParams: {
           page: this.page,
           size: this.itemsPerPage,
