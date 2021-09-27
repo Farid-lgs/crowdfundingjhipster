@@ -78,6 +78,18 @@ export class ProjectComponent implements OnInit {
     this.handleNavigation();
   }
 
+  view(amount: number | null | undefined, projectId: number | undefined): void {
+    if(typeof amount === 'number' && amount > 0) {
+      this.projectService.amount = amount;
+    } else {
+      this.projectService.amount = 0;
+   }
+
+    if(typeof projectId === 'number') {
+      this.router.navigate([`/project/${projectId}`]);
+    }
+  }
+
   calcHours(duration: number): string {
     const days = Math.round(duration / 60 / 60 / 24);
     const hours = Math.round(duration / 60 / 60) % 24;

@@ -6,6 +6,7 @@ import { ProjectComponent } from '../list/project.component';
 import { ProjectDetailComponent } from '../detail/project-detail.component';
 import { ProjectUpdateComponent } from '../update/project-update.component';
 import { ProjectRoutingResolveService } from './project-routing-resolve.service';
+import {MenuComponent} from "../menu/menu.component";
 
 const projectRoute: Routes = [
   {
@@ -34,20 +35,20 @@ const projectRoute: Routes = [
   },
   {
     path: ':id',
-    component: ProjectDetailComponent,
+    component: MenuComponent,
     resolve: {
       project: ProjectRoutingResolveService,
     },
     canActivate: [UserRouteAccessService],
     children: [
-      // {
-      //   path: '',
-      //   component: ProjectDetailComponent,
-      //   resolve: {
-      //     project: ProjectRoutingResolveService,
-      //   },
-      //   canActivate: [UserRouteAccessService],
-      // },
+      {
+        path: '',
+        component: ProjectDetailComponent,
+        resolve: {
+          project: ProjectRoutingResolveService,
+        },
+        canActivate: [UserRouteAccessService],
+      },
       {
         path: 'reward',
         data: { pageTitle: 'crowdFundingJHipsterApp.reward.home.title' },
