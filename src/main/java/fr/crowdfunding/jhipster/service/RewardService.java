@@ -78,7 +78,7 @@ public class RewardService {
 
         Project project = new Project(id);
 
-        return rewardRepository.findByProject(pageable, project).map(rewardMapper::toDto);
+        return rewardRepository.findByProjectOrderByMinimumValueAsc(pageable, project).map(rewardMapper::toDto);
     }
 
     /**

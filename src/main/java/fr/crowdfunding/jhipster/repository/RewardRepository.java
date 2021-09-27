@@ -15,5 +15,5 @@ import java.util.Optional;
 @SuppressWarnings("unused")
 @Repository
 public interface RewardRepository extends JpaRepository<Reward, Long> {
-    Page<Reward> findByProject(Pageable pageable, Project project);
+    Page<Reward> findByProjectOrderByMinimumValueAsc(Pageable pageable, Project project);
 }
