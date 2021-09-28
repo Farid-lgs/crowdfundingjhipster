@@ -17,16 +17,19 @@
           <p *ngIf="user.linkedIn"><span class="font-weight-bold">LinkedIn :</span> {{user.linkedIn}}</p>
           <p *ngIf="!user.linkedIn"><span class="font-weight-bold">LinkedIn :</span> -</p>
 
-          <p *ngIf="user.address?.address"><span class="font-weight-bold">Address :</span> {{user.address?.address}}, {{user.address?.zipCode}} {{user.address?.city}}, {{user.address?.state}} <a routerLink="../../../address/{{user.id}}/edit" class="btn btn-info">Edit address</a></p>
-          <p *ngIf="!user.address?.address"><span class="font-weight-bold">Address :</span> No address <a routerLink="../../../address/{{user.id}}/new" class="btn btn-info">Add address</a></p>
+          <p *ngIf="user.address?.address"><span class="font-weight-bold">Address :</span> {{user.address?.address}}, {{user.address?.zipCode}} {{user.address?.city}}, {{user.address?.state}} <a routerLink="../address/{{user.id}}/edit" class="btn btn-info">Edit address</a></p>
+          <p *ngIf="!user.address?.address"><span class="font-weight-bold">Address :</span> No address <a routerLink="../address/{{user.id}}/new" class="btn btn-info">Add address</a></p>
 
-          <p *ngIf="user.creditCard?.number"><span class="font-weight-bold">Credit Card :</span> Number : {{user.creditCard?.number}}, owner: {{user.creditCard?.ownerName}}, key : {{user.creditCard?.key}}, expiration : {{user.creditCard?.expirationDate}}<a routerLink="../../../creditCard/{{user.id}}/edit" class="btn btn-info">Edit credit card</a></p>
-          <p *ngIf="!user.creditCard?.number"><span class="font-weight-bold">Credit Card :</span> No credit card <a routerLink="../../../creditCard/{{user.id}}/new" class="btn btn-info">Add credit card</a></p>
+          <p *ngIf="user.creditCard?.number"><span class="font-weight-bold">Credit Card :</span> Number : {{user.creditCard?.number}}, owner: {{user.creditCard?.ownerName}}, key : {{user.creditCard?.key}}, expiration : {{user.creditCard?.expirationDate}}<a routerLink="../creditCard/{{user.id}}/edit" class="btn btn-info">Edit credit card</a></p>
+          <p *ngIf="!user.creditCard?.number"><span class="font-weight-bold">Credit Card :</span> No credit card <a routerLink="../creditCard/{{user.id}}/new" class="btn btn-info">Add credit card</a></p>
         </div>
       </div>
 
-      <button type="submit" routerLink="../../" class="btn btn-info">
+      <button type="submit" (click)="previousState()" class="btn btn-info">
         <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+      <button type="button" [routerLink]="['/profile', user.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
       </button>
     </div>
   </div>

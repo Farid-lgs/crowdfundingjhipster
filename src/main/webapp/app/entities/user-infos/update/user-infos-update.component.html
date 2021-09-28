@@ -146,16 +146,8 @@
         </div>
 
         <div class="form-group">
-          <label class="form-control-label" jhiTranslate="crowdFundingJHipsterApp.userInfos.user" for="field_user">User</label>
-          <select class="form-control" id="field_user" data-cy="user" name="user" formControlName="user">
-            <option [ngValue]="null"></option>
-            <option
-              [ngValue]="userOption.id === editForm.get('user')!.value?.id ? editForm.get('user')!.value : userOption"
-              *ngFor="let userOption of usersSharedCollection; trackBy: trackUserById"
-            >
-              {{ userOption.id }}
-            </option>
-          </select>
+          <label class="form-control-label" jhiTranslate="global.field.id" for="field_user">ID</label>
+          <input type="number" class="form-control" name="user" id="field_user" data-cy="user" formControlName="user" [readonly]="true" />
         </div>
 
         <div class="form-group">

@@ -14,9 +14,11 @@ export class UserManagementDetailComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.data.subscribe(({ user }) => {
-
-      console.log( user);
       this.user = user;
     });
+  }
+
+  previousState(): void {
+    window.history.back();
   }
 }

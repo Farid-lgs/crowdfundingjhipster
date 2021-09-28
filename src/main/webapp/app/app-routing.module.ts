@@ -26,6 +26,9 @@ import {AddressRoutingResolveService} from "./entities/address/route/address-rou
 import {CreditCardRoutingResolveService} from "./entities/credit-card/route/credit-card-routing-resolve.service";
 import {RewardUpdateComponent} from "./entities/reward/update/reward-update.component";
 import {RewardRoutingResolveService} from "./entities/reward/route/reward-routing-resolve.service";
+import {UserManagementUpdateComponent} from "./admin/user-management/update/user-management-update.component";
+import {UserInfosUpdateComponent} from "./entities/user-infos/update/user-infos-update.component";
+import {UserInfosRoutingResolveService} from "./entities/user-infos/route/user-infos-routing-resolve.service";
 
 const LAYOUT_ROUTES = [navbarRoute, ...errorRoute];
 
@@ -85,8 +88,16 @@ const LAYOUT_ROUTES = [navbarRoute, ...errorRoute];
             {path: ':login', component: UserManagementDetailComponent,
               resolve: {
                 user: UserResolve,
-              },
+              }
             },
+            {
+              path: ':id/edit', component: UserInfosUpdateComponent,
+              resolve: {
+                userInfos: UserInfosRoutingResolveService,
+              },
+              canActivate: [UserRouteAccessService],
+            },
+
             // {path: 'communities/subscription', component: Category},
           ]
         },
