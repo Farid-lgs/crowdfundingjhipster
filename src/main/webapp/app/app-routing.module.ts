@@ -24,6 +24,11 @@ import {UserManagementResolve} from "./admin/user-management/user-management.rou
 import {UserResolve} from "./account/user-resolve";
 import {AddressRoutingResolveService} from "./entities/address/route/address-routing-resolve.service";
 import {CreditCardRoutingResolveService} from "./entities/credit-card/route/credit-card-routing-resolve.service";
+import {RewardUpdateComponent} from "./entities/reward/update/reward-update.component";
+import {RewardRoutingResolveService} from "./entities/reward/route/reward-routing-resolve.service";
+import {UserManagementUpdateComponent} from "./admin/user-management/update/user-management-update.component";
+import {UserInfosUpdateComponent} from "./entities/user-infos/update/user-infos-update.component";
+import {UserInfosRoutingResolveService} from "./entities/user-infos/route/user-infos-routing-resolve.service";
 
 const LAYOUT_ROUTES = [navbarRoute, ...errorRoute];
 
@@ -50,11 +55,6 @@ const LAYOUT_ROUTES = [navbarRoute, ...errorRoute];
             user: UserManagementResolve,
           },
           children: [
-            {path: 'details/:login/view', component: UserManagementDetailComponent,
-              resolve: {
-                user: UserResolve,
-              },
-            },
             {path: 'creditCard',
               canActivate: [UserRouteAccessService],
               children: [
@@ -78,13 +78,26 @@ const LAYOUT_ROUTES = [navbarRoute, ...errorRoute];
               },
               canActivate: [UserRouteAccessService],
             },
-            {path: 'project/:id', component: ProjectComponent,
+            {path: 'project/:userId', component: ProjectComponent,
               data: {
                 defaultSort: 'id,asc',
               },
               canActivate: [UserRouteAccessService],
             },
             {path: 'community', component: CommunityUpdateComponent},
+            {path: ':login', component: UserManagementDetailComponent,
+              resolve: {
+                user: UserResolve,
+              }
+            },
+            {
+              path: ':id/edit', component: UserInfosUpdateComponent,
+              resolve: {
+                userInfos: UserInfosRoutingResolveService,
+              },
+              canActivate: [UserRouteAccessService],
+            },
+
             // {path: 'communities/subscription', component: Category},
           ]
         },

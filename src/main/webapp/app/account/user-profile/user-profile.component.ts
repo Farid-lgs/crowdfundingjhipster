@@ -3,6 +3,7 @@ import GlobalVariables from "../../core/context/global-variables";
 import {UserInfosService} from "../../entities/user-infos/service/user-infos.service";
 import {IUserInfos} from "../../entities/user-infos/user-infos.model";
 import {HttpResponse} from "@angular/common/http";
+import {AccountService} from "../../core/auth/account.service";
 
 @Component({
   selector: 'jhi-user-profile',
@@ -11,24 +12,28 @@ import {HttpResponse} from "@angular/common/http";
 })
 export class UserProfileComponent implements OnInit {
 
-  btnDatas: Array<{ path: string, logo: string, txt: string }>;
+  btnDatas: Array<{ path: string, logo: string, txt: string }> = [];
   login: string = localStorage.getItem('login') as string;
   userInfos: IUserInfos | null = null;
   id: number | null | undefined;
 
-  constructor(public globalVariables: GlobalVariables, public userInfosService: UserInfosService) {
-    globalVariables.personalSubbarBtns[0].path = `details/${this.login}/view`;
-
-    this.btnDatas = globalVariables.personalSubbarBtns;
+  constructor(public globalVariables: GlobalVariables, public userInfosService: UserInfosService, protected accountService: AccountService) {
   }
 
   ngOnInit(): void {
-    // Do nothing
     this.userInfosService.findUserByLogin(this.login).subscribe(
       (res: HttpResponse<IUserInfos>) => {
         this.userInfos = res.body;
 
-        this.id = this.userInfos?.id ?? null;
+
+        if(this.accountService.userIdentity !== null) {
+          this.id = this.accountService.userIdentity.id;
+          this.login = this.accountService.userIdentity.login;
+        }
+
+        this.globalVariables.personalSubbarBtns[0].path = `${this.login}`;
+        this.btnDatas = this.globalVariables.personalSubbarBtns;
+
         if(!this.id) {
           throw new Error("Not Number Id");
         } else {

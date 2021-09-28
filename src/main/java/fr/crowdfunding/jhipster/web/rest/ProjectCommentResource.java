@@ -2,7 +2,11 @@ package fr.crowdfunding.jhipster.web.rest;
 
 import fr.crowdfunding.jhipster.repository.ProjectCommentRepository;
 import fr.crowdfunding.jhipster.service.ProjectCommentService;
+import fr.crowdfunding.jhipster.service.ProjectService;
+import fr.crowdfunding.jhipster.service.UserInfosService;
 import fr.crowdfunding.jhipster.service.dto.ProjectCommentDTO;
+import fr.crowdfunding.jhipster.service.dto.ProjectDTO;
+import fr.crowdfunding.jhipster.service.dto.UserInfosDTO;
 import fr.crowdfunding.jhipster.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -40,12 +44,16 @@ public class ProjectCommentResource {
     private String applicationName;
 
     private final ProjectCommentService projectCommentService;
+    private final UserInfosService userInfosService;
+    private final ProjectService projectService;
 
     private final ProjectCommentRepository projectCommentRepository;
 
-    public ProjectCommentResource(ProjectCommentService projectCommentService, ProjectCommentRepository projectCommentRepository) {
+    public ProjectCommentResource(ProjectCommentService projectCommentService, ProjectCommentRepository projectCommentRepository, UserInfosService userInfosService, ProjectService projectService) {
         this.projectCommentService = projectCommentService;
         this.projectCommentRepository = projectCommentRepository;
+        this.userInfosService = userInfosService;
+        this.projectService = projectService;
     }
 
     /**
@@ -62,6 +70,13 @@ public class ProjectCommentResource {
         if (projectCommentDTO.getId() != null) {
             throw new BadRequestAlertException("A new projectComment cannot already have an ID", ENTITY_NAME, "idexists");
         }
+
+        Optional<UserInfosDTO> userInfosDTO = userInfosService.findOne(projectCommentDTO.getUserInfos().getId());
+        projectCommentDTO.setUserInfos(userInfosDTO.get());
+
+        Optional<ProjectDTO> projectDTO = projectService.findOne(projectCommentDTO.getProject().getId());
+        projectCommentDTO.setProject(projectDTO.get());
+
         ProjectCommentDTO result = projectCommentService.save(projectCommentDTO);
         return ResponseEntity
             .created(new URI("/api/project-comments/" + result.getId()))
@@ -145,10 +160,10 @@ public class ProjectCommentResource {
      * @param pageable the pagination information.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of projectComments in body.
      */
-    @GetMapping("/project-comments")
-    public ResponseEntity<List<ProjectCommentDTO>> getAllProjectComments(Pageable pageable) {
+    @GetMapping("/project-comments/project/{id}")
+    public ResponseEntity<List<ProjectCommentDTO>> getAllProjectComments(Pageable pageable, @PathVariable Long id) {
         log.debug("REST request to get a page of ProjectComments");
-        Page<ProjectCommentDTO> page = projectCommentService.findAll(pageable);
+        Page<ProjectCommentDTO> page = projectCommentService.findAll(pageable, id);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return ResponseEntity.ok().headers(headers).body(page.getContent());
     }

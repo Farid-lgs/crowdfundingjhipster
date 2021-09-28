@@ -24,7 +24,7 @@ export class ProjectComponent implements OnInit {
   predicate!: string;
   ascending!: boolean;
   ngbPaginationPage = 1
-  id: number | null = null;
+  userId: number | null = null;
 
   constructor(
     protected projectService: ProjectService,
@@ -37,10 +37,10 @@ export class ProjectComponent implements OnInit {
   loadPage(page?: number, dontNavigate?: boolean): void {
     this.isLoading = true;
     const pageToLoad: number = page ?? this.page ?? 1;
-    this.id = Number(this.activatedRoute.snapshot.paramMap.get('id'));
+    this.userId = Number(this.activatedRoute.snapshot.paramMap.get('userId'));
 
-    if(this.id) {
-      this.projectService.findByUserId(this.id, {
+    if(this.userId) {
+      this.projectService.findByUserId(this.userId, {
         page: pageToLoad - 1,
         size: this.itemsPerPage,
         sort: this.sort(),
@@ -76,6 +76,18 @@ export class ProjectComponent implements OnInit {
 
   ngOnInit(): void {
     this.handleNavigation();
+  }
+
+  view(amount: number | null | undefined, projectId: number | undefined): void {
+    if(typeof amount === 'number' && amount > 0) {
+      this.projectService.amount = amount;
+    } else {
+      this.projectService.amount = 0;
+   }
+
+    if(typeof projectId === 'number') {
+      this.router.navigate([`/project/${projectId}`]);
+    }
   }
 
   calcHours(duration: number): string {
@@ -139,7 +151,7 @@ export class ProjectComponent implements OnInit {
   protected onSuccess(data: IProject[] | null, headers: HttpHeaders, page: number, navigate: boolean): void {
     this.totalItems = Number(headers.get('X-Total-Count'));
     this.page = page;
-    if (navigate && this.id == null) {
+    if (navigate && this.userId == null) {
       this.router.navigate(['/project/list'], {
         queryParams: {
           page: this.page,

@@ -1,5 +1,6 @@
 package fr.crowdfunding.jhipster.service;
 
+import fr.crowdfunding.jhipster.domain.Project;
 import fr.crowdfunding.jhipster.domain.ProjectComment;
 import fr.crowdfunding.jhipster.repository.ProjectCommentRepository;
 import fr.crowdfunding.jhipster.service.dto.ProjectCommentDTO;
@@ -72,9 +73,10 @@ public class ProjectCommentService {
      * @return the list of entities.
      */
     @Transactional(readOnly = true)
-    public Page<ProjectCommentDTO> findAll(Pageable pageable) {
+    public Page<ProjectCommentDTO> findAll(Pageable pageable, Long id) {
         log.debug("Request to get all ProjectComments");
-        return projectCommentRepository.findAll(pageable).map(projectCommentMapper::toDto);
+        Project project = new Project(id);
+        return projectCommentRepository.findByProjectOrderByIdDesc(pageable, project).map(projectCommentMapper::toDto);
     }
 
     /**

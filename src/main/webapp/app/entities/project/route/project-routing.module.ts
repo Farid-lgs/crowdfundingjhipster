@@ -6,6 +6,7 @@ import { ProjectComponent } from '../list/project.component';
 import { ProjectDetailComponent } from '../detail/project-detail.component';
 import { ProjectUpdateComponent } from '../update/project-update.component';
 import { ProjectRoutingResolveService } from './project-routing-resolve.service';
+import {MenuComponent} from "../menu/menu.component";
 
 const projectRoute: Routes = [
   {
@@ -25,20 +26,42 @@ const projectRoute: Routes = [
     canActivate: [UserRouteAccessService],
   },
   {
-    path: ':id/view',
-    component: ProjectDetailComponent,
-    resolve: {
-      project: ProjectRoutingResolveService,
-    },
-    canActivate: [UserRouteAccessService],
-  },
-  {
     path: 'new',
     component: ProjectUpdateComponent,
     resolve: {
       project: ProjectRoutingResolveService,
     },
     canActivate: [UserRouteAccessService],
+  },
+  {
+    path: ':id',
+    component: MenuComponent,
+    resolve: {
+      project: ProjectRoutingResolveService,
+    },
+    canActivate: [UserRouteAccessService],
+    children: [
+      {
+        path: 'comment',
+        data: { pageTitle: 'crowdFundingJHipsterApp.projectComment.home.title' },
+        loadChildren: () => import('../../project-comment/project-comment.module').then(m => m.ProjectCommentModule),
+      },
+      {
+        path: '',
+        component: ProjectDetailComponent,
+        resolve: {
+          project: ProjectRoutingResolveService,
+        },
+        canActivate: [UserRouteAccessService],
+
+        loadChildren: () => import('../../reward/reward.module').then(m => m.RewardModule),
+      },
+      // {
+      //   path: '',
+      //   data: { pageTitle: 'crowdFundingJHipsterApp.reward.home.title' },
+      //   loadChildren: () => import('../../reward/reward.module').then(m => m.RewardModule),
+      // },
+    ]
   },
   {
     path: ':id/edit',

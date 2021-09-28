@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import { HttpHeaders, HttpResponse } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
 import { combineLatest } from 'rxjs';
@@ -10,6 +10,7 @@ import { ASC, DESC, ITEMS_PER_PAGE, SORT } from 'app/config/pagination.constants
 import { RewardService } from '../service/reward.service';
 import { RewardDeleteDialogComponent } from '../delete/reward-delete-dialog.component';
 import { DataUtils } from 'app/core/util/data-util.service';
+import {CreatorService} from "../../../shared/service/creator.service";
 
 @Component({
   selector: 'jhi-reward',
@@ -24,21 +25,30 @@ export class RewardComponent implements OnInit {
   predicate!: string;
   ascending!: boolean;
   ngbPaginationPage = 1;
+  projectId = 0;
+  creator = false;
+  // @Input() creator: boolean | undefined;
 
   constructor(
     protected rewardService: RewardService,
     protected activatedRoute: ActivatedRoute,
     protected dataUtils: DataUtils,
     protected router: Router,
-    protected modalService: NgbModal
+    protected modalService: NgbModal,
+    protected creatorService: CreatorService
   ) {}
 
   loadPage(page?: number, dontNavigate?: boolean): void {
+    this.creator = this.creatorService.isCreator();
+
     this.isLoading = true;
     const pageToLoad: number = page ?? this.page ?? 1;
-
+    // Récupère l'url + split la chaine et retourne le 3è fragment (équivalent au projectId)
+    // this.projectId = Number(this.activatedRoute.snapshot.paramMap.get('id'));
+    this.projectId = Number(this.router.url.split('/')[2]);
+    // console.log(this.projectId);
     this.rewardService
-      .query({
+      .query(this.projectId,{
         page: pageToLoad - 1,
         size: this.itemsPerPage,
         sort: this.sort(),

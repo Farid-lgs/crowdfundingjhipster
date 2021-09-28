@@ -47,16 +47,6 @@
           </span>
         </a>
       </li>
-      <li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
-        <a class="nav-link" routerLink="profile" (click)="collapseNavbar()">
-          <span>
-<!--            <fa-icon icon="Projects"></fa-icon>-->
-            <i class="fas fa-certificate"></i>
-            <!--            <span jhiTranslate="global.menu.projects">Projects</span>-->
-            <span>test</span>
-          </span>
-        </a>
-      </li>
       <!-- jhipster-needle-add-element-to-menu - JHipster will add new menu items here -->
       <li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
         <a class="nav-link" routerLink="admin/user-management" (click)="collapseNavbar()">
@@ -402,6 +392,12 @@
             <a class="dropdown-item" routerLink="account/settings" routerLinkActive="active" (click)="collapseNavbar()" data-cy="settings">
               <fa-icon icon="wrench" [fixedWidth]="true"></fa-icon>
               <span jhiTranslate="global.menu.account.settings">Settings</span>
+            </a>
+          </li>
+          <li *ngSwitchCase="true">
+            <a class="dropdown-item" routerLink="/profile/{{account?.login}}" routerLinkActive="active">
+              <fa-icon icon="user" [fixedWidth]="true"></fa-icon>
+              <span>{{account?.login}}</span>
             </a>
           </li>
           <li *ngSwitchCase="true">

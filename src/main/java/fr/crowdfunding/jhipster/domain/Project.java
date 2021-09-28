@@ -140,6 +140,13 @@ public class Project implements Serializable {
     @JsonIgnoreProperties(value = { "projects" }, allowSetters = true)
     private Category category;
 
+    public Project() {
+    }
+
+    public Project(Long id) {
+        this.id = id;
+    }
+
     // jhipster-needle-entity-add-field - JHipster will add fields here
     public Long getId() {
         return id;

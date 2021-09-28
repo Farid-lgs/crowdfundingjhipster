@@ -17,14 +17,6 @@ const rewardRoute: Routes = [
     canActivate: [UserRouteAccessService],
   },
   {
-    path: ':id/view',
-    component: RewardDetailComponent,
-    resolve: {
-      reward: RewardRoutingResolveService,
-    },
-    canActivate: [UserRouteAccessService],
-  },
-  {
     path: 'new',
     component: RewardUpdateComponent,
     resolve: {
@@ -33,7 +25,15 @@ const rewardRoute: Routes = [
     canActivate: [UserRouteAccessService],
   },
   {
-    path: ':id/edit',
+    path: ':rewardId',
+    component: RewardDetailComponent,
+    resolve: {
+      reward: RewardRoutingResolveService,
+    },
+    canActivate: [UserRouteAccessService],
+  },
+  {
+    path: ':rewardId/edit',
     component: RewardUpdateComponent,
     resolve: {
       reward: RewardRoutingResolveService,

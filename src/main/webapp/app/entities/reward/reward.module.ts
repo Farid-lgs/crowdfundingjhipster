@@ -7,8 +7,11 @@ import { RewardDeleteDialogComponent } from './delete/reward-delete-dialog.compo
 import { RewardRoutingModule } from './route/reward-routing.module';
 
 @NgModule({
-  imports: [SharedModule, RewardRoutingModule],
-  declarations: [RewardComponent, RewardDetailComponent, RewardUpdateComponent, RewardDeleteDialogComponent],
-  entryComponents: [RewardDeleteDialogComponent],
+    imports: [SharedModule, RewardRoutingModule],
+    declarations: [RewardComponent, RewardDetailComponent, RewardUpdateComponent, RewardDeleteDialogComponent],
+    entryComponents: [RewardDeleteDialogComponent],
+    exports: [
+        RewardComponent
+    ]
 })
 export class RewardModule {}

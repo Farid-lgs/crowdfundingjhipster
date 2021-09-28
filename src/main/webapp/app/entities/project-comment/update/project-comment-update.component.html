@@ -30,37 +30,33 @@
             >
               This field is required.
             </small>
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('comment')?.errors?.maxLength"
+              jhiTranslate="entity.validation.maxLength"
+              [translateValues]="{max: 255}"
+            >
+              This field cannot be longer than 255 characters.
+            </small>
+            <small
+            class="form-text text-danger"
+            *ngIf="editForm.get('comment')?.errors?.minlength"
+            jhiTranslate="entity.validation.minlength"
+            [translateValues]="{min: 5}"
+            >
+            Minimum 5 characters.
+            </small>
           </div>
         </div>
 
-        <div class="form-group">
-          <label class="form-control-label" jhiTranslate="crowdFundingJHipsterApp.projectComment.userInfos" for="field_userInfos"
-            >User Infos</label
-          >
-          <select class="form-control" id="field_userInfos" data-cy="userInfos" name="userInfos" formControlName="userInfos">
-            <option [ngValue]="null"></option>
-            <option
-              [ngValue]="userInfosOption.id === editForm.get('userInfos')!.value?.id ? editForm.get('userInfos')!.value : userInfosOption"
-              *ngFor="let userInfosOption of userInfosSharedCollection; trackBy: trackUserInfosById"
-            >
-              {{ userInfosOption.id }}
-            </option>
-          </select>
+        <div class="form-group" [hidden]="true">
+          <label class="form-control-label" jhiTranslate="crowdFundingJHipsterApp.projectComment.userInfos" for="field_userInfos">User Infos</label>
+          <input type="number" class="form-control" name="userInfos" id="field_userInfos" data-cy="userInfos" formControlName="userInfos" [readonly]="true" />
         </div>
 
-        <div class="form-group">
-          <label class="form-control-label" jhiTranslate="crowdFundingJHipsterApp.projectComment.project" for="field_project"
-            >Project</label
-          >
-          <select class="form-control" id="field_project" data-cy="project" name="project" formControlName="project">
-            <option [ngValue]="null"></option>
-            <option
-              [ngValue]="projectOption.id === editForm.get('project')!.value?.id ? editForm.get('project')!.value : projectOption"
-              *ngFor="let projectOption of projectsSharedCollection; trackBy: trackProjectById"
-            >
-              {{ projectOption.id }}
-            </option>
-          </select>
+        <div class="form-group" [hidden]="true">
+          <label class="form-control-label" jhiTranslate="crowdFundingJHipsterApp.projectComment.project" for="field_project">ProjectId</label>
+          <input type="number" class="form-control" name="project" id="field_project" data-cy="project" formControlName="project" [readonly]="true" />
         </div>
       </div>
 

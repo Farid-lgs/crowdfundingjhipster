@@ -10,7 +10,7 @@ import { UserInfosService } from '../service/user-infos.service';
 import { AlertError } from 'app/shared/alert/alert-error.model';
 import { EventManager, EventWithContent } from 'app/core/util/event-manager.service';
 import { DataUtils, FileLoadError } from 'app/core/util/data-util.service';
-import { IUser } from 'app/entities/user/user.model';
+import {IUser, User} from 'app/entities/user/user.model';
 import { UserService } from 'app/entities/user/user.service';
 import { ICommunityMembers } from 'app/entities/community-members/community-members.model';
 import { CommunityMembersService } from 'app/entities/community-members/service/community-members.service';
@@ -21,7 +21,7 @@ import { CommunityMembersService } from 'app/entities/community-members/service/
 })
 export class UserInfosUpdateComponent implements OnInit {
   isSaving = false;
-
+  user: IUser | undefined;
   usersSharedCollection: IUser[] = [];
   communityMembersSharedCollection: ICommunityMembers[] = [];
 
@@ -53,6 +53,7 @@ export class UserInfosUpdateComponent implements OnInit {
 
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ userInfos }) => {
+      this.user = new User(userInfos.user?.id)
       this.updateForm(userInfos);
 
       this.loadRelationshipsOptions();
