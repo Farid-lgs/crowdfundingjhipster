@@ -31,8 +31,7 @@ export class AccountService {
 
   authenticate(identity: Account | null): void {
     this._userIdentity = identity;
-    localStorage.setItem('login', <string>identity?.login)
-    console.log(identity)
+    localStorage.setItem('login', <string>identity?.login);
     this.authenticationState.next(this._userIdentity);
   }
 

@@ -25,7 +25,6 @@ export class UserProfileComponent implements OnInit {
       (res: HttpResponse<IUserInfos>) => {
         this.userInfos = res.body;
 
-
         if(this.accountService.userIdentity !== null) {
           this.id = this.accountService.userIdentity.id;
           this.login = this.accountService.userIdentity.login;
