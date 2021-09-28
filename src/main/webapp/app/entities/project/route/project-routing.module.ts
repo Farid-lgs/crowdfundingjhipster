@@ -42,23 +42,25 @@ const projectRoute: Routes = [
     canActivate: [UserRouteAccessService],
     children: [
       {
+        path: 'comment',
+        data: { pageTitle: 'crowdFundingJHipsterApp.projectComment.home.title' },
+        loadChildren: () => import('../../project-comment/project-comment.module').then(m => m.ProjectCommentModule),
+      },
+      {
         path: '',
         component: ProjectDetailComponent,
         resolve: {
           project: ProjectRoutingResolveService,
         },
         canActivate: [UserRouteAccessService],
-      },
-      {
-        path: 'reward',
-        data: { pageTitle: 'crowdFundingJHipsterApp.reward.home.title' },
+
         loadChildren: () => import('../../reward/reward.module').then(m => m.RewardModule),
       },
-      {
-        path: 'comment',
-        data: { pageTitle: 'crowdFundingJHipsterApp.projectComment.home.title' },
-        loadChildren: () => import('../../project-comment/project-comment.module').then(m => m.ProjectCommentModule),
-      },
+      // {
+      //   path: '',
+      //   data: { pageTitle: 'crowdFundingJHipsterApp.reward.home.title' },
+      //   loadChildren: () => import('../../reward/reward.module').then(m => m.RewardModule),
+      // },
     ]
   },
   {

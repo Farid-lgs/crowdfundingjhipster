@@ -1,114 +1,22 @@
-<div>
-<!--  <h2 id="page-heading" data-cy="RewardHeading">-->
-<!--    <span jhiTranslate="crowdFundingJHipsterApp.reward.home.title">Rewards</span>-->
+  <div class="d-flex justify-content-end">
 
-    <div class="d-flex justify-content-end">
-<!--      <button class="btn btn-info mr-2" (click)="loadPage()" [disabled]="isLoading">-->
-<!--        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>-->
-<!--        <span jhiTranslate="crowdFundingJHipsterApp.reward.home.refreshListLabel">Refresh List</span>-->
-<!--      </button>-->
+    <button
+      id="jh-create-entity"
+      data-cy="entityCreateButton"
+      class="btn btn-primary jh-create-entity create-reward"
+      [routerLink]="['new']"
+    >
+      <fa-icon icon="plus"></fa-icon>
+      <span jhiTranslate="crowdFundingJHipsterApp.reward.home.createLabel"> Create a new Reward </span>
+    </button>
+  </div>
 
-      <button
-        id="jh-create-entity"
-        data-cy="entityCreateButton"
-        class="btn btn-primary jh-create-entity create-reward"
-        [routerLink]="['new']"
-      >
-        <fa-icon icon="plus"></fa-icon>
-        <span jhiTranslate="crowdFundingJHipsterApp.reward.home.createLabel"> Create a new Reward </span>
-      </button>
-    </div>
-<!--  </h2>-->
-
-<!--  <jhi-alert-error></jhi-alert-error>-->
-
-<!--  <jhi-alert></jhi-alert>-->
-
-  <div class="alert alert-warning" id="no-result" *ngIf="rewards?.length === 0">
+  <div class="alert alert-warning mt-4" id="no-result" *ngIf="rewards?.length === 0">
     <span jhiTranslate="crowdFundingJHipsterApp.reward.home.notFound">No rewards found</span>
   </div>
 
-<!--  <div class="table-responsive" id="entities" *ngIf="rewards && rewards.length > 0">-->
-<!--    <table class="table table-striped" aria-describedby="page-heading">-->
-<!--      <thead>-->
-<!--        <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" [callback]="loadPage.bind(this)">-->
-<!--          <th scope="col" jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <fa-icon icon="sort"></fa-icon></th>-->
-<!--          <th scope="col" jhiSortBy="title">-->
-<!--            <span jhiTranslate="crowdFundingJHipsterApp.reward.title">Title</span> <fa-icon icon="sort"></fa-icon>-->
-<!--          </th>-->
-<!--          <th scope="col" jhiSortBy="description">-->
-<!--            <span jhiTranslate="crowdFundingJHipsterApp.reward.description">Description</span> <fa-icon icon="sort"></fa-icon>-->
-<!--          </th>-->
-<!--          <th scope="col" jhiSortBy="minimumValue">-->
-<!--            <span jhiTranslate="crowdFundingJHipsterApp.reward.minimumValue">Minimum Value</span> <fa-icon icon="sort"></fa-icon>-->
-<!--          </th>-->
-<!--          <th scope="col" jhiSortBy="deliverAt">-->
-<!--            <span jhiTranslate="crowdFundingJHipsterApp.reward.deliverAt">Deliver At</span> <fa-icon icon="sort"></fa-icon>-->
-<!--          </th>-->
-<!--          <th scope="col" jhiSortBy="expiresAt">-->
-<!--            <span jhiTranslate="crowdFundingJHipsterApp.reward.expiresAt">Expires At</span> <fa-icon icon="sort"></fa-icon>-->
-<!--          </th>-->
-<!--          <th scope="col" jhiSortBy="maximumContributions">-->
-<!--            <span jhiTranslate="crowdFundingJHipsterApp.reward.maximumContributions">Maximum Contributions</span>-->
-<!--            <fa-icon icon="sort"></fa-icon>-->
-<!--          </th>-->
-<!--          <th scope="col" jhiSortBy="image">-->
-<!--            <span jhiTranslate="crowdFundingJHipsterApp.reward.image">Image</span> <fa-icon icon="sort"></fa-icon>-->
-<!--          </th>-->
-<!--          <th scope="col" jhiSortBy="project.id">-->
-<!--            <span jhiTranslate="crowdFundingJHipsterApp.reward.project">Project</span> <fa-icon icon="sort"></fa-icon>-->
-<!--          </th>-->
-<!--          <th scope="col"></th>-->
-<!--        </tr>-->
-<!--      </thead>-->
-<!--      <tbody>-->
-<!--        <tr *ngFor="let reward of rewards; trackBy: trackId" data-cy="entityTable">-->
-<!--          <td>-->
-<!--            <a [routerLink]="['/reward', reward.id, 'view']">{{ reward.id }}</a>-->
-<!--          </td>-->
-<!--          <td>{{ reward.title }}</td>-->
-<!--          <td>{{ reward.description }}</td>-->
-<!--          <td>{{ reward.minimumValue }}</td>-->
-<!--          <td>{{ reward.deliverAt | formatMediumDatetime }}</td>-->
-<!--          <td>{{ reward.expiresAt | formatMediumDatetime }}</td>-->
-<!--          <td>{{ reward.maximumContributions }}</td>-->
-<!--          <td>-->
-<!--            <a *ngIf="reward.image" (click)="openFile(reward.image, reward.imageContentType)">-->
-<!--              <img [src]="'data:' + reward.imageContentType + ';base64,' + reward.image" style="max-height: 30px" alt="reward image" />-->
-<!--            </a>-->
-<!--            <span *ngIf="reward.image">{{ reward.imageContentType }}, {{ byteSize(reward.image) }}</span>-->
-<!--          </td>-->
-<!--          <td>-->
-<!--            <div *ngIf="reward.project">-->
-<!--              <a [routerLink]="['/project', reward.project?.id, 'view']">{{ reward.project?.id }}</a>-->
-<!--            </div>-->
-<!--          </td>-->
-<!--          <td class="text-right">-->
-<!--            <div class="btn-group">-->
-<!--              <button type="submit" [routerLink]="[reward.id]" class="btn btn-info btn-sm" data-cy="entityDetailsButton">-->
-<!--                <fa-icon icon="eye"></fa-icon>-->
-<!--                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>-->
-<!--              </button>-->
-
-<!--              <button type="submit" [routerLink]="[reward.id, 'edit']" class="btn btn-primary btn-sm" data-cy="entityEditButton">-->
-<!--                <fa-icon icon="pencil-alt"></fa-icon>-->
-<!--                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>-->
-<!--              </button>-->
-
-<!--              <button type="submit" (click)="delete(reward)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">-->
-<!--                <fa-icon icon="times"></fa-icon>-->
-<!--                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>-->
-<!--              </button>-->
-<!--            </div>-->
-<!--          </td>-->
-<!--        </tr>-->
-<!--      </tbody>-->
-<!--    </table>-->
-<!--  </div>-->
-<!-- ******************************************************************************* -->
-
   <div class="justify-content-center">
-    <div class="mr-3 ml-3 pl-2 mb-4 desc shadow-lg col-5" *ngFor="let reward of rewards; trackBy: trackId">
+    <div class="mr-3 ml-3 pl-2 mt-4 desc shadow-lg" *ngFor="let reward of rewards; trackBy: trackId">
       <div>
         <p class=".h3 font-weight-bold">For {{ reward.minimumValue }} dollars or more</p>
       </div>
@@ -149,45 +57,6 @@
             </button>
           </div>
         </div>
-<!--        <button-->
-<!--          type="submit"-->
-<!--          [routerLink]="['/project', project.id]"-->
-<!--          class="btn btn-info btn-sm"-->
-<!--          data-cy="entityDetailsButton"-->
-<!--        >-->
-<!--          <fa-icon icon="eye"></fa-icon>-->
-<!--          <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>-->
-<!--        </button>-->
-<!--        <button *jhiHasAnyAuthority="'ROLE_ADMIN'" type="submit" (click)="delete(project)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">-->
-<!--          <fa-icon icon="times"></fa-icon>-->
-<!--          <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>-->
-<!--        </button>-->
-
-<!--        <div class="hr-d"></div>-->
-<!--        <p class="time row">-->
-<!--          <span class="col-5"><i class="fa fa-tag"></i> {{ project.category?.name }}</span>-->
-<!--          <span class="col-5 col-offset-2"><i class="fa fa-calendar"></i> Time left : {{(project.duration? calcHours(project.duration) : '0 hours')}}</span>-->
-<!--        </p>-->
       </div>
     </div>
   </div>
-<!--  *********************************************************************************************************-->
-
-<!--  <div *ngIf="rewards && rewards.length > 0">-->
-<!--    <div class="row justify-content-center">-->
-<!--      <jhi-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></jhi-item-count>-->
-<!--    </div>-->
-
-<!--    <div class="row justify-content-center">-->
-<!--      <ngb-pagination-->
-<!--        [collectionSize]="totalItems"-->
-<!--        [(page)]="ngbPaginationPage"-->
-<!--        [pageSize]="itemsPerPage"-->
-<!--        [maxSize]="5"-->
-<!--        [rotate]="true"-->
-<!--        [boundaryLinks]="true"-->
-<!--        (pageChange)="loadPage($event)"-->
-<!--      ></ngb-pagination>-->
-<!--    </div>-->
-<!--  </div>-->
-</div>

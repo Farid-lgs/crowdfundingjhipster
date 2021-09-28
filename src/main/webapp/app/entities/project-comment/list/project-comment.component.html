@@ -9,13 +9,13 @@
     <span jhiTranslate="crowdFundingJHipsterApp.projectComment.home.notFound">No projectComments found</span>
   </div>
 
-  <div class="justify-content-center" id="entities" *ngIf="projectComments && projectComments.length > 0">
+  <div class="justify-content-center offset-2 col-6" id="entities" *ngIf="projectComments && projectComments.length > 0">
     <div *ngFor="let projectComment of projectComments; trackBy: trackId" data-cy="entityTable">
       <div>
         <div class="row font-weight-bold">{{projectComment?.userInfos?.user?.login}}</div>
         <div class="row">
-          <span class="col-11">{{ projectComment.comment }}</span>
-          <button type="submit" (click)="delete(projectComment)" class="btn btn-danger btn-sm col-1" data-cy="entityDeleteButton">
+          <span class="col-10">{{ projectComment.comment }}</span>
+          <button type="submit" (click)="delete(projectComment)" class="btn btn-danger btn-sm col-2" data-cy="entityDeleteButton">
             <fa-icon icon="times"></fa-icon>
             <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
           </button>

@@ -1,10 +1,8 @@
 <div class="row justify-content-center">
-  <div class="col-8">
-    <!--    <div *ngIf="project">-->
-    <h2 data-cy="projectDetailsHeading"><span jhiTranslate="crowdFundingJHipsterApp.project.detail.title">Project</span></h2>
-    <ul class="navbar-expand navbar-nav">
+  <div class="col-12">
+    <h2 class="offset-2" data-cy="projectDetailsHeading"><span jhiTranslate="crowdFundingJHipsterApp.project.detail.title">Project</span></h2>
+    <ul class="navbar-expand navbar-nav offset-2">
       <li class="nav-item ml-3"><a routerLink="../{{project?.id}}">Projet</a></li>
-      <li class="nav-item ml-3"><a routerLink="reward">Reward</a></li>
       <li class="nav-item ml-3"><a routerLink="comment">Commentaires</a></li>
     </ul>
     <router-outlet></router-outlet>

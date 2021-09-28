@@ -5,67 +5,71 @@
   <jhi-alert-error></jhi-alert-error>
 
   <jhi-alert></jhi-alert>
+  <div class="row">
+    <div class="col-6">
 
-  <div class="row-md">
+      <div class="row font-weight-bold mb-3">
+        <span class="col-12">{{ project.title }}</span>
+      </div>
 
-    <div class="row font-weight-bold mb-3">
-      <span class="col-12">{{ project.title }}</span>
-    </div>
+      <div class="row mb-3">
+        <span class="col-12"> {{ amount }} / {{ project.goal }} €</span>
+      </div>
 
-    <div class="row mb-3">
-      <span class="col-12"> {{ amount }} / {{ project.goal }} €</span>
-    </div>
+      <div class="row mb-3">
+        <span class="col-12">{{ project.headline }}</span>
+      </div>
 
-    <div class="row mb-3">
-      <span class="col-12">{{ project.headline }}</span>
-    </div>
+      <div class="row mb-3">
+        <span class="col-12"><iframe width="440" height="240" src="{{ project.videoUrl }}"></iframe></span>
+      </div>
 
-    <div class="row mb-3">
-      <span class="col-12"><iframe width="500" height="240" src="{{ project.videoUrl }}"></iframe></span>
-    </div>
+      <div class="row" mb-3>
+        <span class="col-12">{{ project.location }}</span>
+      </div>
 
-    <div class="row" mb-3>
-      <span class="col-12">{{ project.location }}</span>
-    </div>
+      <div class="row mb-3">
+        <span class="col-12">{{ project.createdAt | formatMediumDatetime }}</span>
+      </div>
 
-    <div class="row mb-3">
-      <span class="col-12">{{ project.createdAt | formatMediumDatetime }}</span>
-    </div>
+      <div class="row mb-3">
+        <span class="col-12">{{ project.description }}</span>
+      </div>
 
-    <div class="row mb-3">
-      <span class="col-12">{{ project.description }}</span>
-    </div>
+      <div class="row mb-3">
+        <span class="col-12">{{ project.moreLinks }}</span>
+      </div>
 
-    <div class="row mb-3">
-      <span class="col-12">{{ project.moreLinks }}</span>
-    </div>
+      <div class="row mb-3">
+        <span class="col-12">{{ project.budgetDescription }}</span>
+      </div>
 
-    <div class="row mb-3">
-      <span class="col-12">{{ project.budgetDescription }}</span>
-    </div>
+      <div class="row mb-3">
+        <div *ngIf="project.coverImage">
+          <a (click)="openFile(project.coverImage, project.coverImageContentType)">
+            <img
+              [src]="'data:' + project.coverImageContentType + ';base64,' + project.coverImage"
+              style="max-width: 100%"
+              alt="project image"
+            />
+          </a>
+          {{ project.coverImageContentType }}, {{ byteSize(project.coverImage) }}
+        </div>
+      </div>
+      <div class="row">
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+        </button>
 
-    <div class="row mb-3">
-      <div *ngIf="project.coverImage">
-        <a (click)="openFile(project.coverImage, project.coverImageContentType)">
-          <img
-            [src]="'data:' + project.coverImageContentType + ';base64,' + project.coverImage"
-            style="max-width: 100%"
-            alt="project image"
-          />
-        </a>
-        {{ project.coverImageContentType }}, {{ byteSize(project.coverImage) }}
+        <button type="button" [routerLink]="['/project', project.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+        </button>
       </div>
     </div>
+
+    <div class="col-6">
+      <router-outlet></router-outlet>
+    </div>
+
   </div>
-
-  <div class="row">
-    <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
-      <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
-    </button>
-
-    <button type="button" [routerLink]="['/project', project.id, 'edit']" class="btn btn-primary">
-      <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
-    </button>
-  </div>
-
 </div>
