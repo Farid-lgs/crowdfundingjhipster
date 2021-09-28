@@ -17,7 +17,6 @@ import {AccountService} from "../../../core/auth/account.service";
 })
 export class CreditCardUpdateComponent implements OnInit {
   isSaving = false;
-  userId: number | undefined;
   IUserInfos = new UserInfos();
 
   userInfosCollection: IUserInfos[] = [];
@@ -47,7 +46,11 @@ export class CreditCardUpdateComponent implements OnInit {
         this.IUserInfos = new UserInfos(this.accountService.userIdentity.id);
       }
 
-      creditCard.userInfos = this.IUserInfos;
+      if(creditCard !== undefined) {
+        creditCard.userInfos = this.IUserInfos;
+      } else {
+        creditCard = new CreditCard(null, null, null, null, null, this.IUserInfos);
+      }
 
       this.updateForm(creditCard);
 
@@ -62,10 +65,10 @@ export class CreditCardUpdateComponent implements OnInit {
   save(): void {
     this.isSaving = true;
     const creditCard = this.createFromForm();
-    if (creditCard.id !== undefined) {
-      this.subscribeToSaveResponse(this.creditCardService.update(creditCard));
-    } else {
+    if (creditCard.id == null) {
       this.subscribeToSaveResponse(this.creditCardService.create(creditCard));
+    } else {
+      this.subscribeToSaveResponse(this.creditCardService.update(creditCard));
     }
   }
 

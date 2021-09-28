@@ -393,9 +393,13 @@ public class UserService {
         Integer key = (Integer) user[17];
         Date date = (Date) user[18];
 
-        LocalDate expirationDate = Instant.ofEpochMilli(date.getTime())
-            .atZone(ZoneId.systemDefault())
-            .toLocalDate();
+        LocalDate expirationDate = null;
+
+        if(date != null) {
+            expirationDate = Instant.ofEpochMilli(date.getTime())
+                .atZone(ZoneId.systemDefault())
+                .toLocalDate();
+        }
 
         creditCard.setNumber(number);
         creditCard.setOwnerName(ownerName);
