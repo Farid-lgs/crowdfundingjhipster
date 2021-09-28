@@ -9,6 +9,7 @@ import { ICreditCard, CreditCard } from '../credit-card.model';
 import { CreditCardService } from '../service/credit-card.service';
 import {IUserInfos, UserInfos} from 'app/entities/user-infos/user-infos.model';
 import { UserInfosService } from 'app/entities/user-infos/service/user-infos.service';
+import {AccountService} from "../../../core/auth/account.service";
 
 @Component({
   selector: 'jhi-credit-card-update',
@@ -33,27 +34,21 @@ export class CreditCardUpdateComponent implements OnInit {
   constructor(
     protected creditCardService: CreditCardService,
     protected userInfosService: UserInfosService,
+    protected accountService: AccountService,
     protected activatedRoute: ActivatedRoute,
     protected fb: FormBuilder
   ) {}
 
   ngOnInit(): void {
-    const userId = this.activatedRoute.snapshot.paramMap.get('userId');
-    const id = this.activatedRoute.snapshot.paramMap.get('id');
-
-    if(id != null) {
-      this.userId = Number(id);
-    }
 
     this.activatedRoute.data.subscribe(({ creditCard }) => {
-      if(userId != null) {
-        this.userId = Number(userId);
 
-        this.IUserInfos = new UserInfos(this.userId);
-
-        creditCard.userInfos = this.IUserInfos;
+      if(this.accountService.userIdentity) {
+        this.IUserInfos = new UserInfos(this.accountService.userIdentity.id);
       }
-      console.log(creditCard);
+
+      creditCard.userInfos = this.IUserInfos;
+
       this.updateForm(creditCard);
 
       this.loadRelationshipsOptions();
