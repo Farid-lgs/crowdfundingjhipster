@@ -52,11 +52,6 @@ const LAYOUT_ROUTES = [navbarRoute, ...errorRoute];
             user: UserManagementResolve,
           },
           children: [
-            {path: 'details/:login/view', component: UserManagementDetailComponent,
-              resolve: {
-                user: UserResolve,
-              },
-            },
             {path: 'creditCard',
               canActivate: [UserRouteAccessService],
               children: [
@@ -87,6 +82,11 @@ const LAYOUT_ROUTES = [navbarRoute, ...errorRoute];
               canActivate: [UserRouteAccessService],
             },
             {path: 'community', component: CommunityUpdateComponent},
+            {path: ':login', component: UserManagementDetailComponent,
+              resolve: {
+                user: UserResolve,
+              },
+            },
             // {path: 'communities/subscription', component: Category},
           ]
         },

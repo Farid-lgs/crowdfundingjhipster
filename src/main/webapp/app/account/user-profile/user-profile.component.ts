@@ -31,7 +31,7 @@ export class UserProfileComponent implements OnInit {
           this.login = this.accountService.userIdentity.login;
         }
 
-        this.globalVariables.personalSubbarBtns[0].path = `details/${this.login}/view`;
+        this.globalVariables.personalSubbarBtns[0].path = `${this.login}`;
         this.btnDatas = this.globalVariables.personalSubbarBtns;
 
         if(!this.id) {
