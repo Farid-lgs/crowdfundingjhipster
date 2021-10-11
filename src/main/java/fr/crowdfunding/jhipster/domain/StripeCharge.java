@@ -1,24 +1,20 @@
 package fr.crowdfunding.jhipster.domain;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
-public class StripeCharge {
+public class StripeCharge implements Serializable {
     private long amount;
     private String receiptEmail;
     private String source;
     private String currency;
+    private String stripePublicKey = "pk_test_51Jh7d8IFCde9fuycMpWCWzGmBpwIWiqgtrkyakVrZuxBv4P2uo87i4yXZreLng129zHGhVIc1SalezZbMsfnkhe800ymADAHyo";
+    private static final int CENT_TO_DOLLAR = 100;
 
-    public StripeCharge() {
-        this.amount = 10 * 100;
-        this.source = "tok_visa";
-        this.currency = "aud";
-        this.receiptEmail = "alexandre.meddas@gmail.com";
-    }
-
-    public StripeCharge(long amount, String receiptEmail) {
-        this.amount = amount;
-        this.source = "tok_visa";
+    public StripeCharge(long amount, String receiptEmail, String token) {
+        this.amount = amount * CENT_TO_DOLLAR;
+        this.source = token;
         this.currency = "aud";
         this.receiptEmail = receiptEmail;
     }
@@ -34,6 +30,8 @@ public class StripeCharge {
             "My First Test Charge (created for API docs)"
         );
         params.put("receipt_email",this.receiptEmail);
+//        params.put("stripePublicKey",this.stripePublicKey);
+//        params.put("stripeToken", "tok_1JiF6eIFCde9fuycXfaoY7S5");
         return params;
     }
 
@@ -44,6 +42,7 @@ public class StripeCharge {
             ", receiptEmail='" + receiptEmail + '\'' +
             ", source='" + source + '\'' +
             ", currency='" + currency + '\'' +
+            ", stripePublicKey='" + stripePublicKey + '\'' +
             '}';
     }
 }

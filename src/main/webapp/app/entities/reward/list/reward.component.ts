@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import { HttpHeaders, HttpResponse } from '@angular/common/http';
+import {HttpClient, HttpHeaders, HttpResponse} from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
 import { combineLatest } from 'rxjs';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -11,6 +11,9 @@ import { RewardService } from '../service/reward.service';
 import { RewardDeleteDialogComponent } from '../delete/reward-delete-dialog.component';
 import { DataUtils } from 'app/core/util/data-util.service';
 import {CreatorService} from "../../../shared/service/creator.service";
+import {PaymentService} from "../../../shared/service/payment.service";
+import {map} from "rxjs/operators";
+import {ApplicationConfigService} from "../../../core/config/application-config.service";
 
 @Component({
   selector: 'jhi-reward',
@@ -27,6 +30,9 @@ export class RewardComponent implements OnInit {
   ngbPaginationPage = 1;
   projectId = 0;
   creator = false;
+  paymentHandler:any = null;
+  protected resourceUrl = this.applicationConfigService.getEndpointFor('api/charge');
+
   // @Input() creator: boolean | undefined;
 
   constructor(
@@ -35,7 +41,8 @@ export class RewardComponent implements OnInit {
     protected dataUtils: DataUtils,
     protected router: Router,
     protected modalService: NgbModal,
-    protected creatorService: CreatorService
+    protected creatorService: CreatorService,
+    protected paymentService: PaymentService,protected http: HttpClient, protected applicationConfigService: ApplicationConfigService
   ) {}
 
   loadPage(page?: number, dontNavigate?: boolean): void {
@@ -66,7 +73,67 @@ export class RewardComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.invokeStripe();
+    // this.paymentService.invokeStripe();
     this.handleNavigation();
+  }
+
+  makePayment(amount: number | undefined, paymentService: PaymentService = this.paymentService): void {
+    if(typeof amount === 'undefined') {
+      amount = 0;
+    }
+    // this.paymentService.payment(amount);
+    // console.log(this.paymentService.payment(amount));
+
+    /*const paymentHandler = */(<any>window).StripeCheckout.configure({
+      key: 'pk_test_51Jh7d8IFCde9fuycMpWCWzGmBpwIWiqgtrkyakVrZuxBv4P2uo87i4yXZreLng129zHGhVIc1SalezZbMsfnkhe800ymADAHyo',
+      locale: 'auto',
+      token(stripeToken: any) {
+        console.log(stripeToken)
+        console.log(stripeToken.id)
+        alert('Stripe token generated!');
+        console.log(paymentService.paymentBack(amount, stripeToken.id, stripeToken.email));
+        // console.log(paymentService.paymentBack(amount, stripeToken.id, stripeToken.email));
+
+
+        // this.http.post(this.resourceUrl).pipe(map((res: any) => console.log(res)));
+        // console.log(this.paymentService.payment(amount));
+        console.log("eeeeeeeeeeee");
+      }
+    }).open({
+      name: 'Positronx',
+      description: '3 widgets',
+      amount: amount * 100
+    });
+
+    // this.paymentService.test();
+// console.log("ttttttttt");
+//     paymentHandler.open({
+//       name: 'Positronx',
+//       description: '3 widgets',
+//       amount: amount * 100
+//     });
+  }
+
+  invokeStripe(): void {
+    if(!window.document.getElementById('stripe-script')) {
+      const script = window.document.createElement("script");
+      script.id = "stripe-script";
+      script.type = "text/javascript";
+      script.src = "https://checkout.stripe.com/checkout.js";
+      script.onload = () => {
+        this.paymentHandler = (<any>window).StripeCheckout.configure({
+          key: 'pk_test_51Jh7d8IFCde9fuycMpWCWzGmBpwIWiqgtrkyakVrZuxBv4P2uo87i4yXZreLng129zHGhVIc1SalezZbMsfnkhe800ymADAHyo',
+          locale: 'auto',
+          token(stripeToken: any) {
+            console.log(stripeToken)
+            alert('Payment has been successfull!');
+          }
+        });
+      }
+
+      window.document.body.appendChild(script);
+    }
   }
 
   trackId(index: number, item: IReward): number {
