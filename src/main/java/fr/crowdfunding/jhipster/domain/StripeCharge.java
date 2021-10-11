@@ -30,8 +30,7 @@ public class StripeCharge implements Serializable {
             "My First Test Charge (created for API docs)"
         );
         params.put("receipt_email",this.receiptEmail);
-//        params.put("stripePublicKey",this.stripePublicKey);
-//        params.put("stripeToken", "tok_1JiF6eIFCde9fuycXfaoY7S5");
+
         return params;
     }
 
