@@ -8,6 +8,8 @@ import fr.crowdfunding.jhipster.service.dto.ProjectDTO;
 import fr.crowdfunding.jhipster.service.mapper.ProjectMapper;
 
 import java.math.BigInteger;
+import java.sql.Timestamp;
+import java.time.Instant;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
@@ -172,14 +174,14 @@ public class ProjectService {
             p.setGoal((Double) res[4]);
             p.setHeadline((String) res[5]);
             p.setDuration((Integer)res[6]);
-            p.setNbRows((BigInteger)res[9]);
+            p.setCreatedAt(((Timestamp) res[7]).toInstant());
+            p.setNbRows((BigInteger)res[10]);
 
-            c.setId((BigInteger) res[7]);
-            c.setName((String) res[8]);
+            c.setId((BigInteger) res[8]);
+            c.setName((String) res[9]);
             p.setCategory(c);
             project.add(p);
         }
-
         return project;
     }
 

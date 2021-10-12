@@ -28,23 +28,13 @@ export interface IProject {
   coverImage?: string | null;
   status?: ProjectStatuts | null;
   commonId?: string | null;
-  // publishDate: Moment;
   projectImages?: IProjectImages[] | null;
   contributions?: IContribution[] | null;
   projectAccounts?: IProjectAccount[] | null;
   projectPosts?: IProjectComment[] | null;
   rewards?: IReward[] | null;
-  // communityId?: number;
-  // userInfosId?: number;
-  // categoryId?: number;
-  // balanceTransferId?: number;
-  projectAccountDTO?: IProjectAccount | null;// a delete si useless
-  // categoryDTO?: ICategory;
-  participants?: number | null; // A delete si useless
+  participants?: number | null;
   amount?: number | null;
-  // communityDTO?: ICommunity;
-
-  balanceTransfer?: IBalanceTransfer | null;
   community?: ICommunity | null;
   userInfos?: IUserInfos | null;
   category?: ICategory | null;
@@ -69,21 +59,13 @@ export class Project implements IProject {
     public coverImage?: string | null,
     public status?: ProjectStatuts | null,
     public commonId?: string | null,
-    // public publishDate?: Moment,
     public projectImages?: IProjectImages[] | null,
     public contributions?: IContribution[] | null,
     public projectAccounts?: IProjectAccount[] | null,
     public projectPosts?: IProjectComment[] | null,
     public rewards?: IReward[] | null,
-    // public communityId?: number,
-    // public userInfosId?: number,
-    // public categoryId?: number,
-    // public balanceTransferId?: number,
     public participants?: number | null,
     public amount?: number | null,
-    public projectAccountDTO?: IProjectAccount | null,
-
-    public balanceTransfer?: IBalanceTransfer | null,
     public community?: ICommunity | null,
     public userInfos?: IUserInfos | null,
     public category?: ICategory | null

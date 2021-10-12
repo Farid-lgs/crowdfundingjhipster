@@ -44,8 +44,8 @@
     <div class="row justify-content-center">
       <div class="mr-3 ml-3 mb-4 col-lg-3 col-md-3 col-xs-12 desc shadow-lg" *ngFor="let project of projects ; trackBy: trackId">
         <a class="b-link-fade b-animate-go" [routerLink]="['/project', project.id, 'view']">
-          <img *ngIf="project.coverImage" width="360" height="230" [src]="'data:' + project.coverImageContentType + ';base64,' + project.coverImage" alt="project image" />
-          <img *ngIf="!project.coverImage" width="360" height="230" src="../../../content/images/projectLogo.png" alt="project image" />
+          <img *ngIf="project.coverImage" width="240" height="120" [src]="'data:' + project.coverImageContentType + ';base64,' + project.coverImage" alt="project image" />
+          <img *ngIf="!project.coverImage" width="240" height="120" src="../../../content/images/projectLogo.png" alt="project image" />
         </a>
         <div class="desc1">
           <h2>{{ project.title }}</h2>
@@ -77,7 +77,7 @@
           <div class="hr-d"></div>
           <p class="time row">
             <span class="col-5"><i class="fa fa-tag"></i> {{ project.category?.name }}</span>
-            <span class="col-5 col-offset-2"><i class="fa fa-calendar"></i> Time left : {{(project.duration? calcHours(project.duration) : '0 hours')}}</span>
+            <span class="col-5 col-offset-2"><i class="fa fa-calendar"></i> {{project.createdAt | formatMediumDate }}</span>
           </p>
         </div>
       </div>

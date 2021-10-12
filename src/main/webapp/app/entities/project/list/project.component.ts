@@ -90,17 +90,6 @@ export class ProjectComponent implements OnInit {
     }
   }
 
-  calcHours(duration: number): string {
-    const days = Math.round(duration / 60 / 60 / 24);
-    const hours = Math.round(duration / 60 / 60) % 24;
-    if(days === 0) {
-      return `${hours} hours`;
-    }
-    if(days > 0 && hours === 0) {
-      return `${days} days`
-    }
-    return `${days} days ${hours} hours`;
-  }
   trackId(index: number, item: IProject): number {
     return item.id!;
   }
