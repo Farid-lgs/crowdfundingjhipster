@@ -1,6 +1,8 @@
 package fr.crowdfunding.jhipster.service;
 
 import fr.crowdfunding.jhipster.domain.Contribution;
+import fr.crowdfunding.jhipster.domain.Project;
+import fr.crowdfunding.jhipster.domain.UserInfos;
 import fr.crowdfunding.jhipster.repository.ContributionRepository;
 import fr.crowdfunding.jhipster.service.dto.ContributionDTO;
 import fr.crowdfunding.jhipster.service.mapper.ContributionMapper;
@@ -24,10 +26,14 @@ public class ContributionService {
     private final ContributionRepository contributionRepository;
 
     private final ContributionMapper contributionMapper;
+    private final UserInfosService userInfosService;
+    private final ProjectService projectService;
 
-    public ContributionService(ContributionRepository contributionRepository, ContributionMapper contributionMapper) {
+    public ContributionService(ContributionRepository contributionRepository, ContributionMapper contributionMapper, UserInfosService userInfosService, ProjectService projectService) {
         this.contributionRepository = contributionRepository;
         this.contributionMapper = contributionMapper;
+        this.userInfosService = userInfosService;
+        this.projectService = projectService;
     }
 
     /**
@@ -41,6 +47,14 @@ public class ContributionService {
         Contribution contribution = contributionMapper.toEntity(contributionDTO);
         contribution = contributionRepository.save(contribution);
         return contributionMapper.toDto(contribution);
+    }
+
+    public void saveContributionPostCharge(double amount, Long projectId, String userName) {
+        Project project = projectService.getProject(projectId).get();
+        UserInfos userInfos = userInfosService.getUser(userName).get();
+        Contribution contribution = new Contribution(amount, userName, userInfos, project);
+
+        contributionRepository.save(contribution);
     }
 
     /**

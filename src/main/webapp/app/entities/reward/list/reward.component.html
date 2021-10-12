@@ -19,6 +19,7 @@
     <div class="mr-3 ml-3 pl-2 mt-4 desc shadow-lg" *ngFor="let reward of rewards; trackBy: trackId">
       <div>
         <p class=".h3 font-weight-bold">For {{ reward.minimumValue }} dollars or more</p>
+        <button (click)="makePayment(reward.minimumValue)" class="btn btn-danger btn-block">Pay ${{ reward.minimumValue }}</button>
       </div>
       <a class="b-link-fade b-animate-go" [routerLink]="['/reward', reward.id, 'view']">
         <img *ngIf="reward.image" width="360" height="230" [src]="'data:' + reward.imageContentType + ';base64,' + reward.image" alt="reward image" />

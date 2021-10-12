@@ -18,7 +18,11 @@ export class ProjectDetailComponent implements OnInit {
   constructor(protected dataUtils: DataUtils, protected activatedRoute: ActivatedRoute, protected creatorService: CreatorService, protected projectService: ProjectService) {}
 
   ngOnInit(): void {
-    this.amount = this.projectService.amount;
+    if(localStorage.getItem('amount') !== null && localStorage.getItem('amount') !== '') {
+      this.amount = Number(localStorage.getItem('amount'));
+    } else {
+      this.amount = this.projectService.amount;
+    }
     this.activatedRoute.data.subscribe(({ project }) => {
       this.project = project;
 

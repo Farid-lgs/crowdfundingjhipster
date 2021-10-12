@@ -39,11 +39,11 @@ public class Contribution implements Serializable {
 
     @NotNull
     @Column(name = "anonymous", nullable = false)
-    private Boolean anonymous;
+    private Boolean anonymous = false;
 
     @NotNull
     @Column(name = "rewarded", nullable = false)
-    private Boolean rewarded;
+    private Boolean rewarded = false;
 
     @JsonIgnoreProperties(value = { "contribution" }, allowSetters = true)
     @OneToOne
@@ -83,6 +83,16 @@ public class Contribution implements Serializable {
         allowSetters = true
     )
     private Project project;
+
+    public Contribution() {
+    }
+
+    public Contribution(Double amount, String payerName, UserInfos userInfos, Project project) {
+        this.amount = amount;
+        this.payerName = payerName;
+        this.userInfos = userInfos;
+        this.project = project;
+    }
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
     public Long getId() {

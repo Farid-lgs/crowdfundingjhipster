@@ -25,6 +25,7 @@ export class ProjectService {
 
   set amount(value: number) {
     this._amount = value;
+    localStorage.setItem('amount', String(value));
   }
 
   create(project: IProject): Observable<EntityResponseType> {

@@ -209,6 +209,11 @@ public class ProjectService {
         return projectRepository.findById(id).map(projectMapper::toDto);
     }
 
+    @Transactional(readOnly = true)
+    public Optional<Project> getProject(Long id) {
+        return projectRepository.findById(id);
+    }
+
     /**
      * Delete the project by id.
      *

@@ -158,7 +158,7 @@ public class UserInfosService {
 
     @Transactional(readOnly = true)
     public Optional<UserInfos> getUser(String login) {
-        return userInfosRepository.findOneUseInfosrByPublicName(login);
+        return userInfosRepository.findOneUserInfosByPublicName(login);
     }
 
     /**
