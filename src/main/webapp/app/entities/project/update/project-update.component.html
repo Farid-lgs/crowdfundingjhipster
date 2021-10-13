@@ -1,18 +1,11 @@
 <div class="row justify-content-center">
   <div class="col-8">
     <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
-      <h2
-        id="jhi-project-heading"
-        data-cy="ProjectCreateUpdateHeading"
-        jhiTranslate="crowdFundingJHipsterApp.project.home.createOrEditLabel"
-      >
-        Create or edit a Project
-      </h2>
 
       <div>
         <jhi-alert-error></jhi-alert-error>
 
-        <div class="form-group" [hidden]="editForm.get('id')!.value == null">
+        <div class="form-group" [hidden]="true">
           <label class="form-control-label" jhiTranslate="global.field.id" for="field_id">ID</label>
           <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
         </div>
@@ -230,19 +223,6 @@
         <div class="form-group">
           <label class="form-control-label" jhiTranslate="crowdFundingJHipsterApp.project.commonId" for="field_commonId">Common Id</label>
           <input type="text" class="form-control" name="commonId" id="field_commonId" data-cy="commonId" formControlName="commonId" />
-        </div>
-
-        <div class="form-group">
-          <label class="form-control-label" jhiTranslate="crowdFundingJHipsterApp.project.community" for="field_community">Community</label>
-          <select class="form-control" id="field_community" data-cy="community" name="community" formControlName="community">
-            <option [ngValue]="null"></option>
-            <option
-              [ngValue]="communityOption.id === editForm.get('community')!.value?.id ? editForm.get('community')!.value : communityOption"
-              *ngFor="let communityOption of communitiesSharedCollection; trackBy: trackCommunityById"
-            >
-              {{ communityOption.id }}
-            </option>
-          </select>
         </div>
 
         <div class="form-group">

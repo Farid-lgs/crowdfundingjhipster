@@ -56,11 +56,6 @@ const projectRoute: Routes = [
 
         loadChildren: () => import('../../reward/reward.module').then(m => m.RewardModule),
       },
-      // {
-      //   path: '',
-      //   data: { pageTitle: 'crowdFundingJHipsterApp.reward.home.title' },
-      //   loadChildren: () => import('../../reward/reward.module').then(m => m.RewardModule),
-      // },
     ]
   },
   {

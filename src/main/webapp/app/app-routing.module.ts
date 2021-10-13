@@ -8,25 +8,15 @@ import { Authority } from 'app/config/authority.constants';
 
 import { UserRouteAccessService } from 'app/core/auth/user-route-access.service';
 import {UserProfileComponent} from "./account/user-profile/user-profile.component";
-import {CreditCardComponent} from "./entities/credit-card/list/credit-card.component";
-import {AddressComponent} from "./entities/address/list/address.component";
-import {CommunityComponent} from "./entities/community/list/community.component";
-import {CommunityDetailComponent} from "./entities/community/detail/community-detail.component";
 import {CommunityUpdateComponent} from "./entities/community/update/community-update.component";
-import {ProjectUpdateComponent} from "./entities/project/update/project-update.component";
-import {Project} from "./entities/project/project.model";
 import {ProjectComponent} from "./entities/project/list/project.component";
 import {CreditCardUpdateComponent} from "./entities/credit-card/update/credit-card-update.component";
-import {UserInfosDetailComponent} from "./entities/user-infos/detail/user-infos-detail.component";
 import {AddressUpdateComponent} from "./entities/address/update/address-update.component";
 import {UserManagementDetailComponent} from "./admin/user-management/detail/user-management-detail.component";
 import {UserManagementResolve} from "./admin/user-management/user-management.route";
 import {UserResolve} from "./account/user-resolve";
 import {AddressRoutingResolveService} from "./entities/address/route/address-routing-resolve.service";
 import {CreditCardRoutingResolveService} from "./entities/credit-card/route/credit-card-routing-resolve.service";
-import {RewardUpdateComponent} from "./entities/reward/update/reward-update.component";
-import {RewardRoutingResolveService} from "./entities/reward/route/reward-routing-resolve.service";
-import {UserManagementUpdateComponent} from "./admin/user-management/update/user-management-update.component";
 import {UserInfosUpdateComponent} from "./entities/user-infos/update/user-infos-update.component";
 import {UserInfosRoutingResolveService} from "./entities/user-infos/route/user-infos-routing-resolve.service";
 
@@ -97,8 +87,6 @@ const LAYOUT_ROUTES = [navbarRoute, ...errorRoute];
               },
               canActivate: [UserRouteAccessService],
             },
-
-            // {path: 'communities/subscription', component: Category},
           ]
         },
 

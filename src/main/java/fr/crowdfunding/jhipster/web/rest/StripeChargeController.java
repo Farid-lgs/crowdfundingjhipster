@@ -34,7 +34,7 @@ public class StripeChargeController {
 
         try {
             // creating the charge
-            Stripe.apiKey = "sk_test_51Jh7d8IFCde9fuycylNbFRx4yyFuR5YXdodIJr9VRCBmKx3myalnlrz9mt1Jcs0zNcDWHViJw2JS6sdzTldDR7Po00nxhXpDdr";//dotenv.get("SK_TEST_KEY");
+            Stripe.apiKey = "sk_test_51Jh7d8IFCde9fuycylNbFRx4yyFuR5YXdodIJr9VRCBmKx3myalnlrz9mt1Jcs0zNcDWHViJw2JS6sdzTldDR7Po00nxhXpDdr";
             Charge charge = Charge.create(stripeCharge.getCharge());
 
             addContributionPostCharge(arrayDatasSplit);
