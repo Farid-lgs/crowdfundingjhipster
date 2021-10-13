@@ -1,8 +1,6 @@
 package fr.crowdfunding.jhipster.repository;
 
 import fr.crowdfunding.jhipster.domain.UserInfos;
-import fr.crowdfunding.jhipster.service.dto.UserInfosDTO;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.jpa.repository.*;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
