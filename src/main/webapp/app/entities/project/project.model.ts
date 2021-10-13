@@ -4,7 +4,6 @@ import { IContribution } from 'app/entities/contribution/contribution.model';
 import { IProjectAccount } from 'app/entities/project-account/project-account.model';
 import { IProjectComment } from 'app/entities/project-comment/project-comment.model';
 import { IReward } from 'app/entities/reward/reward.model';
-import { IBalanceTransfer } from 'app/entities/balance-transfer/balance-transfer.model';
 import { ICommunity } from 'app/entities/community/community.model';
 import { IUserInfos } from 'app/entities/user-infos/user-infos.model';
 import { ICategory } from 'app/entities/category/category.model';
@@ -33,7 +32,8 @@ export interface IProject {
   projectAccounts?: IProjectAccount[] | null;
   projectPosts?: IProjectComment[] | null;
   rewards?: IReward[] | null;
-  balanceTransfer?: IBalanceTransfer | null;
+  participants?: number | null;
+  amount?: number | null;
   community?: ICommunity | null;
   userInfos?: IUserInfos | null;
   category?: ICategory | null;
@@ -63,11 +63,12 @@ export class Project implements IProject {
     public projectAccounts?: IProjectAccount[] | null,
     public projectPosts?: IProjectComment[] | null,
     public rewards?: IReward[] | null,
-    public balanceTransfer?: IBalanceTransfer | null,
+    public participants?: number | null,
+    public amount?: number | null,
     public community?: ICommunity | null,
     public userInfos?: IUserInfos | null,
     public category?: ICategory | null
-  ) {}
+  ) { }
 }
 
 export function getProjectIdentifier(project: IProject): number | undefined {

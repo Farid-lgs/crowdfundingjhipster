@@ -15,18 +15,20 @@ const projectCommentRoute: Routes = [
       defaultSort: 'id,asc',
     },
     canActivate: [UserRouteAccessService],
+    children: [
+      {
+        path: '',
+        component: ProjectCommentUpdateComponent,
+        resolve: {
+          projectComment: ProjectCommentRoutingResolveService,
+        },
+        canActivate: [UserRouteAccessService],
+      },
+    ]
   },
   {
     path: ':id/view',
     component: ProjectCommentDetailComponent,
-    resolve: {
-      projectComment: ProjectCommentRoutingResolveService,
-    },
-    canActivate: [UserRouteAccessService],
-  },
-  {
-    path: 'new',
-    component: ProjectCommentUpdateComponent,
     resolve: {
       projectComment: ProjectCommentRoutingResolveService,
     },

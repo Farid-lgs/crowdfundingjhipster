@@ -12,7 +12,7 @@ export class RewardRoutingResolveService implements Resolve<IReward> {
   constructor(protected service: RewardService, protected router: Router) {}
 
   resolve(route: ActivatedRouteSnapshot): Observable<IReward> | Observable<never> {
-    const id = route.params['id'];
+    const id = route.params['rewardId'];
     if (id) {
       return this.service.find(id).pipe(
         mergeMap((reward: HttpResponse<Reward>) => {

@@ -2,6 +2,7 @@ package fr.crowdfunding.jhipster.service.dto;
 
 import fr.crowdfunding.jhipster.domain.enumeration.ProjectStatuts;
 import java.io.Serializable;
+import java.math.BigInteger;
 import java.time.Instant;
 import java.util.Objects;
 import java.util.UUID;

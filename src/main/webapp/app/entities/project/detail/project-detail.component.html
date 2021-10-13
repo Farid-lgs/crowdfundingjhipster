@@ -1,115 +1,74 @@
-<div class="row justify-content-center">
-  <div class="col-8">
-    <div *ngIf="project">
-      <h2 data-cy="projectDetailsHeading"><span jhiTranslate="crowdFundingJHipsterApp.project.detail.title">Project</span></h2>
+<div *ngIf="project">
+  <hr />
 
-      <hr />
+  <jhi-alert-error></jhi-alert-error>
 
-      <jhi-alert-error></jhi-alert-error>
+  <jhi-alert></jhi-alert>
+  <div class="row">
+    <div class="col-6">
 
-      <jhi-alert></jhi-alert>
+      <div class="row font-weight-bold mb-3">
+        <span class="col-12">{{ project.title }}</span>
+      </div>
 
-      <dl class="row-md jh-entity-details">
-        <dt><span jhiTranslate="global.field.id">ID</span></dt>
-        <dd>
-          <span>{{ project.id }}</span>
-        </dd>
-        <dt><span jhiTranslate="crowdFundingJHipsterApp.project.title">Title</span></dt>
-        <dd>
-          <span>{{ project.title }}</span>
-        </dd>
-        <dt><span jhiTranslate="crowdFundingJHipsterApp.project.goal">Goal</span></dt>
-        <dd>
-          <span>{{ project.goal }}</span>
-        </dd>
-        <dt><span jhiTranslate="crowdFundingJHipsterApp.project.headline">Headline</span></dt>
-        <dd>
-          <span>{{ project.headline }}</span>
-        </dd>
-        <dt><span jhiTranslate="crowdFundingJHipsterApp.project.videoUrl">Video Url</span></dt>
-        <dd>
-          <span>{{ project.videoUrl }}</span>
-        </dd>
-        <dt><span jhiTranslate="crowdFundingJHipsterApp.project.location">Location</span></dt>
-        <dd>
-          <span>{{ project.location }}</span>
-        </dd>
-        <dt><span jhiTranslate="crowdFundingJHipsterApp.project.createdAt">Created At</span></dt>
-        <dd>
-          <span>{{ project.createdAt | formatMediumDatetime }}</span>
-        </dd>
-        <dt><span jhiTranslate="crowdFundingJHipsterApp.project.updatedAt">Updated At</span></dt>
-        <dd>
-          <span>{{ project.updatedAt | formatMediumDatetime }}</span>
-        </dd>
-        <dt><span jhiTranslate="crowdFundingJHipsterApp.project.description">Description</span></dt>
-        <dd>
-          <span>{{ project.description }}</span>
-        </dd>
-        <dt><span jhiTranslate="crowdFundingJHipsterApp.project.moreLinks">More Links</span></dt>
-        <dd>
-          <span>{{ project.moreLinks }}</span>
-        </dd>
-        <dt><span jhiTranslate="crowdFundingJHipsterApp.project.budgetDescription">Budget Description</span></dt>
-        <dd>
-          <span>{{ project.budgetDescription }}</span>
-        </dd>
-        <dt><span jhiTranslate="crowdFundingJHipsterApp.project.duration">Duration</span></dt>
-        <dd>
-          <span>{{ project.duration }}</span>
-        </dd>
-        <dt><span jhiTranslate="crowdFundingJHipsterApp.project.adminNotes">Admin Notes</span></dt>
-        <dd>
-          <span>{{ project.adminNotes }}</span>
-        </dd>
-        <dt><span jhiTranslate="crowdFundingJHipsterApp.project.coverImage">Cover Image</span></dt>
-        <dd>
-          <div *ngIf="project.coverImage">
-            <a (click)="openFile(project.coverImage, project.coverImageContentType)">
-              <img
-                [src]="'data:' + project.coverImageContentType + ';base64,' + project.coverImage"
-                style="max-width: 100%"
-                alt="project image"
-              />
-            </a>
-            {{ project.coverImageContentType }}, {{ byteSize(project.coverImage) }}
-          </div>
-        </dd>
-        <dt><span jhiTranslate="crowdFundingJHipsterApp.project.status">Status</span></dt>
-        <dd>
-          <span jhiTranslate="{{ 'crowdFundingJHipsterApp.ProjectStatuts.' + project.status }}">{{ project.status }}</span>
-        </dd>
-        <dt><span jhiTranslate="crowdFundingJHipsterApp.project.commonId">Common Id</span></dt>
-        <dd>
-          <span>{{ project.commonId }}</span>
-        </dd>
-        <dt><span jhiTranslate="crowdFundingJHipsterApp.project.community">Community</span></dt>
-        <dd>
-          <div *ngIf="project.community">
-            <a [routerLink]="['/community', project.community?.id, 'view']">{{ project.community?.id }}</a>
-          </div>
-        </dd>
-        <dt><span jhiTranslate="crowdFundingJHipsterApp.project.userInfos">User Infos</span></dt>
-        <dd>
-          <div *ngIf="project.userInfos">
-            <a [routerLink]="['/user-infos', project.userInfos?.id, 'view']">{{ project.userInfos?.id }}</a>
-          </div>
-        </dd>
-        <dt><span jhiTranslate="crowdFundingJHipsterApp.project.category">Category</span></dt>
-        <dd>
-          <div *ngIf="project.category">
-            <a [routerLink]="['/category', project.category?.id, 'view']">{{ project.category?.id }}</a>
-          </div>
-        </dd>
-      </dl>
+      <div class="row mb-3">
+        <span class="col-12"> {{ amount }} / {{ project.goal }} €</span>
+      </div>
 
-      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
-        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
-      </button>
+      <div class="row mb-3">
+        <span class="col-12">{{ project.headline }}</span>
+      </div>
 
-      <button type="button" [routerLink]="['/project', project.id, 'edit']" class="btn btn-primary">
-        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
-      </button>
+      <div class="row mb-3">
+        <span class="col-12"><iframe width="440" height="240" src="{{ project.videoUrl }}"></iframe></span>
+      </div>
+
+      <div class="row" mb-3>
+        <span class="col-12">{{ project.location }}</span>
+      </div>
+
+      <div class="row mb-3">
+        <span class="col-12">{{ project.createdAt | formatMediumDatetime }}</span>
+      </div>
+
+      <div class="row mb-3">
+        <span class="col-12">{{ project.description }}</span>
+      </div>
+
+      <div class="row mb-3">
+        <span class="col-12">{{ project.moreLinks }}</span>
+      </div>
+
+      <div class="row mb-3">
+        <span class="col-12">{{ project.budgetDescription }}</span>
+      </div>
+
+      <div class="row mb-3">
+        <div *ngIf="project.coverImage">
+          <a (click)="openFile(project.coverImage, project.coverImageContentType)">
+            <img
+              [src]="'data:' + project.coverImageContentType + ';base64,' + project.coverImage"
+              style="max-width: 100%"
+              alt="project image"
+            />
+          </a>
+          {{ project.coverImageContentType }}, {{ byteSize(project.coverImage) }}
+        </div>
+      </div>
+      <div class="row">
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/project', project.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+        </button>
+      </div>
     </div>
+
+    <div class="col-6">
+      <router-outlet></router-outlet>
+    </div>
+
   </div>
 </div>

@@ -1,5 +1,6 @@
 package fr.crowdfunding.jhipster.service;
 
+import fr.crowdfunding.jhipster.domain.User;
 import fr.crowdfunding.jhipster.domain.UserInfos;
 import fr.crowdfunding.jhipster.repository.UserInfosRepository;
 import fr.crowdfunding.jhipster.repository.UserRepository;
@@ -153,6 +154,11 @@ public class UserInfosService {
     public Optional<UserInfosDTO> findOne(Long id) {
         log.debug("Request to get UserInfos : {}", id);
         return userInfosRepository.findById(id).map(userInfosMapper::toDto);
+    }
+
+    @Transactional(readOnly = true)
+    public Optional<UserInfos> getUser(String login) {
+        return userInfosRepository.findOneUserInfosByPublicName(login);
     }
 
     /**

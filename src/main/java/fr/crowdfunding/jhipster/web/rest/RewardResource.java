@@ -17,7 +17,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -144,10 +143,10 @@ public class RewardResource {
      * @param pageable the pagination information.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of rewards in body.
      */
-    @GetMapping("/rewards")
-    public ResponseEntity<List<RewardDTO>> getAllRewards(Pageable pageable) {
+    @GetMapping("/rewards/project/{id}")
+    public ResponseEntity<List<RewardDTO>> getAllRewards(Pageable pageable, @PathVariable Long id) {
         log.debug("REST request to get a page of Rewards");
-        Page<RewardDTO> page = rewardService.findAll(pageable);
+        Page<RewardDTO> page = rewardService.findAll(pageable, id);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return ResponseEntity.ok().headers(headers).body(page.getContent());
     }

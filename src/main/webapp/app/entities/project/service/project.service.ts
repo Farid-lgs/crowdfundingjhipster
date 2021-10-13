@@ -15,8 +15,18 @@ export type EntityArrayResponseType = HttpResponse<IProject[]>;
 @Injectable({ providedIn: 'root' })
 export class ProjectService {
   protected resourceUrl = this.applicationConfigService.getEndpointFor('api/projects');
+  private _amount = 0;
 
   constructor(protected http: HttpClient, protected applicationConfigService: ApplicationConfigService) {}
+
+  get amount(): number {
+    return this._amount;
+  }
+
+  set amount(value: number) {
+    this._amount = value;
+    localStorage.setItem('amount', String(value));
+  }
 
   create(project: IProject): Observable<EntityResponseType> {
     const copy = this.convertDateFromClient(project);
@@ -43,6 +53,14 @@ export class ProjectService {
     return this.http
       .get<IProject>(`${this.resourceUrl}/${id}`, { observe: 'response' })
       .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
+  }
+
+  findByUserId(id: number, req?: any): Observable<EntityArrayResponseType> {
+    const options = createRequestOption(req);
+
+    return this.http
+      .get<IProject[]>(`${this.resourceUrl}/user/${id}`, { params: options, observe: 'response' })
+      .pipe(map((res: EntityArrayResponseType) => this.convertDateArrayFromServer(res)));
   }
 
   query(req?: any): Observable<EntityArrayResponseType> {

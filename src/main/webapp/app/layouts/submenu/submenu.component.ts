@@ -8,17 +8,15 @@ import {Component, Input, OnInit} from '@angular/core';
 export class SubmenuComponent implements OnInit {
 
   @Input() btnDatas: any;
-  userLogin: string = localStorage.getItem('user') as string;
-  // test: string = localStorage.getItem('user') === null ? '' : localStorage.getItem('user');
+  userLogin: string = localStorage.getItem('login') as string;
 
   constructor() {
     // do nothing
   }
 
   ngOnInit(): void {
-    // if(localStorage.getItem('user')  null)
-    //   this.user = <string>localStorage.getItem('user') === null ? '' : localStorage.getItem('user');
-    // // do nothing
+    this.userLogin = localStorage.getItem('login') as string;
+    // do nothing
   }
 
 }

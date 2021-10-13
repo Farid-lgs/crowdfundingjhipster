@@ -1,7 +1,9 @@
 package fr.crowdfunding.jhipster.service;
 
 import fr.crowdfunding.jhipster.domain.Address;
+import fr.crowdfunding.jhipster.domain.UserInfos;
 import fr.crowdfunding.jhipster.repository.AddressRepository;
+import fr.crowdfunding.jhipster.repository.UserInfosRepository;
 import fr.crowdfunding.jhipster.service.dto.AddressDTO;
 import fr.crowdfunding.jhipster.service.mapper.AddressMapper;
 import java.util.Optional;
@@ -25,9 +27,12 @@ public class AddressService {
 
     private final AddressMapper addressMapper;
 
-    public AddressService(AddressRepository addressRepository, AddressMapper addressMapper) {
+    private final UserInfosRepository userInfosRepository;
+
+    public AddressService(AddressRepository addressRepository, AddressMapper addressMapper, UserInfosRepository userInfosRepository) {
         this.addressRepository = addressRepository;
         this.addressMapper = addressMapper;
+        this.userInfosRepository = userInfosRepository;
     }
 
     /**
@@ -39,6 +44,8 @@ public class AddressService {
     public AddressDTO save(AddressDTO addressDTO) {
         log.debug("Request to save Address : {}", addressDTO);
         Address address = addressMapper.toEntity(addressDTO);
+        Optional<UserInfos> userInfos = userInfosRepository.findById(addressDTO.getUserInfos().getId());
+        address.setUserInfos(userInfos.get());
         address = addressRepository.save(address);
         return addressMapper.toDto(address);
     }
@@ -86,7 +93,9 @@ public class AddressService {
     @Transactional(readOnly = true)
     public Optional<AddressDTO> findOne(Long id) {
         log.debug("Request to get Address : {}", id);
-        return addressRepository.findById(id).map(addressMapper::toDto);
+        Optional<UserInfos> userInfos = userInfosRepository.findById(id);
+
+        return addressRepository.findOneAddressByUserInfos(userInfos.get()).map(addressMapper::toDto);
     }
 
     /**

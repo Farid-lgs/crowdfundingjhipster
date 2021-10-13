@@ -1,6 +1,9 @@
 package fr.crowdfunding.jhipster.web.rest;
 
+import fr.crowdfunding.jhipster.config.Constants;
+import fr.crowdfunding.jhipster.domain.UserInfos;
 import fr.crowdfunding.jhipster.repository.UserInfosRepository;
+import fr.crowdfunding.jhipster.security.AuthoritiesConstants;
 import fr.crowdfunding.jhipster.service.UserInfosService;
 import fr.crowdfunding.jhipster.service.dto.UserInfosDTO;
 import fr.crowdfunding.jhipster.web.rest.errors.BadRequestAlertException;
@@ -9,9 +12,10 @@ import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.stream.StreamSupport;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -20,6 +24,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import tech.jhipster.web.util.HeaderUtil;
@@ -174,6 +179,19 @@ public class UserInfosResource {
         Page<UserInfosDTO> page = userInfosService.findAll(pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return ResponseEntity.ok().headers(headers).body(page.getContent());
+    }
+
+    /**
+     * {@code GET /users/:login} : get the "login" user.
+     *
+     * @param login the login of the user to find.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the "login" user, or with status {@code 404 (Not Found)}.
+     */
+    @GetMapping("/user-infos/name/{login}")
+    @PreAuthorize("hasAuthority(\"" + AuthoritiesConstants.USER + "\")")
+    public ResponseEntity<UserInfos> getUser(@PathVariable @Pattern(regexp = Constants.LOGIN_REGEX) String login) {
+        log.debug("REST request to get User : {}", login);
+        return ResponseUtil.wrapOrNotFound(userInfosService.getUser(login));
     }
 
     /**

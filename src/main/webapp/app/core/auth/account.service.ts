@@ -12,7 +12,7 @@ import { Account } from 'app/core/auth/account.model';
 
 @Injectable({ providedIn: 'root' })
 export class AccountService {
-  private userIdentity: Account | null = null;
+  private _userIdentity: Account | null = null;
   private authenticationState = new ReplaySubject<Account | null>(1);
   private accountCache$?: Observable<Account | null>;
 
@@ -30,18 +30,27 @@ export class AccountService {
   }
 
   authenticate(identity: Account | null): void {
-    this.userIdentity = identity;
-    this.authenticationState.next(this.userIdentity);
+    this._userIdentity = identity;
+    localStorage.setItem('login', <string>identity?.login);
+    this.authenticationState.next(this._userIdentity);
+  }
+
+  get userIdentity(): Account | null {
+    return this._userIdentity;
+  }
+
+  set userIdentity(value: Account | null) {
+    this._userIdentity = value;
   }
 
   hasAnyAuthority(authorities: string[] | string): boolean {
-    if (!this.userIdentity) {
+    if (!this._userIdentity) {
       return false;
     }
     if (!Array.isArray(authorities)) {
       authorities = [authorities];
     }
-    return this.userIdentity.authorities.some((authority: string) => authorities.includes(authority));
+    return this._userIdentity.authorities.some((authority: string) => authorities.includes(authority));
   }
 
   identity(force?: boolean): Observable<Account | null> {
@@ -69,7 +78,7 @@ export class AccountService {
   }
 
   isAuthenticated(): boolean {
-    return this.userIdentity !== null;
+    return this._userIdentity !== null;
   }
 
   getAuthenticationState(): Observable<Account | null> {

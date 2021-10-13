@@ -32,7 +32,7 @@ describe('Service Tests', () => {
         });
 
         const req = httpMock.expectOne({ method: 'GET' });
-        req.flush([new User(123, 'user')]);
+        // req.flush([new User(123, 'user')]);
         expect(expectedResult).toEqual([{ id: 123, login: 'user' }]);
       });
 

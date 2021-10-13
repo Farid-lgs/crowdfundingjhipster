@@ -2,6 +2,7 @@ package fr.crowdfunding.jhipster.web.rest;
 
 import fr.crowdfunding.jhipster.repository.ProjectRepository;
 import fr.crowdfunding.jhipster.service.ProjectService;
+import fr.crowdfunding.jhipster.service.dto.ProjectCardDTO;
 import fr.crowdfunding.jhipster.service.dto.ProjectDTO;
 import fr.crowdfunding.jhipster.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
@@ -9,7 +10,6 @@ import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.stream.StreamSupport;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import org.slf4j.Logger;
@@ -18,7 +18,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -147,14 +146,25 @@ public class ProjectResource {
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of projects in body.
      */
     @GetMapping("/projects")
-    public ResponseEntity<List<ProjectDTO>> getAllProjects(Pageable pageable, @RequestParam(required = false) String filter) {
-        if ("balancetransfer-is-null".equals(filter)) {
-            log.debug("REST request to get all Projects where balanceTransfer is null");
-            return new ResponseEntity<>(projectService.findAllWhereBalanceTransferIsNull(), HttpStatus.OK);
-        }
+    public ResponseEntity<List<ProjectCardDTO>> getAllProjects(Pageable pageable, @RequestParam(required = false) String filter) {
+
         log.debug("REST request to get a page of Projects");
-        Page<ProjectDTO> page = projectService.findAll(pageable);
+
+        Page<ProjectCardDTO> page = projectService.findAll(pageable);
+
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+
+        return ResponseEntity.ok().headers(headers).body(page.getContent());
+    }
+
+    @GetMapping("/projects/user/{id}")
+    public ResponseEntity<List<ProjectCardDTO>> getProjectByUserId(Pageable pageable, @PathVariable final Long id) {
+        log.debug("REST request to get Project : {}", id);
+
+        Page<ProjectCardDTO> page = projectService.findAllByUserId(pageable, id);
+
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+
         return ResponseEntity.ok().headers(headers).body(page.getContent());
     }
 

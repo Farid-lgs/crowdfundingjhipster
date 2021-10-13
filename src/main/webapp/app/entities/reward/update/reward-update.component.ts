@@ -1,7 +1,7 @@
-import { Component, OnInit, ElementRef } from '@angular/core';
+import {Component, OnInit, ElementRef, Input} from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
 import { FormBuilder, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import { Observable } from 'rxjs';
 import { finalize, map } from 'rxjs/operators';
 
@@ -13,7 +13,7 @@ import { RewardService } from '../service/reward.service';
 import { AlertError } from 'app/shared/alert/alert-error.model';
 import { EventManager, EventWithContent } from 'app/core/util/event-manager.service';
 import { DataUtils, FileLoadError } from 'app/core/util/data-util.service';
-import { IProject } from 'app/entities/project/project.model';
+import {IProject, Project} from 'app/entities/project/project.model';
 import { ProjectService } from 'app/entities/project/service/project.service';
 
 @Component({
@@ -22,6 +22,8 @@ import { ProjectService } from 'app/entities/project/service/project.service';
 })
 export class RewardUpdateComponent implements OnInit {
   isSaving = false;
+  id: number | null = null;
+  project: IProject = new Project();
 
   projectsSharedCollection: IProject[] = [];
 
@@ -45,11 +47,21 @@ export class RewardUpdateComponent implements OnInit {
     protected projectService: ProjectService,
     protected elementRef: ElementRef,
     protected activatedRoute: ActivatedRoute,
+    protected router: Router,
     protected fb: FormBuilder
   ) {}
 
   ngOnInit(): void {
+    // Récupère l'url + split la chaine et retourne le 3è fragment (équivalent au projectId)
+    const projectId = Number(this.router.url.split('/')[2]);
+
     this.activatedRoute.data.subscribe(({ reward }) => {
+      if(projectId > 0) {
+        this.project = new Project(projectId);
+
+        reward.project = this.project;
+      }
+
       if (reward.id === undefined) {
         const today = dayjs().startOf('day');
         reward.deliverAt = today;
@@ -96,6 +108,7 @@ export class RewardUpdateComponent implements OnInit {
   save(): void {
     this.isSaving = true;
     const reward = this.createFromForm();
+
     if (reward.id !== undefined) {
       this.subscribeToSaveResponse(this.rewardService.update(reward));
     } else {

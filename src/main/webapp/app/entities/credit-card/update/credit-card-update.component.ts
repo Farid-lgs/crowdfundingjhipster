@@ -7,8 +7,9 @@ import { finalize, map } from 'rxjs/operators';
 
 import { ICreditCard, CreditCard } from '../credit-card.model';
 import { CreditCardService } from '../service/credit-card.service';
-import { IUserInfos } from 'app/entities/user-infos/user-infos.model';
+import {IUserInfos, UserInfos} from 'app/entities/user-infos/user-infos.model';
 import { UserInfosService } from 'app/entities/user-infos/service/user-infos.service';
+import {AccountService} from "../../../core/auth/account.service";
 
 @Component({
   selector: 'jhi-credit-card-update',
@@ -16,6 +17,7 @@ import { UserInfosService } from 'app/entities/user-infos/service/user-infos.ser
 })
 export class CreditCardUpdateComponent implements OnInit {
   isSaving = false;
+  IUserInfos = new UserInfos();
 
   userInfosCollection: IUserInfos[] = [];
 
@@ -31,12 +33,25 @@ export class CreditCardUpdateComponent implements OnInit {
   constructor(
     protected creditCardService: CreditCardService,
     protected userInfosService: UserInfosService,
+    protected accountService: AccountService,
     protected activatedRoute: ActivatedRoute,
     protected fb: FormBuilder
   ) {}
 
   ngOnInit(): void {
+
     this.activatedRoute.data.subscribe(({ creditCard }) => {
+
+      if(this.accountService.userIdentity) {
+        this.IUserInfos = new UserInfos(this.accountService.userIdentity.id);
+      }
+
+      if(creditCard !== undefined) {
+        creditCard.userInfos = this.IUserInfos;
+      } else {
+        creditCard = new CreditCard(null, null, null, null, null, this.IUserInfos);
+      }
+
       this.updateForm(creditCard);
 
       this.loadRelationshipsOptions();
@@ -50,10 +65,10 @@ export class CreditCardUpdateComponent implements OnInit {
   save(): void {
     this.isSaving = true;
     const creditCard = this.createFromForm();
-    if (creditCard.id !== undefined) {
-      this.subscribeToSaveResponse(this.creditCardService.update(creditCard));
-    } else {
+    if (creditCard.id == null) {
       this.subscribeToSaveResponse(this.creditCardService.create(creditCard));
+    } else {
+      this.subscribeToSaveResponse(this.creditCardService.update(creditCard));
     }
   }
 

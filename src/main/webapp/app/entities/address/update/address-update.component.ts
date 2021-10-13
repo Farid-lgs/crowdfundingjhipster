@@ -7,10 +7,11 @@ import { finalize, map } from 'rxjs/operators';
 
 import { IAddress, Address } from '../address.model';
 import { AddressService } from '../service/address.service';
-import { IUserInfos } from 'app/entities/user-infos/user-infos.model';
+import {IUserInfos, UserInfos} from 'app/entities/user-infos/user-infos.model';
 import { UserInfosService } from 'app/entities/user-infos/service/user-infos.service';
 import { ICountry } from 'app/entities/country/country.model';
 import { CountryService } from 'app/entities/country/service/country.service';
+import {AccountService} from "../../../core/auth/account.service";
 
 @Component({
   selector: 'jhi-address-update',
@@ -18,6 +19,7 @@ import { CountryService } from 'app/entities/country/service/country.service';
 })
 export class AddressUpdateComponent implements OnInit {
   isSaving = false;
+  IUserInfos = new UserInfos();
 
   userInfosCollection: IUserInfos[] = [];
   countriesSharedCollection: ICountry[] = [];
@@ -37,12 +39,20 @@ export class AddressUpdateComponent implements OnInit {
     protected addressService: AddressService,
     protected userInfosService: UserInfosService,
     protected countryService: CountryService,
+    protected accountService: AccountService,
     protected activatedRoute: ActivatedRoute,
     protected fb: FormBuilder
   ) {}
 
   ngOnInit(): void {
+
     this.activatedRoute.data.subscribe(({ address }) => {
+      if(this.accountService.userIdentity) {
+        this.IUserInfos = new UserInfos(this.accountService.userIdentity.id);
+      }
+
+      address.userInfos = this.IUserInfos;
+
       this.updateForm(address);
 
       this.loadRelationshipsOptions();
@@ -91,6 +101,7 @@ export class AddressUpdateComponent implements OnInit {
   }
 
   protected updateForm(address: IAddress): void {
+    console.log(address);
     this.editForm.patchValue({
       id: address.id,
       address: address.address,
@@ -116,7 +127,6 @@ export class AddressUpdateComponent implements OnInit {
         )
       )
       .subscribe((userInfos: IUserInfos[]) => (this.userInfosCollection = userInfos));
-
     this.countryService
       .query()
       .pipe(map((res: HttpResponse<ICountry[]>) => res.body ?? []))

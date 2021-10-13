@@ -38,9 +38,9 @@ export class ProjectCommentService {
     return this.http.get<IProjectComment>(`${this.resourceUrl}/${id}`, { observe: 'response' });
   }
 
-  query(req?: any): Observable<EntityArrayResponseType> {
+  query(id: number, req?: any): Observable<EntityArrayResponseType> {
     const options = createRequestOption(req);
-    return this.http.get<IProjectComment[]>(this.resourceUrl, { params: options, observe: 'response' });
+    return this.http.get<IProjectComment[]>(`${this.resourceUrl}/project/${id}`, { params: options, observe: 'response' });
   }
 
   delete(id: number): Observable<HttpResponse<{}>> {
