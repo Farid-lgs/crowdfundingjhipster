@@ -9,7 +9,6 @@ export class SubmenuComponent implements OnInit {
 
   @Input() btnDatas: any;
   userLogin: string = localStorage.getItem('login') as string;
-  // test: string = localStorage.getItem('user') === null ? '' : localStorage.getItem('user');
 
   constructor() {
     // do nothing
@@ -17,10 +16,7 @@ export class SubmenuComponent implements OnInit {
 
   ngOnInit(): void {
     this.userLogin = localStorage.getItem('login') as string;
-
-    // if(localStorage.getItem('user')  null)
-    //   this.user = <string>localStorage.getItem('user') === null ? '' : localStorage.getItem('user');
-    // // do nothing
+    // do nothing
   }
 
 }

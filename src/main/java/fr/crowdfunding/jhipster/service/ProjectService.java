@@ -9,7 +9,6 @@ import fr.crowdfunding.jhipster.service.mapper.ProjectMapper;
 
 import java.math.BigInteger;
 import java.sql.Timestamp;
-import java.time.Instant;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;

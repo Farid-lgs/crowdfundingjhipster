@@ -108,7 +108,7 @@ export class RewardUpdateComponent implements OnInit {
   save(): void {
     this.isSaving = true;
     const reward = this.createFromForm();
-    console.log(reward);
+
     if (reward.id !== undefined) {
       this.subscribeToSaveResponse(this.rewardService.update(reward));
     } else {

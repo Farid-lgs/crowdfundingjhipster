@@ -19,7 +19,6 @@ import {AccountService} from "../../../core/auth/account.service";
 })
 export class AddressUpdateComponent implements OnInit {
   isSaving = false;
-  // userId: number | undefined;
   IUserInfos = new UserInfos();
 
   userInfosCollection: IUserInfos[] = [];
