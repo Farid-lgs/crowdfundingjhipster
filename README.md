@@ -2,6 +2,34 @@
 
 This application was generated using JHipster 7.1.0, you can find documentation and help at [https://www.jhipster.tech/documentation-archive/v7.1.0](https://www.jhipster.tech/documentation-archive/v7.1.0).
 
+Au cours de mon stage de fin d’étude au sein du Rif (Rassemblement des Ingénieurs Francophones), j’ai travaillé en tant que développeur dans une équipe agile de deux personnes majoritairement en peer-programming. 
+La problématique à laquelle répond cette application est le fait d’offrir une application de financement participatif qui ne repose pas sur la modèle de financement « Tout ou Rien » car les principaux acteurs de ce marché l’utilisent tous comme modèle de financement. 
+Le plus gros problème de ce modèle de financement est que pour obtenir le financement, il faut obligatoirement avoir rempli intégralement l’objectif défini. Cela force souvent les utilisateurs à fixer des objectifs plus bas que l’objectif réellement visé afin de pouvoir remplir plus facilement l’objectif défini et recevoir l’argent.
+L’application conçue à donc pour objectif de répondre aux mêmes problématiques que les concurrents mais avec un modèle de financement plus flexible et qui évite de pousser les utilisateurs à brider l’objectif de financement qu’ils ont afin de remplir plus facilement l’objectif pour recevoir les dons. Les utilisateurs qui offrent des dons peuvent bien évidemment recevoir des récompenses qui sont fixé par le créateur du projet.
+•    Définition des besoins et rédaction du cahier des charges
+•    Maquettage, Modélisation
+•    Analyse et conception (modélisation UML et JDL)
+•    vérification des modèles générés et du schéma de DB
+•    Gestion et organisation du repository git, validation des merge request
+•    Résolution des conflits de fusion
+•    Développement des API REST et intégration de l’API Stripe 
+•    Développement des interfaces utilisateurs
+•    Prise en considération des Pré-Sécurisation de l’application avec Spring Security et un token JWT
+•    Couverture de plus de 70 % des tests, TDD avec JUnit, Mockito, Cucumber
+•    Analyse de code avec Sonarqube
+•    Tout en suivant l’esprit DevOps et le framework Scrum
+Environments :  HTML5, Bootstrap, JHipster, Spring (Core, Boot, Data, Security), Angular, PostgreSQL, Git, Agile(SCRUM), Stripe, IntelliJ IDEA, Windows, GitHub
+
+![image](https://user-images.githubusercontent.com/80573575/138281449-e0e32647-ef85-4e1f-bff4-864a3fc7837c.png)
+
+![image](https://user-images.githubusercontent.com/80573575/138281708-310a5191-4a4d-4b3e-9919-d67860214712.png)
+
+![image](https://user-images.githubusercontent.com/80573575/138281724-e762a158-a100-4be7-9385-a084e4ee0d0f.png)
+
+![image](https://user-images.githubusercontent.com/80573575/138281771-1be51470-0bf8-48ed-942b-26d911006e56.png)
+
+![image](https://user-images.githubusercontent.com/80573575/138282219-55376ee3-dfdc-474b-9fba-fe7c16180a5f.png)
+
 ## Development
 
 Before you can build this project, you must install and configure the following dependencies on your machine:
